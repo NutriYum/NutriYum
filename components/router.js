@@ -13,6 +13,7 @@ import Main from './screens/Main';
 import MyCameraScreen from './screens/Camera'
 import MyFoodScreen from './screens/Food'
 import ProfileScreen from './screens/Profile'
+import ManualEntry from './screens/ManualEntry'
 
 export const SignedOut = StackNavigator({
   Login: {
@@ -43,14 +44,23 @@ const SignedIn = TabNavigator(
       screen: MyFoodScreen,
       path: 'Food'
     },
+    Manual: {
+      screen: ManualEntry,
+      path: 'Manual'
+    },
   },
   {
     tabBarPosition: 'bottom',
-    initialRouteName: 'Main',
+    initialRouteName: 'Camera',
   },
   {
     tabBarOptions: {
       activeTintColor: '#e91e63'
+    }
+  },
+  {
+    style: {
+      fontSize: 20
     }
   }
 )

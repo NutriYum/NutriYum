@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import { Image } from 'react-native'
+import { Image, Picker } from 'react-native'
 import {
-  Picker,
   Button,
   Container,
   Icon,
@@ -35,7 +34,7 @@ watsonKey = WATSON_KEY
 
 const options = {
   // keyPrefix: "uploads/",
-  bucket: 'nutriyum',
+  bucket: 'nutriyum2',
   region: 'us-east-1',
   accessKey: accesskey,
   secretKey: secretkey,
