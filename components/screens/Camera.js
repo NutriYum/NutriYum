@@ -13,7 +13,7 @@ import {
   Left
 } from 'native-base'
 import { Camera, Permissions, ImageManipulator } from 'expo'
-import styles from '../Styles'
+import styles from '../../Styles'
 import CameraConfirm from './CameraConfirm'
 
 class CameraComponent extends Component {
@@ -119,7 +119,7 @@ class MyCameraScreen extends Component {
 //   logout: (navigation) => dispatch(logout(navigation))
 // });
 
-export default connect(null, null)(MyCameraScreen)
+export default MyCameraScreen
 
 // const styles = StyleSheet.create({
 //   container: {
