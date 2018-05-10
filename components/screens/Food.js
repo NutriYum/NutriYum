@@ -20,18 +20,18 @@ import {
   View
 } from 'native-base'
 import { RNS3 } from 'react-native-aws3'
-// import {
-//   AMAZON_ACCESSKEY,
-//   AMAZON_SECRETKEY,
-//   WATSON_KEY
-// } from 'react-native-dotenv'
+import {
+  AMAZON_ACCESSKEY,
+  AMAZON_SECRETKEY,
+  WATSON_KEY
+} from 'react-native-dotenv'
 import axios from 'axios'
 import styles from '../../Styles'
 import FoodLog from './FoodLog'
 
-let accesskey = 'AKIAJGELABLCI4QXHX5A'
-let secretkey = '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'
-let watsonKey = 'b9f2f8bb3e2e8a67a0456ba3f816c09b1ba963e6'
+accesskey = AMAZON_ACCESSKEY
+secretkey = AMAZON_SECRETKEY
+watsonKey = WATSON_KEY
 
 const options = {
   // keyPrefix: "uploads/",
