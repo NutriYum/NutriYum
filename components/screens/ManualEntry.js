@@ -1,24 +1,23 @@
 import React, { Component } from 'react'
 import { TextInput } from 'react-native'
 import axios from 'axios'
-import { Text, Container, Picker, List, ListItem, Content, Button, Badge, Title, Header } from 'native-base'
-import styles from '../../Styles'
+import { Text, Container, Picker, List, ListItem, Content, Button, Title, Header } from 'native-base'
 import IP from '../../IP'
+import { connect } from 'react-redux'
+import { addToFoodLogThunker, getFoodLogThunker } from '../redux/foodLog';
+import styles from '../../Styles'
 
-
-
-export default class ManualEntry extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            text: '',
-            nutrition: [],
-            error: ''
-        }
-        this.onSubmitFood = this.onSubmitFood.bind(this)
-        this.clearAll = this.clearAll.bind(this)
-        this.clearOne = this.clearOne.bind(this)
-      }
+class ManualEntry extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      text: '',
+      nutrition: [],
+      error: ''
+    }
+    this.onSubmitFood = this.onSubmitFood.bind(this)
+    this.clearAll = this.clearAll.bind(this)
+  }
 
   onSubmitFood() {
     this.setState({ error: '', nutrition: [] })
@@ -47,12 +46,6 @@ export default class ManualEntry extends Component {
 
       clearAll () {
           this.setState({nutrition: []})
-      }
-
-      clearOne () {
-        console.log('this.state.nutrition>>>',this.state.nutrition)
-        console.log('this.props', this.props)
-        this.setState(this.state.nutrition.splice(this.index, 1))
       }
     render () {
         return (
@@ -95,3 +88,13 @@ export default class ManualEntry extends Component {
     }
 }
 
+const mapState = state => {
+  return {
+    user: state.currentUser,
+    nutrition: state.nutrition
+  }
+}
+
+const mapDispatch = { addToFoodLogThunker }
+
+export default connect(mapState, mapDispatch)(ManualEntry)
