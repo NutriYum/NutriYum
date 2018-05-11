@@ -4,11 +4,13 @@ import IP from '../../IP';
 
 /* -----------------    ACTION TYPES    ------------------ */
 
+const GET_USER = 'GET_USER'
 const SET_CURRENT_USER = 'SET_CURRENT_USER';
 const REMOVE_CURRENT_USER = 'REMOVE_CURRENT_USER';
 
 /* ------------     ACTION CREATORS      ------------------ */
 
+const getUser = user => ({type: GET_USER, user})
 const setCurrentUser = user => ({ type: SET_CURRENT_USER, user });
 export const removeCurrentUser = () => ({ type: REMOVE_CURRENT_USER });
 
@@ -16,6 +18,9 @@ export const removeCurrentUser = () => ({ type: REMOVE_CURRENT_USER });
 
 export default function reducer (currentUser = {}, action) {
   switch (action.type) {
+
+    case GET_USER:
+      return action.user;
 
     case SET_CURRENT_USER:
       return action.user;
@@ -29,6 +34,13 @@ export default function reducer (currentUser = {}, action) {
 }
 
 /* ------------       THUNK CREATORS     ------------------ */
+
+export const me = () => dispatch =>
+  axios.get('/auth/me')
+    .then(res => {
+      dispatch(getUser(res.data || defaultUser))
+    })
+    .catch(err => console.log(err))
 
 export const login = (credentials, navigation) => dispatch => {
   console.log(IP, credentials)

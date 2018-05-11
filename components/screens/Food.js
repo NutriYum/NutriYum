@@ -27,6 +27,9 @@ import {
 import axios from 'axios'
 import styles from '../../Styles'
 import FoodLog from './FoodLog'
+import { connect } from 'react-redux';
+import { addToFoodLogThunker } from '../redux/foodLog';
+
 
 accesskey = AMAZON_ACCESSKEY
 secretkey = AMAZON_SECRETKEY
@@ -44,6 +47,7 @@ const options = {
 class MyFoodScreen extends React.Component {
   constructor(props) {
     super(props)
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   static navigationOptions = {
     tabBarLabel: 'Food'
@@ -54,6 +58,9 @@ class MyFoodScreen extends React.Component {
     watsonPicker: '',
     nutrition: {},
     photo: ''
+  }
+  handleSubmit(){
+    this.props.addToFoodLogThunker(this.state.nutrition)
   }
 
   clearFoodState() {
@@ -181,18 +188,8 @@ class MyFoodScreen extends React.Component {
           ) : null}
           {Object.keys(this.state.nutrition).length ? (
             <Button
-              onPress={() => {
-                console.log(this.state.nutrition)
-                return (
-                  <FoodLog
-                    navigation={this.props.navigation}
-                    foodName={this.state.nutrition.name}
-                    photo={newPhoto}
-                    clearFood={this.clearFoodState}
-                  />
-                )
-              }}
-            >
+              onPress={this.handleSubmit}
+              >
               <Text>Add to Daily Food Log</Text>
             </Button>
           ) : null}
@@ -202,8 +199,9 @@ class MyFoodScreen extends React.Component {
   }
 }
 
-export default MyFoodScreen
+// export default MyFoodScreen
+const mapStateToProps = null;
 
+const mapDispatchToProps = { addToFoodLogThunker }
 
-// export default connect(null, null)(MyFoodScreen);
-
+export default connect(mapStateToProps, mapDispatchToProps)(MyFoodScreen);
