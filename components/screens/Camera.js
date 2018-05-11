@@ -3,7 +3,6 @@ import { Image } from 'react-native'
 import {
   Button,
   Container,
-  Icon,
   Header,
   Content,
   Text,
