@@ -14,6 +14,7 @@ import MyCameraScreen from './screens/Camera'
 import MyFoodScreen from './screens/Food'
 import ProfileScreen from './screens/Profile'
 import ManualEntry from './screens/ManualEntry'
+import CameraConfirm from './screens/CameraConfirm'
 
 export const SignedOut = StackNavigator({
   Login: {
@@ -30,6 +31,24 @@ export const SignedOut = StackNavigator({
   }
 });
 
+export const CameraStack = StackNavigator({
+  MyCameraScreen: {
+    screen: MyCameraScreen,
+    navigationOptions: {
+      title: 'MyCameraScreen'
+    }
+  },
+  CameraConfirm: {
+    screen: CameraConfirm,
+    navigationOptions: {
+      title: 'CameraConfirm'
+    }
+  }
+},
+  {headerMode: 'none',
+    initialRouteName: 'MyCameraScreen'}
+);
+
 const SignedIn = TabNavigator(
   {
     Main: {
@@ -37,7 +56,7 @@ const SignedIn = TabNavigator(
       path: 'Main'
     },
     Camera: {
-      screen: MyCameraScreen,
+      screen: CameraStack,
       path: 'Camera'
     },
     Food: {
