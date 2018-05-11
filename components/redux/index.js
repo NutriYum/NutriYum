@@ -1,7 +1,12 @@
 import { combineReducers } from 'redux';
 
+import foodLog from './foodLog';
+
 import currentUser from './auth';
+import currentPhoto from './photo';
 
 export default combineReducers({
-  currentUser
+  currentUser,
+  foodLog,
+  currentPhoto
 });

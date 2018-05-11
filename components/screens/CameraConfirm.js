@@ -12,19 +12,40 @@ import {
   Body,
   Left
 } from 'native-base'
+import { connect } from 'react-redux'
+import { setCurrentPhoto, removeCurrentPhoto } from '../redux/photo' 
+import { StackActions, NavigationActions } from 'react-navigation';
 
-confirm = async () => {
-  props.navigation.navigate('Food', {
-    photo: confirmPhoto,
-    photoName: confirmPhotoName
-  })
-}
+class CameraConfirm extends React.Component {
+  constructor(props){
+    super(props)
 
-export default (CameraConfirm = props => {
-  return (
-    <Container>
-      <Header />
-      <Content>
+    this.looksGood = this.looksGood.bind(this)
+    this.looksBad = this.looksBad.bind(this)
+  }
+
+  async looksGood(){
+    await this.props.navigation.navigate('Food')
+    // this.props.removeCurrentPhoto();
+  }
+
+  async looksBad(){
+    // this.props.removeCurrentPhoto();
+    //this is king kong . you can reload stack state and pages by resetting the stack.
+    const resetAction = StackActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({ routeName: 'MyCameraScreen' })],
+    });
+    this.props.navigation.dispatch(resetAction);
+    this.props.removeCurrentPhoto();
+  }
+    
+  render(){
+    console.log(StackActions)
+    return (
+      <Container>
+        <Header />
+        <Content>
         <Card>
           <CardItem>
             <Body>
@@ -33,27 +54,21 @@ export default (CameraConfirm = props => {
           </CardItem>
           <CardItem cardBody>
             <Image
-              style={{ flex: 1, height: 400, width: null }}
-              source={{ uri: props.photo }}
+              style={{ flex: 1, height: 200, width: null }}
+              source={{ uri:  this.props.photo.photo.uri}}
             />
           </CardItem>
           <CardItem>
             <Left>
               <Button
                 transparent
-                onPress={() =>
-                  props.navigation.navigate('Food', {
-                    photo: props.photo,
-                    photoName: props.photoName
-                  })
-                }
-              >
+                onPress={this.looksGood}>
                 <Icon active name="thumbs-up" />
                 <Text>Looks good!</Text>
               </Button>
             </Left>
             <Body>
-              <Button transparent onPress={props.clearPhoto}>
+              <Button transparent onPress={()=> {this.looksBad()}}>
                 <Icon active name="reverse-camera" />
                 <Text>Take a new picture</Text>
               </Button>
@@ -61,6 +76,16 @@ export default (CameraConfirm = props => {
           </CardItem>
         </Card>
       </Content>
-    </Container>
-  )
-})
+      </Container>)
+}
+}
+
+const mapState = state => {
+  return {
+    photo: state.currentPhoto,
+  }
+}
+
+const mapDispatch = { setCurrentPhoto, removeCurrentPhoto }
+
+export default connect(mapState, mapDispatch)(CameraConfirm)
