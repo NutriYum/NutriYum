@@ -17,6 +17,7 @@ import styles from '../../Styles'
 import CameraConfirm from './CameraConfirm'
 import { connect } from 'react-redux'
 import { setCurrentPhoto, removeCurrentPhoto } from '../redux/photo' 
+import Loader from './Loading'
 
 class CameraComponent extends Component {
   constructor(props){
@@ -28,6 +29,7 @@ class CameraComponent extends Component {
     type: Camera.Constants.Type.back,
     whiteBalance: 'auto',
     autoFocus: 'off',
+    loading: false,
     // photo: null,
     // photoName: ''
   }
@@ -43,6 +45,7 @@ class CameraComponent extends Component {
 
   snap = async () => {
     if (this.camera) {
+      this.setState({loading: true})
       let photo = await this.camera.takePictureAsync()
       let indexURI = await photo.uri.toString().indexOf('Camera/') + 7
       let tempPhoto = await photo.uri.toString()
@@ -58,6 +61,7 @@ class CameraComponent extends Component {
         await manipResult.uri
         await this.props.setCurrentPhoto({photo: manipResult, photoName: tempPhotoName})
         this.props.navigation.navigate('CameraConfirm');
+        this.setState({loading: false})
     }
   }
 
@@ -73,6 +77,7 @@ class CameraComponent extends Component {
       return (
         <Container>
           <Header />
+          <Loader loading={this.state.loading} />
           <Camera
             ratio={'16:10'}
             style={{ flex: 1 }}
