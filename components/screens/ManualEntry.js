@@ -11,6 +11,7 @@ class ManualEntry extends Component {
     super(props)
     this.state = {
       text: '',
+      nutrition: [],
       foodType: 'Common Foods',
       error: ''
     }
@@ -97,7 +98,8 @@ const styles = {
 
 const mapState = state => {
   return {
-    user: state.currentUser
+    user: state.currentUser,
+    nutrition: state.nutrition
   }
 }
 
