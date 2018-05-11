@@ -10,11 +10,14 @@ import {
   Card,
   CardItem,
   Body,
-  Left
+  Left,
+  Title
 } from 'native-base'
 import { connect } from 'react-redux'
 import { setCurrentPhoto, removeCurrentPhoto } from '../redux/photo' 
-import { StackActions, NavigationActions } from 'react-navigation';
+import { StackActions, NavigationActions } from 'react-navigation'
+import styles from '../../Styles'
+
 
 class CameraConfirm extends React.Component {
   constructor(props){
@@ -41,11 +44,10 @@ class CameraConfirm extends React.Component {
   }
     
   render(){
-    console.log(StackActions)
     return (
       <Container>
-        <Header />
-        <Content>
+      <Header style={styles.header}><Title> NutriYum </Title></Header>
+       <Content>
         <Card>
           <CardItem>
             <Body>

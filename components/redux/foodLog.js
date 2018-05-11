@@ -50,7 +50,7 @@ export default function reducer (state = defaultFoodLog, action) {
  export const getFoodLogThunker = foodLogsId => dispatch =>
    axios.get(`${IP}/api/${foodLogsId}`)
    .then(res => {
-     console.log("hello from think");
+    //  console.log("hello from think");
      dispatch(getFoodLog(res.data || defaultFoodLog))
    })
    .catch(err => console.log(err))

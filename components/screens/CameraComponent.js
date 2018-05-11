@@ -10,7 +10,8 @@ import {
   Card,
   CardItem,
   Body,
-  Left
+  Left,
+  Title
 } from 'native-base'
 import { Camera, Permissions, ImageManipulator } from 'expo'
 import styles from '../../Styles'
@@ -62,8 +63,6 @@ class CameraComponent extends Component {
   }
 
   render() {
-
-  console.log(this.props)
     const { hasCameraPermission } = this.state
     if (hasCameraPermission === null) {
       return <Container />
@@ -72,7 +71,7 @@ class CameraComponent extends Component {
     } else if (hasCameraPermission === true) {
       return (
         <Container>
-          <Header />
+          <Header style={styles.header}><Title> NutriYum </Title></Header>
           <Camera
             ratio={'16:10'}
             style={{ flex: 1 }}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Image, Picker } from 'react-native'
-import {Button,Container,Icon,Header,Content,Text,Card,CardItem,Body,Left,Right,List,ListItem,Form,Separator,View} from 'native-base'
+import {Button,Container,Icon,Header,Content,Text,Card,CardItem,Body,Left,Right,List,ListItem,Form,Separator,View, Title} from 'native-base'
 import { RNS3 } from 'react-native-aws3'
 import {
   AMAZON_ACCESSKEY,
@@ -75,7 +75,7 @@ class MyFoodScreen extends React.Component {
         this.setState({
           bucketLocale: response.body.postResponse.location
         })
-        console.log('from amazon', this.state.bucketLocale)
+        // console.log('from amazon', this.state.bucketLocale)
       })
       const response = await axios.get(
         `https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key=${watsonKey}&url=${
@@ -84,7 +84,7 @@ class MyFoodScreen extends React.Component {
       )
       let result = response.data.images[0].classifiers[0].classes
       await this.setState({ watsonFood: result })
-      console.log('from watson', this.state)
+      // console.log('from watson', this.state)
       this.setState({ bucketLocale: '', watsonPicker: '', nutrition: {} })
     }
   }
@@ -95,7 +95,7 @@ class MyFoodScreen extends React.Component {
 
     return (
       <Container>
-        <Header />
+      <Header style={styles.header}><Title> NutriYum </Title></Header>
         <Content>
           {photo ? (
             <Card>

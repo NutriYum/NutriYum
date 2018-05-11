@@ -19,5 +19,16 @@ export default styles = StyleSheet.create({
   },
   pickerListText: {
     fontSize: 24
-  }
+  },
+  header: {
+    backgroundColor: '#d3d3d3', 
+    paddingTop: 20
+  },
+  manualTextInput: {
+    height: 40, borderColor: 'gray', borderWidth: 1
+  },
+  container: {
+    margin: 20,
+    marginTop: 50
+}
 })

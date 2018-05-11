@@ -33,7 +33,7 @@ class Login extends React.Component {
     // }
     const email = this.state.email;
     const password = this.state.password;
-    console.log(email, password)
+    // console.log(email, password)
     this.props.login({
       email,
       password
