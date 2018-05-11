@@ -49,17 +49,16 @@ class Login extends React.Component {
   render() {
    return (
     <KeyboardAvoidingView behavior="position" >
-
-       <ScrollView>
+      <ScrollView>
         <Text >{this.state.error}</Text>
         <Text >Email</Text>
         <TextInput
-          style
+          style={styles.textInput}
           autoCapitalize="none"
           autoCorrect={false}
-          maxLength={15}
-          placeholder="EMAIL"
-          placeholderTextColor="tomato"
+          maxLength={150}
+          // placeholder="EMAIL"
+          // placeholderTextColor="tomato"
           value={this.state.email}
           onChangeText={(email) => this.handleChangeEmail(email)}
         />
@@ -69,9 +68,9 @@ class Login extends React.Component {
           secureTextEntry={true}
           autoCapitalize="none"
           autoCorrect={false}
-          maxLength={15}
-          placeholder="PASSWORD"
-          placeholderTextColor="tomato"
+          maxLength={150}
+          // placeholder="PASSWORD"
+          // placeholderTextColor="tomato"
           value={this.state.password}
           onChangeText={(password) => this.handleChangePassword(password)}
         />
@@ -92,7 +91,7 @@ class Login extends React.Component {
             });
           }}
         />
-      </ScrollView> 
+      </ScrollView>
     </KeyboardAvoidingView>
   );
  }
