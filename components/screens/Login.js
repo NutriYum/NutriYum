@@ -1,5 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, TextInput, KeyboardAvoidingView, ScrollView, Button } from 'react-native';
+import { Container, Header, Content, Form, Item, Input, Label } from 'native-base';
+
 import { connect } from 'react-redux';
 
 import { login } from '../redux/auth';
@@ -26,6 +28,9 @@ class Login extends React.Component {
   }
 
   handleSubmit() {
+    if (!this.state.email || !this.state.password) {
+      return this.setState({error: 'Email and Password are required'})
+    }
     const email = this.state.email;
     const password = this.state.password;
     console.log(email, password)
@@ -43,12 +48,50 @@ class Login extends React.Component {
 
   render() {
    return (
-    <KeyboardAvoidingView behavior="position" style={styles.container}>
-      <ScrollView>
-        <Text style={styles.error}>{this.state.error}</Text>
-        <Text style={styles.textLabel}>Email</Text>
+    <KeyboardAvoidingView behavior="position" >
+      <View>
+        <Header />
+        {/* <Content> */}
+          <Form
+          name="login"
+          >
+            <Item floatingLabel>
+              <Label>Email</Label>
+              <Input 
+                name="email"
+                value={this.state.email}
+                onChangeText={(text)=> this.setState({email: text})}
+              />
+            </Item>
+            <Item floatingLabel last>
+              <Label>Password</Label>
+              <Input 
+                name="password"
+                value={this.state.password}
+                secureTextEntry={true}
+                onChangeText={(text)=> this.setState({password: text})}
+              />
+            </Item>
+            <Item>
+            <Button
+            title="login"
+            type="submit"
+            onPress={this.loginPress}
+            >
+            <Text>Log In</Text>       
+            </Button>
+            </Item>
+            <Item>
+              {this.warning()}
+            </Item>
+          </Form>
+        {/* </Content> */}
+      </View>
+      {/* <ScrollView>
+        <Text >{this.state.error}</Text>
+        <Text >Email</Text>
         <TextInput
-          style={styles.textInput}
+          style
           autoCapitalize="none"
           autoCorrect={false}
           maxLength={15}
@@ -57,7 +100,7 @@ class Login extends React.Component {
           value={this.state.email}
           onChangeText={(email) => this.handleChangeEmail(email)}
         />
-        <Text style={styles.textLabel}>Password</Text>
+        <Text >Password</Text>
         <TextInput
           style={styles.textInput}
           secureTextEntry={true}
@@ -86,7 +129,7 @@ class Login extends React.Component {
             });
           }}
         />
-      </ScrollView>
+      </ScrollView> */}
     </KeyboardAvoidingView>
   );
  }

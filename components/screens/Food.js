@@ -48,7 +48,6 @@ class MyFoodScreen extends React.Component {
       watsonPicker: '',
       nutrition: {},
     })
-    // this.props.removeCurrentPhoto();
     const resetAction = StackActions.reset({
       index: 0,
       actions: [NavigationActions.navigate({ routeName: 'MyCameraScreen' })],
@@ -87,7 +86,6 @@ class MyFoodScreen extends React.Component {
   render() {
     const { navigation } = this.props
     let {photo, photoName} = this.props.photo
-    console.log(this.state);
 
     return (
       <Container>

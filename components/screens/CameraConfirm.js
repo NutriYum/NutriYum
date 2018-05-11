@@ -16,14 +16,6 @@ import { connect } from 'react-redux'
 import { setCurrentPhoto, removeCurrentPhoto } from '../redux/photo' 
 import { StackActions, NavigationActions } from 'react-navigation';
 
-
-// confirm = async () => {
-//   props.navigation.navigate('Food', {
-//     photo: confirmPhoto,
-//     photoName: confirmPhotoName
-//   })
-// }
-
 class CameraConfirm extends React.Component {
   constructor(props){
     super(props)
@@ -33,20 +25,19 @@ class CameraConfirm extends React.Component {
   }
 
   async looksGood(){
-    await this.props.navigation.navigate('Food', {
-      // photo: this.props.photo,
-    })
+    await this.props.navigation.navigate('Food')
     // this.props.removeCurrentPhoto();
   }
 
   async looksBad(){
-    // await this.props.navigation.navigate('MyCameraScreen')
     // this.props.removeCurrentPhoto();
+    //this is king kong . you can reload stack state and pages by resetting the stack.
     const resetAction = StackActions.reset({
       index: 0,
       actions: [NavigationActions.navigate({ routeName: 'MyCameraScreen' })],
     });
     this.props.navigation.dispatch(resetAction);
+    this.props.removeCurrentPhoto();
   }
     
   render(){
@@ -92,7 +83,6 @@ class CameraConfirm extends React.Component {
 const mapState = state => {
   return {
     photo: state.currentPhoto,
-    // photo: state.photo, 
   }
 }
 
