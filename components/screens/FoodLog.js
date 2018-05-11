@@ -19,6 +19,8 @@ import {
 } from 'native-base'
 import styles from '../../Styles'
 import { Image } from 'react-native'
+import { connect } from 'react-redux';
+import { getFoodLogThunker, getFoodLog } from '../redux/foodLog';
 
 class MyFoodLog extends React.Component {
   state = {
@@ -94,4 +96,8 @@ class MyFoodLog extends React.Component {
   }
 }
 
-export default MyFoodLog
+const mapStateToProps = { getFoodLog };
+
+const mapDispatchToProps = { getFoodLogThunker }
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyFoodLog);

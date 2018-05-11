@@ -9,6 +9,8 @@ import {
 } from 'react-native-dotenv'
 import axios from 'axios'
 import styles from '../../Styles'
+import FoodLog from './FoodLog'
+import { addToFoodLogThunker } from '../redux/foodLog';
 import { setCurrentPhoto, removeCurrentPhoto } from '../redux/photo'
 import { connect } from 'react-redux'
 import { StackActions, NavigationActions } from 'react-navigation';
@@ -29,6 +31,7 @@ const options = {
 class MyFoodScreen extends React.Component {
   constructor(props) {
     super(props)
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   static navigationOptions = {
     tabBarLabel: 'Food'
@@ -38,6 +41,9 @@ class MyFoodScreen extends React.Component {
     watsonFood: [],
     watsonPicker: '',
     nutrition: {},
+  }
+  handleSubmit(){
+    this.props.addToFoodLogThunker(this.state.nutrition)
   }
 
 
@@ -180,13 +186,11 @@ class MyFoodScreen extends React.Component {
               </List>
             </View>
           ) : null}
+// need to be able to navigate to the food log here
           {Object.keys(this.state.nutrition).length ? (
             <Button
-            // need to be able to navigate to the food log here
-              onPress={() => {
-                console.log(this.state.nutrition)
-              }}
-            >
+              onPress={this.handleSubmit}
+              >
               <Text>Add to Daily Food Log</Text>
             </Button>
           ) : null}
@@ -203,6 +207,7 @@ const mapState = state => {
   }
 }
 
-const mapDispatch = { setCurrentPhoto, removeCurrentPhoto }
+const mapDispatch = { setCurrentPhoto, removeCurrentPhoto, addToFoodLogThunker }
 
 export default connect(mapState, mapDispatch)(MyFoodScreen)
+
