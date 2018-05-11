@@ -61,7 +61,7 @@ class CameraComponent extends Component {
         await manipResult.uri
         await this.props.setCurrentPhoto({photo: manipResult, photoName: tempPhotoName})
         this.props.navigation.navigate('CameraConfirm');
-        await this.setState({loading: false})
+        this.setState({loading: false})
     }
   }
 
