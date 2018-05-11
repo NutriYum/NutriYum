@@ -2,9 +2,11 @@ import React, { Component } from 'react'
 import { TextInput } from 'react-native'
 import axios from 'axios'
 import { Text, Container, Picker, List, ListItem, Content } from 'native-base'
-impott IP from '../../IP'
+import IP from '../../IP'
+import { connect } from 'react-redux'
+import { addToFoodLogThunker, getFoodLogThunker } from '../redux/foodLog';
 
-export default class ManualEntry extends Component {
+class ManualEntry extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -93,3 +95,14 @@ const styles = {
     marginTop: 50
   }
 }
+
+const mapState = state => {
+  return {
+    user: state.currentUser,
+    nutrition: state.nutrition
+  }
+}
+
+const mapDispatch = { addToFoodLogThunker }
+
+export default connect(mapState, mapDispatch)(ManualEntry)
