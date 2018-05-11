@@ -45,24 +45,24 @@ export const CameraStack = createStackNavigator({
     initialRouteName: 'MyCameraScreen'}
 );
 
-// export const FoodStack = createStackNavigator({
-//   MyFoodScreen: {
-//     screen: MyFoodScreen,
-//     navigationOptions: {
-//       title: 'MyFoodScreen'
-//     }
-//   },
-//   NutritionInfo: {
-//     screen: NutritionInfo,
-//     navigationOptions: {
-//       title: 'NutritionInfo'
-//     }
-//   }
-// },
-//   {
-//     // headerMode: 'none',
-//     initialRouteName: 'MyFoodScreen'}
-// );
+export const FoodStack = createStackNavigator({
+  MyFoodScreen: {
+    screen: MyFoodScreen,
+    navigationOptions: {
+      title: 'MyFoodScreen'
+    }
+  },
+  NutritionInfo: {
+    screen: FoodNutrition,
+    navigationOptions: {
+      title: 'NutritionInfo'
+    }
+  }
+},
+  {
+    // headerMode: 'none',
+    initialRouteName: 'MyFoodScreen'}
+);
 
 const SignedIn = createMaterialTopTabNavigator(
   {
@@ -75,7 +75,7 @@ const SignedIn = createMaterialTopTabNavigator(
       path: 'Camera'
     },
     Food: {
-      screen: MyFoodScreen,
+      screen: FoodStack,
       path: 'Food'
     },
     Manual: {

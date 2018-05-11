@@ -17,7 +17,7 @@ export default function reducer (currentMatch = {}, action) {
   switch (action.type) {
 
     case SET_FOOD_MATCH:
-      return action.photo;
+      return action.match;
 
     case REMOVE_FOOD_MATCH:
       return {};

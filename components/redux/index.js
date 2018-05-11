@@ -10,6 +10,6 @@ export default combineReducers({
   currentUser,
   foodLog,
   currentPhoto,
-  // currentMatch,
-  // currentNutrition,
+  currentMatch,
+  currentNutrition,
 });
