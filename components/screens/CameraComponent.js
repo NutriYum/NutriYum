@@ -23,7 +23,7 @@ class CameraComponent extends Component {
   constructor(props){
     super(props)
   }
-  
+
   state = {
     hasCameraPermission: null,
     type: Camera.Constants.Type.back,
@@ -66,8 +66,6 @@ class CameraComponent extends Component {
   }
 
   render() {
-
-  console.log(this.props)
     const { hasCameraPermission } = this.state
     if (hasCameraPermission === null) {
       return <Container />
@@ -99,7 +97,7 @@ class CameraComponent extends Component {
           </Camera>
         </Container>
       )
-    } 
+    }
   }
 }
 
@@ -108,7 +106,7 @@ const mapState = state => {
       user: state.currentUser,
       photo: state.currentPhoto}
   }
-  
+
 const mapDispatch = { setCurrentPhoto, removeCurrentPhoto }
-  
+
 export default connect(mapState, mapDispatch)(CameraComponent)
