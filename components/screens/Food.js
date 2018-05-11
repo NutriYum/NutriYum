@@ -85,7 +85,7 @@ class MyFoodScreen extends React.Component {
       let result = response.data.images[0].classifiers[0].classes
       await this.setState({ watsonFood: result })
       console.log('from watson', this.state)
-      this.setState({ bucketLocale: '', watsonPicker: '', nutrition: {} })
+      // this.setState({ bucketLocale: '', watsonPicker: '', nutrition: {} })
     }
   }
 
@@ -209,4 +209,3 @@ const mapState = state => {
 const mapDispatch = { setCurrentPhoto, removeCurrentPhoto, addToFoodLogThunker }
 
 export default connect(mapState, mapDispatch)(MyFoodScreen)
-
