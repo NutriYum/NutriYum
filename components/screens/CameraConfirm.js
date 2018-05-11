@@ -13,7 +13,7 @@ import {
   Left
 } from 'native-base'
 import { connect } from 'react-redux'
-import { setCurrentPhoto, removeCurrentPhoto } from '../redux/photo' 
+import { setCurrentPhoto, removeCurrentPhoto } from '../redux/photo'
 import { StackActions, NavigationActions } from 'react-navigation';
 
 class CameraConfirm extends React.Component {
@@ -39,9 +39,8 @@ class CameraConfirm extends React.Component {
     this.props.navigation.dispatch(resetAction);
     this.props.removeCurrentPhoto();
   }
-    
+
   render(){
-    console.log(StackActions)
     return (
       <Container>
         <Header />

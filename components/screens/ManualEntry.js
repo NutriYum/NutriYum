@@ -16,7 +16,7 @@ export default class ManualEntry extends Component {
   }
 
   onSubmitFood() {
-    this.setState({ error: '' })
+    this.setState({ error: '', nutrition: [] })
     let result = axios
       .get(
         `http://036aaf82.ngrok.io/api/nutri/search/${encodeURI(
