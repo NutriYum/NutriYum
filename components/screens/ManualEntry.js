@@ -17,11 +17,12 @@ export default class ManualEntry extends Component {
 
       onSubmitFood() {
                 let result = axios.get(
-                    `https://nutri-yum.herokuapp.com/api/nutri/search/${
+                    `http://167c8c69.ngrok.io/api/nutri/search/${
                         encodeURI(this.state.text)
                     }`
                 )
                 .then((result) => {
+                    console.log("on submit food!", result.data)
                     this.setState({
                         nutrition:result.data
                     })
