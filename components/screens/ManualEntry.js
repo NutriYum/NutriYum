@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { TextInput } from 'react-native'
 import axios from 'axios'
 import { Text, Container, Picker, List, ListItem, Content } from 'native-base'
+impott IP from '../../IP'
 
 export default class ManualEntry extends Component {
   constructor(props) {
@@ -19,7 +20,7 @@ export default class ManualEntry extends Component {
     this.setState({ error: '', nutrition: [] })
     let result = axios
       .get(
-        `http://036aaf82.ngrok.io/api/nutri/search/${encodeURI(
+        `${IP}api/nutri/search/${encodeURI(
           this.state.text
         )}`
       )
