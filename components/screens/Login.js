@@ -28,9 +28,9 @@ class Login extends React.Component {
   }
 
   handleSubmit() {
-    if (!this.state.email || !this.state.password) {
-      return this.setState({error: 'Email and Password are required'})
-    }
+    // if (!this.state.email || !this.state.password) {
+    //   return this.setState({error: 'Email and Password are required'})
+    // }
     const email = this.state.email;
     const password = this.state.password;
     console.log(email, password)
@@ -49,45 +49,8 @@ class Login extends React.Component {
   render() {
    return (
     <KeyboardAvoidingView behavior="position" >
-      <View>
-        <Header />
-        {/* <Content> */}
-          <Form
-          name="login"
-          >
-            <Item floatingLabel>
-              <Label>Email</Label>
-              <Input 
-                name="email"
-                value={this.state.email}
-                onChangeText={(text)=> this.setState({email: text})}
-              />
-            </Item>
-            <Item floatingLabel last>
-              <Label>Password</Label>
-              <Input 
-                name="password"
-                value={this.state.password}
-                secureTextEntry={true}
-                onChangeText={(text)=> this.setState({password: text})}
-              />
-            </Item>
-            <Item>
-            <Button
-            title="login"
-            type="submit"
-            onPress={this.loginPress}
-            >
-            <Text>Log In</Text>       
-            </Button>
-            </Item>
-            <Item>
-              {this.warning()}
-            </Item>
-          </Form>
-        {/* </Content> */}
-      </View>
-      {/* <ScrollView>
+
+       <ScrollView>
         <Text >{this.state.error}</Text>
         <Text >Email</Text>
         <TextInput
@@ -129,7 +92,7 @@ class Login extends React.Component {
             });
           }}
         />
-      </ScrollView> */}
+      </ScrollView> 
     </KeyboardAvoidingView>
   );
  }
