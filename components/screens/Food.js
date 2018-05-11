@@ -1,23 +1,6 @@
 import React, { Component } from 'react'
 import { Image, Picker } from 'react-native'
-import {
-  Button,
-  Container,
-  Icon,
-  Header,
-  Content,
-  Text,
-  Card,
-  CardItem,
-  Body,
-  Left,
-  Right,
-  List,
-  ListItem,
-  Form,
-  Separator,
-  View
-} from 'native-base'
+import {Button,Container,Icon,Header,Content,Text,Card,CardItem,Body,Left,Right,List,ListItem,Form,Separator,View} from 'native-base'
 import { RNS3 } from 'react-native-aws3'
 import {
   AMAZON_ACCESSKEY,
@@ -27,9 +10,10 @@ import {
 import axios from 'axios'
 import styles from '../../Styles'
 import FoodLog from './FoodLog'
-import { connect } from 'react-redux';
 import { addToFoodLogThunker } from '../redux/foodLog';
-
+import { setCurrentPhoto, removeCurrentPhoto } from '../redux/photo'
+import { connect } from 'react-redux'
+import { StackActions, NavigationActions } from 'react-navigation';
 
 accesskey = AMAZON_ACCESSKEY
 secretkey = AMAZON_SECRETKEY
@@ -57,25 +41,31 @@ class MyFoodScreen extends React.Component {
     watsonFood: [],
     watsonPicker: '',
     nutrition: {},
-    photo: ''
   }
   handleSubmit(){
     this.props.addToFoodLogThunker(this.state.nutrition)
   }
 
-  clearFoodState() {
-    this.setState({
+
+  async clearFoodState() {
+    await this.setState({
       bucketLocale: '',
       watsonFood: [],
       watsonPicker: '',
-      nutrition: {}
+      nutrition: {},
     })
+    const resetAction = StackActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({ routeName: 'MyCameraScreen' })],
+    });
+    this.props.navigation.dispatch(resetAction);
+    this.props.removeCurrentPhoto();
   }
 
   send = async (photo, photoName) => {
     const file = {
-      uri: photo,
-      name: photoName,
+      uri: this.props.photo.photo.uri,
+      name: this.props.photo.photoName,
       type: 'image/png'
     }
     if (!this.state.bucketLocale) {
@@ -101,13 +91,13 @@ class MyFoodScreen extends React.Component {
 
   render() {
     const { navigation } = this.props
-    let newPhoto = navigation.getParam('photo')
-    let newPhotoName = navigation.getParam('photoName')
+    let {photo, photoName} = this.props.photo
+
     return (
       <Container>
         <Header />
         <Content>
-          {newPhoto ? (
+          {photo ? (
             <Card>
               <CardItem>
                 <Body>
@@ -117,24 +107,32 @@ class MyFoodScreen extends React.Component {
               <CardItem cardBody>
                 <Image
                   style={{ flex: 1, height: 200, width: null }}
-                  source={{ uri: newPhoto }}
+                  source={{ uri: photo.uri }}
                 />
               </CardItem>
               <CardItem>
                 <Left>
-                  <Button
-                    transparent
-                    onPress={() => this.send(newPhoto, newPhotoName)}
+                  <Button transparent onPress={() => this.send(photo.uri, photoName)}
                   >
                     <Icon active name="thumbs-up" />
                     <Text>Send to Watson</Text>
                   </Button>
                 </Left>
+                <Right>
+                  <Button
+                    transparent
+                    onPress={() => this.clearFoodState()}
+                  >
+                    <Icon active name="thumbs-down" />
+                    <Text>Clear</Text>
+                  </Button>
+                </Right>
               </CardItem>
             </Card>
           ) : (
-            <FoodLog />
+            null
           )}
+
           {this.state.watsonFood.length > 0 ? (
             <View>
               <Form>
@@ -158,6 +156,8 @@ class MyFoodScreen extends React.Component {
                     }
                   }}
                 >
+                {/* need to be able to clear this picker */}
+                {/* need to be able to warn on non-food item */}
                   {this.state.watsonFood.map((item, index) => {
                     return (
                       <Picker.Item
@@ -186,6 +186,7 @@ class MyFoodScreen extends React.Component {
               </List>
             </View>
           ) : null}
+// need to be able to navigate to the food log here
           {Object.keys(this.state.nutrition).length ? (
             <Button
               onPress={this.handleSubmit}
@@ -199,9 +200,14 @@ class MyFoodScreen extends React.Component {
   }
 }
 
-// export default MyFoodScreen
-const mapStateToProps = null;
+const mapState = state => {
+  return {
+    user: state.currentUser,
+    photo: state.currentPhoto
+  }
+}
 
-const mapDispatchToProps = { addToFoodLogThunker }
+const mapDispatch = { setCurrentPhoto, removeCurrentPhoto, addToFoodLogThunker }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MyFoodScreen);
+export default connect(mapState, mapDispatch)(MyFoodScreen)
+

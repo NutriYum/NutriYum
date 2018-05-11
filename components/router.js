@@ -14,8 +14,9 @@ import MyCameraScreen from './screens/Camera'
 import MyFoodScreen from './screens/Food'
 import ProfileScreen from './screens/Profile'
 import ManualEntry from './screens/ManualEntry'
+import CameraConfirm from './screens/CameraConfirm'
 
-export const SignedOut = StackNavigator({
+export const SignedOut = createStackNavigator({
   Login: {
     screen: Login,
     navigationOptions: {
@@ -30,14 +31,32 @@ export const SignedOut = StackNavigator({
   }
 });
 
-const SignedIn = TabNavigator(
+export const CameraStack = createStackNavigator({
+  MyCameraScreen: {
+    screen: MyCameraScreen,
+    navigationOptions: {
+      title: 'MyCameraScreen'
+    }
+  },
+  CameraConfirm: {
+    screen: CameraConfirm,
+    navigationOptions: {
+      title: 'CameraConfirm'
+    }
+  }
+},
+  {headerMode: 'none',
+    initialRouteName: 'MyCameraScreen'}
+);
+
+const SignedIn = createMaterialTopTabNavigator(
   {
     Main: {
       screen: Main,
       path: 'Main'
     },
     Camera: {
-      screen: MyCameraScreen,
+      screen: CameraStack,
       path: 'Camera'
     },
     Food: {
@@ -66,7 +85,7 @@ const SignedIn = TabNavigator(
 )
 
 export const createRootNavigator = (signedIn = false) => {
-  return StackNavigator(
+  return createStackNavigator(
     {
       SignedIn: {
         screen: SignedIn,
