@@ -13,7 +13,7 @@ import {
   Left
 } from 'native-base'
 import { connect } from 'react-redux'
-import { setCurrentPhoto, removeCurrentPhoto } from '../redux/photo' 
+import { setCurrentPhoto, removeCurrentPhoto } from '../redux/photo'
 import { StackActions, NavigationActions } from 'react-navigation';
 
 class CameraConfirm extends React.Component {
@@ -39,7 +39,7 @@ class CameraConfirm extends React.Component {
     this.props.navigation.dispatch(resetAction);
     this.props.removeCurrentPhoto();
   }
-    
+
   render(){
     console.log(StackActions)
     return (
@@ -49,12 +49,12 @@ class CameraConfirm extends React.Component {
         <Card>
           <CardItem>
             <Body>
-              <Text>My Pic</Text>
+              <Text style={{alignSelf: 'center'}}>You're STILL eating?</Text>
             </Body>
           </CardItem>
           <CardItem cardBody>
             <Image
-              style={{ flex: 1, height: 200, width: null }}
+              style={{ flex: 1, height: 400, width: null }}
               source={{ uri:  this.props.photo.photo.uri}}
             />
           </CardItem>

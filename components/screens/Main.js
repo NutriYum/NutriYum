@@ -1,10 +1,23 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { connect } from 'react-redux';
-
+import { StackActions, NavigationActions } from 'react-navigation';
 import { logout } from '../redux/auth';
 
 class Main extends React.Component {
+  // constructor(props){
+  //   this.logout = this.logout.bind(this);
+  // }
+  // logout(){
+
+  //   const resetAction = StackActions.reset({
+  //     index: 0,
+  //     actions: [NavigationActions.navigate({ routeName: 'Login' })],
+  //   });
+  //   this.props.navigation.dispatch(resetAction);
+  //   this.props.logout(this.props.navigation)
+  // }
+
   render() {
     return (
       <View style={styles.container}>
@@ -14,7 +27,7 @@ class Main extends React.Component {
         <Button
           buttonStyle={styles.button}
           title="Logout"
-          onPress={() => this.props.logout(this.props.navigation)}
+          onPress={()=>{this.props.logout(this.props.navigation)}}
         />
       </View>
     );

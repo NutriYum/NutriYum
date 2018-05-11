@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, TextInput, KeyboardAvoidingView, ScrollView, Button } from 'react-native';
+import { Container, Header, Content, Form, Item, Input, Label } from 'native-base';
 import { connect } from 'react-redux';
 
 import { signup } from '../redux/auth';
@@ -8,30 +9,21 @@ class Signup extends React.Component {
   constructor(props){
     super(props);
     this.state = {
+      userName:'',
       email: '',
       password1: '',
       password2: '',
       error: ''
     };
-    this.handleChangeEmail = this.handleChangeEmail.bind(this);
-    this.handleChangePassword1 = this.handleChangePassword1.bind(this);
-    this.handleChangePassword2 = this.handleChangePassword2.bind(this);
+    // this.warning = this.warning.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChangeEmail(value) {
-    this.setState({email: value});
+  componentWillMount(){
+    setInterval(()=>{console.log(this.state)}, 1000)
   }
 
-  handleChangePassword1(value) {
-    this.setState({password1: value});
-  }
-
-  handleChangePassword2(value) {
-    this.setState({password2: value});
-  }
-
-  handleSubmit() {
+  async handleSubmit() {
     if (this.state.email && this.state.password1 && this.state.password1 === this.state.password2) {
       const email = this.state.email;
       const password = this.state.password1;
@@ -41,6 +33,7 @@ class Signup extends React.Component {
       }, this.props.navigation);
       // clear the state after signup for security
       this.setState({
+        userName:'',
         email: '',
         password1: '',
         password2: '',
@@ -55,56 +48,90 @@ class Signup extends React.Component {
     }
   }
 
+warning(){
+    if (this.props.error){
+      return <Text style={{fontWeight: 'bold',color: 'red', textShadowColor: 'black', fontSize: 16}}> {this.props.error.response.data} </Text>
+  }
+}
+
   render() {
    return (
-    <KeyboardAvoidingView behavior="position" style={styles.container}>
-      <ScrollView>
-        <Text style={styles.error}>{this.state.error}</Text>
-        <Text style={styles.textLabel}>Enter a Email</Text>
-        <TextInput
-          style={styles.textInput}
-          autoCapitalize="none"
-          autoCorrect={false}
-          maxLength={15}
-          value={this.state.email}
-          onChangeText={(email) => this.handleChangeEmail(email)}
-        />
-        <Text style={styles.textLabel}>Enter a Password</Text>
-        <TextInput
-          style={styles.textInput}
-          secureTextEntry={true}
-          autoCapitalize="none"
-          autoCorrect={false}
-          maxLength={15}
-          value={this.state.password1}
-          onChangeText={(password1) => this.handleChangePassword1(password1)}
-        />
-        <Text style={styles.textLabel}>Confirm Password</Text>
-        <TextInput
-          style={styles.textInput}
-          secureTextEntry={true}
-          autoCapitalize="none"
-          autoCorrect={false}
-          maxLength={15}
-          value={this.state.password2}
-          onChangeText={(password2) => this.handleChangePassword2(password2)}
-        />
+    <KeyboardAvoidingView behavior="padding" enabled>
+
+        <Form name='signup'>
+        <ScrollView>
+        <Item stackedLabel>
+          <Label>Username</Label>
+            <Input 
+                name="userName"
+                autoCapitalize='none'
+                value={this.state.userName}
+                onChangeText={(text)=> this.setState({userName: text})}
+            />
+        </Item>
+        <Item stackedLabel>
+          <Label>Email</Label>
+            <Input 
+                name="email"
+                autoCapitalize='none'
+                keyboardType="email-address"
+                value={this.state.email}
+                onChangeText={(text)=> this.setState({email: text})}
+            />
+        </Item>
+
+        <Item stackedLabel>
+          <Label>Password</Label>
+            <Input 
+                name="password"
+                value={this.state.password}
+                secureTextEntry={true}
+                onChangeText={(text)=> this.setState({password1: text})}
+            />
+        </Item>
+
+                
+        <Item stackedLabel last
+        // style={{marginBottom: 40}}
+        >
+          <Label>Confirm Password</Label>
+            <Input 
+                name="confirm password"
+                value={this.state.password}
+                secureTextEntry={true}
+                onChangeText={(text)=> this.setState({password2: text})}
+            />
+        </Item>
+        </ScrollView>
         <Button
-          buttonStyle={styles.button}
-          title="Sign Up"
+          style={{marginBottom: 40}}
+          title="signup!"
+          type="submit"
           onPress={this.handleSubmit}
         />
-      </ScrollView>
+                
+              <Item style={{marginTop: 20}}>
+              {this.warning()}
+              </Item>
+              </Form>
+
     </KeyboardAvoidingView>
   );
  }
 }
 
+const mapStateToProps = state => {
+  return {
+    user: state.currentUser,
+    error: state.currentUser.error
+  }
+ }
+
 const mapDispatchToProps = (dispatch) => ({
   signup: (credentials, navigation) => dispatch(signup(credentials, navigation))
 });
 
-export default connect(null, mapDispatchToProps)(Signup);
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);
 
 const styles = StyleSheet.create({
   container: {
