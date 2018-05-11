@@ -42,7 +42,7 @@ class CameraConfirm extends React.Component {
     this.props.navigation.dispatch(resetAction);
     this.props.removeCurrentPhoto();
   }
-    
+
   render(){
     return (
       <Container>

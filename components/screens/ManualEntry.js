@@ -3,6 +3,7 @@ import { TextInput } from 'react-native'
 import axios from 'axios'
 import { Text, Container, Picker, List, ListItem, Content, Button, Badge, Title, Header } from 'native-base'
 import styles from '../../Styles'
+import IP from '../../IP'
 
 
 
@@ -12,30 +13,37 @@ export default class ManualEntry extends Component {
         this.state = {
             text: '',
             nutrition: [],
+            error: ''
         }
         this.onSubmitFood = this.onSubmitFood.bind(this)
         this.clearAll = this.clearAll.bind(this)
         this.clearOne = this.clearOne.bind(this)
       }
 
-      onSubmitFood() {
-                let result = axios.get(
-                    `https://nutri-yum.herokuapp.com/api/nutri/search/${
-                        encodeURI(this.state.text)
-                    }`
-                )
-                .then((result) => {
-                    this.setState({
-                        nutrition:result.data
-                    })
-                })
-                .catch((error) => {
-                    console.error(error)
-                    return <Text>{error.message}</Text>
-                })
+  onSubmitFood() {
+    this.setState({ error: '', nutrition: [] })
+    let result = axios
+      .get(
+        `${IP}api/nutri/search/${encodeURI(
+          this.state.text
+        )}`
+      )
+      .then(result => {
+        if (result.data === 'Item was not found! Try again') {
+          this.setState({ error: result.data })
+        } else {
+          this.setState({
+            nutrition: result.data
+          })
+        }
+      })
+      .catch(error => {
+        console.error(error)
+        return <Text>{error.message}</Text>
+      })
 
-        this.setState({ text: '' })
-      }
+    this.setState({ text: '' })
+  }
 
       clearAll () {
           this.setState({nutrition: []})

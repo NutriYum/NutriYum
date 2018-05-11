@@ -12,28 +12,17 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
-      error: '' || (this.props.navigation.state.params && this.props.navigation.state.params.error)
+      error: ''
     };
-    this.handleChangeEmail = this.handleChangeEmail.bind(this);
-    this.handleChangePassword = this.handleChangePassword.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChangeEmail(value) {
-    this.setState({email: value});
-  }
-
-  handleChangePassword(value) {
-    this.setState({password: value});
-  }
-
   handleSubmit() {
-    // if (!this.state.email || !this.state.password) {
-    //   return this.setState({error: 'Email and Password are required'})
-    // }
+    if (!this.state.email || !this.state.password) {
+      return this.setState({error: 'Email and Password are required'})
+    }
     const email = this.state.email;
     const password = this.state.password;
-    // console.log(email, password)
     this.props.login({
       email,
       password
@@ -46,34 +35,39 @@ class Login extends React.Component {
     });
   }
 
+  warning(){
+    if (this.props.error){
+      return <Text style={{fontWeight: 'bold',color: 'red', textShadowColor: 'black', fontSize: 16}}> {this.props.error.response.data} </Text>
+  }
+}
+
   render() {
    return (
-    <KeyboardAvoidingView behavior="position" >
+    <KeyboardAvoidingView behavior="padding" enabled>
       <ScrollView>
-        <Text >{this.state.error}</Text>
-        <Text >Email</Text>
-        <TextInput
-          style={styles.textInput}
-          autoCapitalize="none"
-          autoCorrect={false}
-          maxLength={150}
-          // placeholder="EMAIL"
-          // placeholderTextColor="tomato"
-          value={this.state.email}
-          onChangeText={(email) => this.handleChangeEmail(email)}
-        />
-        <Text >Password</Text>
-        <TextInput
-          style={styles.textInput}
-          secureTextEntry={true}
-          autoCapitalize="none"
-          autoCorrect={false}
-          maxLength={150}
-          // placeholder="PASSWORD"
-          // placeholderTextColor="tomato"
-          value={this.state.password}
-          onChangeText={(password) => this.handleChangePassword(password)}
-        />
+        <Form>
+        <Item stackedLabel>
+              <Label>Email</Label>
+              <Input 
+                name="email"
+                autoCapitalize='none'
+                keyboardType="email-address"
+                value={this.state.email}
+                onChangeText={(text)=> this.setState({email: text})}
+              />
+        </Item>
+
+        <Item stackedLabel last>
+              <Label>Password</Label>
+              <Input 
+                name="password"
+                autoCapitalize='none'
+                value={this.state.password}
+                secureTextEntry={true}
+                onChangeText={(text)=> this.setState({password: text})}
+              />
+            </Item>
+
         <Button
           buttonStyle={styles.button}
           title="Login"
@@ -91,9 +85,18 @@ class Login extends React.Component {
             });
           }}
         />
+        <Text >{this.state.error}</Text>
+        {/* {()=>{this.warning}} */}
+        </Form>
       </ScrollView>
     </KeyboardAvoidingView>
   );
+ }
+}
+
+const mapStateToProps = state => {
+ return {
+   error: state.currentUser.error
  }
 }
 

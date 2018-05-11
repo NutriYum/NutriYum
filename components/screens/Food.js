@@ -186,7 +186,6 @@ class MyFoodScreen extends React.Component {
               </List>
             </View>
           ) : null}
-// need to be able to navigate to the food log here
           {Object.keys(this.state.nutrition).length ? (
             <Button
               onPress={this.handleSubmit}
