@@ -19,5 +19,16 @@ export default styles = StyleSheet.create({
   },
   pickerListText: {
     fontSize: 24
+  },
+  targetContainer: {
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    alignSelf: 'center'
+  },
+  target: {
+    color: '#fff',
+    fontSize: 70,
+    marginTop: 60
   }
 })

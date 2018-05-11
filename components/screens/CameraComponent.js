@@ -16,13 +16,13 @@ import { Camera, Permissions, ImageManipulator } from 'expo'
 import styles from '../../Styles'
 import CameraConfirm from './CameraConfirm'
 import { connect } from 'react-redux'
-import { setCurrentPhoto, removeCurrentPhoto } from '../redux/photo' 
+import { setCurrentPhoto, removeCurrentPhoto } from '../redux/photo'
 
 class CameraComponent extends Component {
   constructor(props){
     super(props)
   }
-  
+
   state = {
     hasCameraPermission: null,
     type: Camera.Constants.Type.back,
@@ -81,6 +81,9 @@ class CameraComponent extends Component {
               this.camera = ref
             }}
           >
+          <Container style={styles.targetContainer}>
+            <Icon style={styles.target} name="maximize" />
+          </Container>
             <Container style={styles.snapIconContainer}>
               <Button
                 style={{ marginBottom: 60 }}
@@ -94,7 +97,7 @@ class CameraComponent extends Component {
           </Camera>
         </Container>
       )
-    } 
+    }
   }
 }
 
@@ -103,7 +106,7 @@ const mapState = state => {
       user: state.currentUser,
       photo: state.currentPhoto}
   }
-  
+
 const mapDispatch = { setCurrentPhoto, removeCurrentPhoto }
-  
+
 export default connect(mapState, mapDispatch)(CameraComponent)
