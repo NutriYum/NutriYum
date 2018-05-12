@@ -21,9 +21,8 @@ class ManualEntry extends Component {
 
   onSubmitFood() {
     this.setState({ error: '', nutrition: [] })
-    let result = axios
-      .get(
-        `${IP}api/nutri/search/${encodeURI(
+    let result = axios.get(
+        `${IP}/api/nutri/search/${encodeURI(
           this.state.text
         )}`
       )
@@ -68,7 +67,7 @@ class ManualEntry extends Component {
                         return (
                             <List key={food.name}>
                             <ListItem itemDivider>
-                                <Text>{food.quantity}  {food.name}</Text>
+                                <Text>{food.quantity}  {food.name}       {food.calories > 50 ? <Text>Thats a lot of calories 😳 </Text> : ''}</Text>
                             </ListItem>
                                 <ListItem><Text>calories:  {food.calories}kcal</Text></ListItem>
                                 <ListItem><Text>total fat:  {food.totalFat}g</Text></ListItem>

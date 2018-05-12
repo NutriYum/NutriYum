@@ -5,11 +5,13 @@ export default styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    alignSelf: 'center'
+    alignSelf: 'center',
+    marginBottom: 60
   },
   snapIcon: {
     color: '#fff',
-    fontSize: 50
+    fontSize: 50, 
+    margin: -10
   },
   centerItems: {
     justifyContent: 'center'
@@ -27,11 +29,16 @@ export default styles = StyleSheet.create({
     borderBottomWidth: 3
   },
   manualTextInput: {
-    height: 40, borderColor: 'gray', borderWidth: 1
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 10,
+    marginTop: 20,
+    marginBottom: 20
   },
   container: {
-    margin: 20,
-    marginTop: 50
+    margin: 20
 },
   modalBackground: {
     flex: 1,

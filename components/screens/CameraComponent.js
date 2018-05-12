@@ -87,7 +87,6 @@ class CameraComponent extends Component {
           >
             <Container style={styles.snapIconContainer}>
               <Button
-                style={{ marginBottom: 60 }}
                 transparent
                 primary
                 onPress={this.snap.bind(this)}
