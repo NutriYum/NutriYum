@@ -19,10 +19,6 @@ class Signup extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentWillMount(){
-    setInterval(()=>{console.log(this.state)}, 1000)
-  }
-
   async handleSubmit() {
     if (this.state.email && this.state.password1 && this.state.password1 === this.state.password2) {
       const email = this.state.email;
@@ -62,7 +58,7 @@ warning(){
         <ScrollView>
         <Item stackedLabel>
           <Label>Username</Label>
-            <Input 
+            <Input
                 name="userName"
                 autoCapitalize='none'
                 value={this.state.userName}
@@ -71,7 +67,7 @@ warning(){
         </Item>
         <Item stackedLabel>
           <Label>Email</Label>
-            <Input 
+            <Input
                 name="email"
                 autoCapitalize='none'
                 keyboardType="email-address"
@@ -82,7 +78,7 @@ warning(){
 
         <Item stackedLabel>
           <Label>Password</Label>
-            <Input 
+            <Input
                 name="password"
                 value={this.state.password}
                 secureTextEntry={true}
@@ -90,12 +86,12 @@ warning(){
             />
         </Item>
 
-                
+
         <Item stackedLabel last
         // style={{marginBottom: 40}}
         >
           <Label>Confirm Password</Label>
-            <Input 
+            <Input
                 name="confirm password"
                 value={this.state.password}
                 secureTextEntry={true}
@@ -109,7 +105,7 @@ warning(){
           type="submit"
           onPress={this.handleSubmit}
         />
-                
+
               <Item style={{marginTop: 20}}>
               {this.warning()}
               </Item>

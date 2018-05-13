@@ -70,12 +70,12 @@ class Login extends React.Component {
             </Item>
 
         <Button
-          buttonStyle={styles.button}
+          style={styles.button}
           title="Login"
           onPress={this.handleSubmit}
         />
         <Button
-          buttonStyle={styles.button}
+          style={styles.button}
           title="Sign Up"
           onPress={() => {
             this.props.navigation.navigate('Signup');
