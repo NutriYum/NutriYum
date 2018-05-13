@@ -27,16 +27,12 @@ class MyFoodScreen extends React.Component {
 
   async nutrionixCall(itemValue){
     try {
-      await this.setState({ watsonPicker: itemValue })
       if (itemValue !== 'non-food') {
         let result = await axios.get(
-          `https://nutri-yum.herokuapp.com/api/nutri/${
-            this.state.watsonPicker
-          }`
+          `https://nutri-yum.herokuapp.com/api/nutri/${itemValue}`
         )
-        this.setState({ nutrition: result.data })
         this.props.setNutrition([result.data])
-        this.props.navigation.navigate('NutritionInfo')
+        this.props.navigation.navigate('FoodNutrition')
       }
     } catch (error) {
       console.error(error)
@@ -45,11 +41,11 @@ class MyFoodScreen extends React.Component {
   }
 
   async clearFoodState() {
-    // const resetAction = StackActions.reset({
-    //   index: 0,
-    //   actions: [NavigationActions.navigate({ routeName: 'MyCameraScreen' })],
-    // });
-    // this.props.navigation.dispatch(resetAction);
+    const resetAction = StackActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({ routeName: 'MyFoodScreen' })],
+    });
+    this.props.navigation.dispatch(resetAction);
     this.props.navigation.navigate('MyCameraScreen')
     // this.props.removeCurrentPhoto();
     this.props.removeCurrentMatch();
@@ -75,9 +71,8 @@ class MyFoodScreen extends React.Component {
                   />
                 </Left>
                 <Body>
-                  <Text> Smelly, Smelly Ass, HEY! </Text>
+                  <Text>  </Text>
                 </Body>
-                <Right>
                 <Right>
                   <Button
                     transparent
@@ -86,7 +81,6 @@ class MyFoodScreen extends React.Component {
                     <Icon active name="thumbs-down" />
                     <Text>Clear Picture</Text>
                   </Button>
-                </Right>
                 </Right>
               </CardItem>
             </Card>
@@ -98,18 +92,20 @@ class MyFoodScreen extends React.Component {
 
           {foodMatch.length > 0 ? (
             <View>
+              <Text>Click the food that best matches your picture</Text>
                   {foodMatch.map((item, index) => {
                     return (
                       <Card key={index}>
-                      <CardItem button 
-                      onPress={()=> this.nutrionixCall(item.class)}>
-                        <Left>
-                          {item.class}
-                        </Left>
-
-                        <Right>{item.score}</Right>
-                        </CardItem>
-                        </Card>
+                      <CardItem
+                        header
+                        button 
+                        onPress={()=> this.nutrionixCall(item.class)}>
+                        <Text> {item.class.toUpperCase()} </Text>
+                      </CardItem>
+                      <CardItem>
+                        <Body><Text>{item.score}% Match</Text></Body>
+                      </CardItem>
+                        </Card> 
                     )})
                   }
             </View>
@@ -129,7 +125,14 @@ const mapState = state => {
   }
 }
 
-const mapDispatch = { setCurrentPhoto, removeCurrentPhoto, addToFoodLogThunker, setCurrentMatch, removeCurrentMatch, removeNutrition }
+const mapDispatch = { 
+  setCurrentPhoto, 
+  removeCurrentPhoto, 
+  addToFoodLogThunker, 
+  setCurrentMatch, 
+  removeCurrentMatch, 
+  setNutrition,
+  removeNutrition }
 
 export default connect(mapState, mapDispatch)(MyFoodScreen)
 

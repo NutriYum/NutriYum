@@ -52,10 +52,10 @@ export const FoodStack = createStackNavigator({
       title: 'MyFoodScreen'
     }
   },
-  NutritionInfo: {
+  FoodNutrition: {
     screen: FoodNutrition,
     navigationOptions: {
-      title: 'NutritionInfo'
+      title: 'FoodNutrition'
     }
   }
 },
