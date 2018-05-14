@@ -10,7 +10,8 @@ import {
   Card,
   CardItem,
   Body,
-  Left
+  Left,
+  Title
 } from 'native-base'
 import { Camera, Permissions, ImageManipulator } from 'expo'
 import styles from '../../Styles'
@@ -74,7 +75,7 @@ class CameraComponent extends Component {
     } else if (hasCameraPermission === true) {
       return (
         <Container>
-          <Header />
+          <Header style={styles.header}><Title> NutriYum </Title></Header>
           <Loader loading={this.state.loading} />
           <Camera
             ratio={'16:10'}
@@ -86,7 +87,6 @@ class CameraComponent extends Component {
           >
             <Container style={styles.snapIconContainer}>
               <Button
-                style={{ marginBottom: 60 }}
                 transparent
                 primary
                 onPress={this.snap.bind(this)}

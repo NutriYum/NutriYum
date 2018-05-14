@@ -10,7 +10,8 @@ import {
   Card,
   CardItem,
   Body,
-  Left
+  Left,
+  Title
 } from 'native-base'
 import { connect } from 'react-redux'
 import { addToFoodLogThunker } from '../redux/foodLog';
@@ -38,6 +39,7 @@ const options = {
   secretKey: secretkey,
   successActionStatus: 201
 }
+
 
 class CameraConfirm extends React.Component {
   constructor(props){
@@ -103,8 +105,8 @@ class CameraConfirm extends React.Component {
   render(){
     return (
       <Container>
-        <Header />
-        <Content>
+      <Header style={styles.header}><Title> NutriYum </Title></Header>
+       <Content>
         <Card>
           <CardItem>
             <Body>
