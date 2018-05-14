@@ -3,7 +3,8 @@ import {
   StyleSheet,
   View,
   Modal,
-  ActivityIndicator
+  ActivityIndicator,
+  Text,
 } from 'react-native';
 import styles from '../../Styles'
 
@@ -31,6 +32,7 @@ class Loader extends Component {
                 size="large"
                 color="#0000ff"
                 />
+              <Text>Watson's on it!</Text>
             </View>
           </View>
         </Modal>
