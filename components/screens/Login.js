@@ -1,10 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, KeyboardAvoidingView, ScrollView, Button } from 'react-native';
+import { StyleSheet, Text, TextInput, KeyboardAvoidingView, ScrollView, Button, Image, TouchableHighlight } from 'react-native';
 import { Container, Header, Content, Form, Item, Input, Label } from 'native-base';
-
 import { connect } from 'react-redux';
-
 import { login } from '../redux/auth';
+import styles from '../../Styles';
+
 
 class Login extends React.Component {
   constructor(props){
@@ -43,6 +43,7 @@ class Login extends React.Component {
 
   render() {
    return (
+  <Container>
     <KeyboardAvoidingView behavior="padding" enabled>
       <ScrollView>
         <Form>
@@ -68,14 +69,14 @@ class Login extends React.Component {
               />
             </Item>
 
-        <Button
-          buttonStyle={styles.button}
-          title="Login"
+        <TouchableHighlight
+          style={styles.loginButton}
           onPress={this.handleSubmit}
-        />
-        <Button
-          buttonStyle={styles.button}
-          title="Sign Up"
+          >
+          <Text style={styles.loginText}>Login</Text>
+        </TouchableHighlight>
+        <TouchableHighlight
+          style={styles.loginButton}
           onPress={() => {
             this.props.navigation.navigate('Signup');
             this.setState({
@@ -84,12 +85,16 @@ class Login extends React.Component {
               error: ''
             });
           }}
-        />
+          >
+          <Text style={styles.loginText}>Sign Up</Text>
+        </TouchableHighlight>
         <Text >{this.state.error}</Text>
         {/* {()=>{this.warning}} */}
         </Form>
       </ScrollView>
     </KeyboardAvoidingView>
+    <Image source={require('../../NYLogo.png')} style={styles.logo}/>
+  </Container>
   );
  }
 }
@@ -106,40 +111,4 @@ const mapDispatchToProps = (dispatch) => ({
 
 export default connect(null, mapDispatchToProps)(Login);
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    backgroundColor: 'white',
-    paddingHorizontal: 5,
-    flex: 1
-  },
-  textLabel: {
-    fontSize: 20,
-    marginTop: 10,
-    padding: 10
-  },
-  textInput: {
-    height: 40,
-    width: 300,
-    margin: 10,
-    color: 'tomato',
-    fontSize: 15,
-    borderWidth: 2,
-    borderRadius: 5
-  },
-  button: {
-    backgroundColor: 'gray',
-    width: 150,
-    height: 40,
-    borderRadius: 5,
-    alignSelf: 'center'
-  },
-  error: {
-    fontSize: 15,
-    color: 'blue',
-    marginVertical: 0,
-    paddingLeft: 10,
-    fontWeight: 'bold'
-  }
-});
+

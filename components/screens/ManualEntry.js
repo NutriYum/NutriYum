@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { TextInput } from 'react-native'
+import { TextInput, Image } from 'react-native'
 import axios from 'axios'
 import { Text, Container, Picker, List, ListItem, Content, Button, Title, Header } from 'native-base'
 import IP from '../../IP'
@@ -13,31 +13,27 @@ class ManualEntry extends Component {
     this.state = {
       text: '',
       nutrition: [],
-      error: ''
     }
     this.onSubmitFood = this.onSubmitFood.bind(this)
     this.clearAll = this.clearAll.bind(this)
   }
 
   onSubmitFood() {
-    this.setState({ error: '', nutrition: [] })
+    this.setState({ nutrition: [] })
     let result = axios.get(
         `${IP}/api/nutri/search/${encodeURI(
           this.state.text
         )}`
       )
       .then(result => {
-        if (result.data === 'Item was not found! Try again') {
-          this.setState({ error: result.data })
-        } else {
           this.setState({
             nutrition: result.data
           })
-        }
+          console.log(this.state.nutrition)
       })
       .catch(error => {
         console.error(error)
-        return <Text>{error.message}</Text>
+        return <Text>ERRROR >>>>  {error}</Text>//0099FF
       })
 
     this.setState({ text: '' })
@@ -49,7 +45,7 @@ class ManualEntry extends Component {
     render () {
         return (
             <Container>
-            <Header style={styles.header}><Title> NutriYum </Title></Header>
+            <Header style={styles.header}><Title style={styles.loginText}> NutriYum </Title></Header>
             <Container style={styles.container}>
             <Text>What did you put in your face hole?</Text>
             <TextInput style={styles.manualTextInput}
@@ -60,14 +56,14 @@ class ManualEntry extends Component {
             name='food'
             />
             <Container>
-                <Button danger onPress={this.clearAll}><Text> Clear All </Text></Button>
+               <Button danger onPress={this.clearAll}><Text> Clear All </Text></Button>
                 <Content>
-                {
+                {this.state.nutrition === 'Item was not found! Try again' ? <Text>Item was not found! Please try again</Text> :
                     this.state.nutrition.map((food, index) => {
                         return (
                             <List key={food.name}>
                             <ListItem itemDivider>
-                                <Text>{food.quantity}  {food.name}       {food.calories > 50 ? <Text>Thats a lot of calories 😳 </Text> : ''}</Text>
+                                <Text>{food.quantity}  {food.name}       {food.calories > 150 ? <Text>That's a lot of calories 😳 </Text> : ''}</Text>
                             </ListItem>
                                 <ListItem><Text>calories:  {food.calories}kcal</Text></ListItem>
                                 <ListItem><Text>total fat:  {food.totalFat}g</Text></ListItem>
@@ -79,7 +75,8 @@ class ManualEntry extends Component {
                             )
                         })
              }
-                </Content>
+             {this.state.nutrition ? <Image source={require('../../NYLogo.png')} style={styles.logo} /> : ''}
+             </Content>
                 </Container>
             </Container>
             </Container>

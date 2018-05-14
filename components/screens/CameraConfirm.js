@@ -46,7 +46,7 @@ class CameraConfirm extends React.Component {
   render(){
     return (
       <Container>
-      <Header style={styles.header}><Title> NutriYum </Title></Header>
+      <Header style={styles.header}><Title style={styles.loginText}> NutriYum </Title></Header>
        <Content>
         <Card>
           <CardItem>
