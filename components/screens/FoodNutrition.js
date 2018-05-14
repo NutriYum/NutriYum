@@ -15,9 +15,6 @@ class FoodNutrition extends Component {
         return(
           <Container>
           <Card>
-          <CardItem>
-            <Text> I was running through the six... WITH MY WOE </Text>
-          </CardItem>
             {
 
         Object.keys(nutrition[0]).map((nutiritionFact, index) => {
