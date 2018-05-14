@@ -15,7 +15,6 @@ class MyFoodScreen extends React.Component {
   constructor(props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this);
-    // this.send = this.send.bind(this);
   }
   static navigationOptions = {
     tabBarLabel: 'Food'
