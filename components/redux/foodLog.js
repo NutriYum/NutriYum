@@ -28,23 +28,12 @@ const addToFoodLog = foodLog => ({ type: ADD_TO_FOODLOG, foodLog })
  * REDUCER
  */
 
-//  function addHelper(state, action) {
-//   // console.log(JSON.parse(action.foodLog))
-//   const parsedFoodLog = JSON.parse(action.foodLog)
-//   console.log(parsedFoodLog)
-
-//     return {...state,
-//     parsedFoodLog
-//   }
-//  }
-
 export default function reducer(state = defaultFoodLog, action) {
   switch (action.type) {
     case GET_FOODLOG:
       return action.foodLog
 
     case ADD_TO_FOODLOG:
-    //   return addHelper(state, action)
     return [...state, ...action.foodLog]
 
 
@@ -61,7 +50,6 @@ export const getFoodLogThunker = foodLogsId => dispatch =>
   axios
     .get(`${IP}/api/foodlogs/${foodLogsId}`)
     .then(res => {
-      // console.log('hello from think')
       dispatch(getFoodLog(res.data || defaultFoodLog))
     })
     .catch(err => console.log(err))
@@ -70,7 +58,6 @@ export const addToFoodLogThunker = food => dispatch => {
   axios
     .post(`${IP}/api/foodLogs`, food)
     .then(res => {
-      console.log("RES.DATA!!",res.data)
       const dispatchData = Array.isArray(res.data) ? res.data : [res.data]
       return dispatch(addToFoodLog(dispatchData || defaultFoodLog))
     })
