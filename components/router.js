@@ -5,16 +5,12 @@ import { FontAwesome } from 'react-native-vector-icons';
 import Login from './screens/Login';
 import Signup from './screens/Signup';
 import Main from './screens/Main';
-
-// import LoginScreen from './Login'
-// import LobbyScreen from './Lobby'
-// import SignUpScreen from './Signup'
-// import HomeButtons from './HomeButtons'
 import MyCameraScreen from './screens/Camera'
 import MyFoodScreen from './screens/Food'
 import ProfileScreen from './screens/Profile'
 import ManualEntry from './screens/ManualEntry'
 import CameraConfirm from './screens/CameraConfirm'
+import FoodNutrition from './screens/FoodNutrition'
 
 export const SignedOut = createStackNavigator({
   Login: {
@@ -49,6 +45,25 @@ export const CameraStack = createStackNavigator({
     initialRouteName: 'MyCameraScreen'}
 );
 
+export const FoodStack = createStackNavigator({
+  MyFoodScreen: {
+    screen: MyFoodScreen,
+    navigationOptions: {
+      title: 'MyFoodScreen'
+    }
+  },
+  FoodNutrition: {
+    screen: FoodNutrition,
+    navigationOptions: {
+      title: 'FoodNutrition'
+    }
+  }
+},
+  {
+    // headerMode: 'none',
+    initialRouteName: 'MyFoodScreen'}
+);
+
 const SignedIn = createMaterialTopTabNavigator(
   {
     Main: {
@@ -60,7 +75,7 @@ const SignedIn = createMaterialTopTabNavigator(
       path: 'Camera'
     },
     Food: {
-      screen: MyFoodScreen,
+      screen: FoodStack,
       path: 'Food'
     },
     Manual: {

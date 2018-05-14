@@ -1,65 +1,55 @@
 import React, { Component } from 'react'
 import { Image, Picker } from 'react-native'
-import {Button,Container,Icon,Header,Content,Text,Card,CardItem,Body,Left,Right,List,ListItem,Form,Separator,View, Title} from 'native-base'
-import { RNS3 } from 'react-native-aws3'
-import {
-  AMAZON_ACCESSKEY,
-  AMAZON_SECRETKEY,
-  WATSON_KEY
-} from 'react-native-dotenv'
+import {Thumbnail, Button, Container, Icon, Header, Content, Text, Card, CardItem, Body, Left, Right, List, ListItem, Form, Separator, View} from 'native-base'
 import axios from 'axios'
 import styles from '../../Styles'
 import FoodLog from './FoodLog'
 import { addToFoodLogThunker } from '../redux/foodLog';
 import { setCurrentPhoto, removeCurrentPhoto } from '../redux/photo'
+import { setCurrentMatch, removeCurrentMatch } from '../redux/foodmatch'
+import { setNutrition, removeNutrition } from '../redux/nutrition'
 import { connect } from 'react-redux'
 import { StackActions, NavigationActions } from 'react-navigation';
-
-accesskey = AMAZON_ACCESSKEY
-secretkey = AMAZON_SECRETKEY
-watsonKey = WATSON_KEY
-
-const options = {
-  // keyPrefix: "uploads/",
-  bucket: 'nutriyum2',
-  region: 'us-east-1',
-  accessKey: accesskey,
-  secretKey: secretkey,
-  successActionStatus: 201
-}
 
 class MyFoodScreen extends React.Component {
   constructor(props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this);
+    // this.send = this.send.bind(this);
   }
   static navigationOptions = {
     tabBarLabel: 'Food'
   }
-  state = {
-    bucketLocale: '',
-    watsonFood: [],
-    watsonPicker: '',
-    nutrition: {},
-  }
+
   handleSubmit(){
     this.props.addToFoodLogThunker(this.state.nutrition)
   }
 
+  async nutrionixCall(itemValue){
+    try {
+      if (itemValue !== 'non-food') {
+        let result = await axios.get(
+          `https://nutri-yum.herokuapp.com/api/nutri/${itemValue}`
+        )
+        this.props.setNutrition([result.data])
+        this.props.navigation.navigate('FoodNutrition')
+      }
+    } catch (error) {
+      console.error(error)
+      return <Text>{error.message}</Text>
+    }
+  }
 
   async clearFoodState() {
-    await this.setState({
-      bucketLocale: '',
-      watsonFood: [],
-      watsonPicker: '',
-      nutrition: {},
-    })
     const resetAction = StackActions.reset({
       index: 0,
-      actions: [NavigationActions.navigate({ routeName: 'MyCameraScreen' })],
+      actions: [NavigationActions.navigate({ routeName: 'MyFoodScreen' })],
     });
     this.props.navigation.dispatch(resetAction);
-    this.props.removeCurrentPhoto();
+    this.props.navigation.navigate('MyCameraScreen')
+    // this.props.removeCurrentPhoto();
+    this.props.removeCurrentMatch();
+    this.props.removeNutrition();
   }
 
   send = async (photo, photoName) => {
@@ -90,123 +80,85 @@ class MyFoodScreen extends React.Component {
   }
 
   render() {
-    const { navigation } = this.props
+    const { navigation, foodMatch } = this.props
     let {photo, photoName} = this.props.photo
 
     return (
       <Container>
       <Header style={styles.header}><Title> NutriYum </Title></Header>
         <Content>
-          {photo ? (
+          {foodMatch && photo ? (
             <Card>
               <CardItem>
-                <Body>
-                  <Text>My Pic</Text>
-                </Body>
-              </CardItem>
-              <CardItem cardBody>
-                <Image
-                  style={{ flex: 1, height: 200, width: null }}
-                  source={{ uri: photo.uri }}
-                />
-              </CardItem>
-              <CardItem>
                 <Left>
-                  <Button transparent onPress={() => this.send(photo.uri, photoName)}
-                  >
-                    <Icon active name="thumbs-up" />
-                    <Text>Send to Watson</Text>
-                  </Button>
+                    <Thumbnail
+                    large
+                    source={{ uri: photo.uri }}
+                  />
                 </Left>
+                <Body>
+                  <Text>  </Text>
+                </Body>
                 <Right>
                   <Button
                     transparent
                     onPress={() => this.clearFoodState()}
-                  >
+                    >
                     <Icon active name="thumbs-down" />
-                    <Text>Clear</Text>
+                    <Text>Clear Picture</Text>
                   </Button>
                 </Right>
               </CardItem>
             </Card>
           ) : (
-            null
+            <View>
+              <Text>Go to camera or manual entry to enter a food item</Text>
+            </View>  
           )}
 
-          {this.state.watsonFood.length > 0 ? (
+          {foodMatch.length > 0 ? (
             <View>
-              <Form>
-                <Picker
-                  mode="dropdown"
-                  selectedValue={this.state.watsonPicker}
-                  onValueChange={async itemValue => {
-                    try {
-                      await this.setState({ watsonPicker: itemValue })
-                      if (itemValue !== 'non-food') {
-                        let result = await axios.get(
-                          `https://nutri-yum.herokuapp.com/api/nutri/${
-                            this.state.watsonPicker
-                          }`
-                        )
-                        this.setState({ nutrition: result.data })
-                      }
-                    } catch (error) {
-                      console.error(error)
-                      return <Text>{error.message}</Text>
-                    }
-                  }}
-                >
-                {/* need to be able to clear this picker */}
-                {/* need to be able to warn on non-food item */}
-                  {this.state.watsonFood.map((item, index) => {
+              <Text>Click the food that best matches your picture</Text>
+                  {foodMatch.map((item, index) => {
                     return (
-                      <Picker.Item
-                        style={styles.pickerListText}
-                        key={index}
-                        label={`Food ${item.class}  ||  Likelihood ${
-                          item.score
-                        }`}
-                        value={item.class}
-                      />
-                    )
-                  })}
-                </Picker>
-              </Form>
-
-              <List>
-                {Object.keys(this.state.nutrition).map((item, index) => {
-                  return (
-                    <ListItem style={styles.centerItems} key={index}>
-                      <Text style={styles.foodListText}>
-                        {item} : {this.state.nutrition[item]}
-                      </Text>
-                    </ListItem>
-                  )
-                })}
-              </List>
+                      <Card key={index}>
+                      <CardItem
+                        header
+                        button 
+                        onPress={()=> this.nutrionixCall(item.class)}>
+                        <Text> {item.class.toUpperCase()} </Text>
+                      </CardItem>
+                      <CardItem>
+                        <Body><Text>{item.score}% Match</Text></Body>
+                      </CardItem>
+                        </Card> 
+                    )})
+                  }
             </View>
           ) : null}
-          {Object.keys(this.state.nutrition).length ? (
-            <Button
-              onPress={this.handleSubmit}
-              >
-              <Text>Add to Daily Food Log</Text>
-            </Button>
-          ) : null}
+
+
         </Content>
       </Container>
     )
   }
 }
-
 const mapState = state => {
   return {
     user: state.currentUser,
-    photo: state.currentPhoto
+    photo: state.currentPhoto,
+    foodMatch: state.currentMatch
   }
 }
 
-const mapDispatch = { setCurrentPhoto, removeCurrentPhoto, addToFoodLogThunker }
+const mapDispatch = { 
+  setCurrentPhoto, 
+  removeCurrentPhoto, 
+  addToFoodLogThunker, 
+  setCurrentMatch, 
+  removeCurrentMatch, 
+  setNutrition,
+  removeNutrition }
 
 export default connect(mapState, mapDispatch)(MyFoodScreen)
 
