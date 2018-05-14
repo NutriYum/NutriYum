@@ -71,7 +71,7 @@ class CameraComponent extends Component {
     if (hasCameraPermission === null) {
       return <Container />
     } else if (hasCameraPermission === false) {
-      return <Container> No access to camera</Container>
+      return <Container><Text> No access to camera  </Text></Container>
     } else if (hasCameraPermission === true) {
       return (
         <Container>
@@ -86,11 +86,12 @@ class CameraComponent extends Component {
             }}
           >
           <Container style={styles.targetContainer}>
-              <Icon style={styles.target} type="MaterialCommunityIcons" name="selection" />
+            <Text style={styles.targetPrompt}> Make sure to center your chow! </Text>
+            <Container style={styles.altTarget}  />
           </Container>
             <Container style={styles.snapIconContainer}>
               <Button
-                style={{ marginBottom: 60 }}
+                style={{ marginBottom: 40 }}
                 transparent
                 primary
                 onPress={this.snap.bind(this)}

@@ -9,7 +9,7 @@ export default styles = StyleSheet.create({
   },
   snapIcon: {
     color: '#fff',
-    fontSize: 50
+    fontSize: 53
   },
   centerItems: {
     justifyContent: 'center'
@@ -24,12 +24,24 @@ export default styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    alignSelf: 'center'
+    alignSelf: 'center',
+    // zIndex: 1,
   },
-  target: {
-    color: '#fff',
-    fontSize: 330,
-    marginTop: 70,
+  targetPrompt: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 20,
+    marginTop: 25,
+    opacity: .5,
+    borderRadius: 3,
+  },
+  altTarget: {
+    borderColor: '#fff',
+    marginTop: 72,
+    borderWidth: 5,
+    padding: 115,
+    borderRadius: 10,
+    borderStyle: 'dashed',
     opacity: .5,
   },
   container: {
