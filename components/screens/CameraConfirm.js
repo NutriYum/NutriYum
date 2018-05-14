@@ -110,12 +110,12 @@ class CameraConfirm extends React.Component {
         <Card>
           <CardItem>
             <Body>
-              <Text>My Pic</Text>
+              <Text style={{alignSelf: 'center'}}>You're STILL eating?</Text>
             </Body>
           </CardItem>
           <CardItem cardBody>
             <Image
-              style={{ flex: 1, height: 200, width: null }}
+              style={{ flex: 1, height: 400, width: null }}
               source={{ uri:  this.props.photo.photo.uri}}
             />
           </CardItem>
