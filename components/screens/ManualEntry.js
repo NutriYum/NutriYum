@@ -106,22 +106,22 @@ class ManualEntry extends Component {
                       </Text>
                     </ListItem>
                     <ListItem>
-                      <Text>calories: {food.calories}kcal</Text>
+                      <Text>Calories: {food.calories}kcal</Text>
                     </ListItem>
                     <ListItem>
-                      <Text>total fat: {food.totalFat}g</Text>
+                      <Text>Total Fat: {food.totalFat}g</Text>
                     </ListItem>
                     <ListItem>
-                      <Text>carbs: {food.carbs}g</Text>
+                      <Text>Carbs: {food.carbs}g</Text>
                     </ListItem>
                     <ListItem>
-                      <Text>sugar: {food.sugar}g</Text>
+                      <Text>Sugar: {food.sugar}g</Text>
                     </ListItem>
                     <ListItem>
-                      <Text>sodium: {food.sodium}g</Text>
+                      <Text>Sodium: {food.sodium}g</Text>
                     </ListItem>
                     <ListItem>
-                      <Text>protein: {food.protein}g</Text>
+                      <Text>Protein: {food.protein}g</Text>
                     </ListItem>
                   </List>
                 )
