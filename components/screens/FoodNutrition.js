@@ -11,7 +11,6 @@ class FoodNutrition extends Component {
 
     render(){
       let {nutrition} = this.props
-      // console.log(Object.keys(nutrition[0]))
         return(
           <Container>
           <Card>
@@ -35,21 +34,6 @@ class FoodNutrition extends Component {
     }
 }
 
-{/* <CardItem>
-<Text> I was running through the six... WITH MY WOE </Text>
-</CardItem>
-
-<List>
-{Object.keys(this.state.nutrition).map((item, index) => {
-  return (
-    <ListItem style={styles.centerItems} key={index}>
-      <Text style={styles.foodListText}>
-        {item} : {this.state.nutrition[item]}
-      </Text>
-    </ListItem>
-  )
-})}
-</List> */}
 
 const mapState = state => {
   return {
