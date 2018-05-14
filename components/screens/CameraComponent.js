@@ -91,6 +91,7 @@ class CameraComponent extends Component {
           </Container>
             <Container style={styles.snapIconContainer}>
               <Button
+
                 style={{ marginBottom: 40 }}
                 transparent
                 primary
