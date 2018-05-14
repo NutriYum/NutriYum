@@ -10,7 +10,7 @@ import {
 import axios from 'axios'
 import styles from '../../Styles'
 import FoodLog from './FoodLog'
-import { addToFoodLogThunker } from '../redux/foodLog';
+import { addToFoodLogThunker, getFoodLogThunker } from '../redux/foodLog';
 import { setCurrentPhoto, removeCurrentPhoto } from '../redux/photo'
 import { connect } from 'react-redux'
 import { StackActions, NavigationActions } from 'react-navigation';
@@ -206,7 +206,7 @@ const mapState = state => {
   }
 }
 
-const mapDispatch = { setCurrentPhoto, removeCurrentPhoto, addToFoodLogThunker }
+const mapDispatch = { setCurrentPhoto, removeCurrentPhoto, addToFoodLogThunker, getFoodLogThunker }
 
 export default connect(mapState, mapDispatch)(MyFoodScreen)
 

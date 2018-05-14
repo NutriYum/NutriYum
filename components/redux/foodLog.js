@@ -15,7 +15,9 @@ const ADD_TO_FOODLOG = 'ADD_TO_FOODLOG'
  * INITIAL STATE
  */
 
-const defaultFoodLog = {}
+const defaultFoodLog = {
+  nutrition: {}
+}
 
 /**
  * ACTION CREATORS
@@ -34,7 +36,7 @@ export default function reducer(state = defaultFoodLog, action) {
       return action.foodLog
 
     case ADD_TO_FOODLOG:
-      return Object.assign({}, state, action.foodLog)
+      return {...state, nutrition: action.foodLog}
 
     default:
       return defaultFoodLog
@@ -49,14 +51,14 @@ export const getFoodLogThunker = foodLogsId => dispatch =>
   axios
     .get(`${IP}/api/foodlogs/${foodLogsId}`)
     .then(res => {
-      console.log('hello from think')
+      // console.log('hello from think')
       dispatch(getFoodLog(res.data || defaultFoodLog))
     })
     .catch(err => console.log(err))
 
-export const addToFoodLogThunker = foodLog => dispatch => {
+export const addToFoodLogThunker = food => dispatch => {
   axios
-    .post(`${IP}/api/foodLogs`, foodLog)
+    .post(`${IP}/api/foodLogs`, food)
     .then(res => dispatch(addToFoodLog(res.config.data || defaultFoodLog)))
     .catch(err => console.log(err))
 }
