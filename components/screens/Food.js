@@ -4,7 +4,7 @@ import {Thumbnail, Button, Container, Icon, Header, Content, Text, Card, CardIte
 import axios from 'axios'
 import styles from '../../Styles'
 import FoodLog from './FoodLog'
-import { addToFoodLogThunker } from '../redux/foodLog';
+import { addToFoodLogThunker, getFoodLogThunker } from '../redux/foodLog';
 import { setCurrentPhoto, removeCurrentPhoto } from '../redux/photo'
 import { setCurrentMatch, removeCurrentMatch } from '../redux/foodmatch'
 import { setNutrition, removeNutrition } from '../redux/nutrition'
@@ -152,6 +152,7 @@ const mapState = state => {
 }
 
 const mapDispatch = { 
+  getFoodLogThunker,
   setCurrentPhoto, 
   removeCurrentPhoto, 
   addToFoodLogThunker, 
