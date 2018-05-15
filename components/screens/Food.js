@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Image, Picker } from 'react-native'
-import {Thumbnail, Button, Container, Icon, Header, Content, Text, Card, CardItem, Body, Left, Right, List, ListItem, Form, Separator, View} from 'native-base'
+import {Thumbnail, Button, Container, Icon, Header, Content, Text, Card, CardItem, Body, Left, Right, List, ListItem, Form, Separator, View, Title} from 'native-base'
 import axios from 'axios'
 import styles from '../../Styles'
 import FoodLog from './FoodLog'
@@ -112,7 +112,7 @@ class MyFoodScreen extends React.Component {
           ) : (
             <View>
               <Text>Go to camera or manual entry to enter a food item</Text>
-            </View>  
+            </View>
           )}
 
           {foodMatch.length > 0 ? (
@@ -123,14 +123,14 @@ class MyFoodScreen extends React.Component {
                       <Card key={index}>
                       <CardItem
                         header
-                        button 
+                        button
                         onPress={()=> this.nutrionixCall(item.class)}>
                         <Text> {item.class.toUpperCase()} </Text>
                       </CardItem>
                       <CardItem>
                         <Body><Text>{item.score}% Match</Text></Body>
                       </CardItem>
-                        </Card> 
+                        </Card>
                     )})
                   }
             </View>
@@ -150,13 +150,13 @@ const mapState = state => {
   }
 }
 
-const mapDispatch = { 
+const mapDispatch = {
   getFoodLogThunker,
-  setCurrentPhoto, 
-  removeCurrentPhoto, 
-  addToFoodLogThunker, 
-  setCurrentMatch, 
-  removeCurrentMatch, 
+  setCurrentPhoto,
+  removeCurrentPhoto,
+  addToFoodLogThunker,
+  setCurrentMatch,
+  removeCurrentMatch,
   setNutrition,
   removeNutrition }
 

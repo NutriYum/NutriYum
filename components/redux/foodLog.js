@@ -54,9 +54,9 @@ export const getFoodLogThunker = foodLogsId => dispatch =>
     })
     .catch(err => console.log(err))
 
-export const addToFoodLogThunker = food => dispatch => {
+export const addToFoodLogThunker = (food, url) => dispatch => {
   axios
-    .post(`${IP}/api/foodLogs`, food)
+    .post(`${IP}/api/foodLogs`, food, url)
     .then(res => {
       const dispatchData = Array.isArray(res.data) ? res.data : [res.data]
       return dispatch(addToFoodLog(dispatchData || defaultFoodLog))
