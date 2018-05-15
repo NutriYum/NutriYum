@@ -50,7 +50,7 @@ export const FoodStack = createStackNavigator({
   MyFoodScreen: {
     screen: MyFoodScreen,
     navigationOptions: {
-      title: 'MyFoodScreen',
+      title: 'Select your chow',
       headerStyle: styles.header,
       headerTitleStyle: styles.loginText
     },
@@ -58,7 +58,9 @@ export const FoodStack = createStackNavigator({
   FoodNutrition: {
     screen: FoodNutrition,
     navigationOptions: {
-      title: 'FoodNutrition'
+      title: 'Food Nutrition',
+      headerStyle: styles.header,
+      headerTitleStyle: styles.loginText
     }
   }
 },

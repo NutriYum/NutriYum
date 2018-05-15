@@ -58,9 +58,7 @@ class FoodNutrition extends Component {
               </CardItem>
             )
           })}
-          <Button 
-            primary
-            onPress={this.addToFood}>
+          <Button primary onPress={this.addToFood}>
             <Text> Add to Food Log </Text>
           </Button>
         </Card>
