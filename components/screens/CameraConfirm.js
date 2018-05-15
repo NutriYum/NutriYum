@@ -22,22 +22,22 @@ import { setNutrition, removeNutrition } from '../redux/nutrition'
 import { StackActions, NavigationActions } from 'react-navigation'
 import { RNS3 } from 'react-native-aws3'
 import {
-  AMAZON_ACCESSKEY,
-  AMAZON_SECRETKEY,
-  WATSON_KEY
+  VENDOR_AK,
+  VENDOR_SK,
+  VR_KEY
 } from 'react-native-dotenv'
 import axios from 'axios'
 import styles from '../../Styles'
 
-accesskey = AMAZON_ACCESSKEY
-secretkey = AMAZON_SECRETKEY
-watsonKey = WATSON_KEY
+let vk = VENDOR_AK
+let sk = VENDOR_SK
+let watK = VR_KEY
 
 const options = {
   bucket: 'nutriyum2',
   region: 'us-east-1',
-  accessKey: accesskey,
-  secretKey: secretkey,
+  accessKey: vk,
+  secretKey: sk,
   successActionStatus: 201
 }
 

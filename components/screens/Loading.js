@@ -3,7 +3,8 @@ import {
   StyleSheet,
   View,
   Modal,
-  ActivityIndicator
+  ActivityIndicator,
+  Text,
 } from 'react-native';
 import styles from '../../Styles'
 
@@ -12,7 +13,7 @@ class Loader extends Component {
   constructor(props){
     super(props)
   }
-  render()  { 
+  render()  {
     const { loading } = this.props;
     console.log(loading)
     return (
@@ -28,10 +29,11 @@ class Loader extends Component {
             <View style={styles.activityIndicatorWrapper}>
               <ActivityIndicator
                 animating={true}
-                size="large" 
+                size="large"
                 color="#0000ff"
                 />
-            </View> 
+              <Text>Watson's on it!</Text>
+            </View>
           </View>
         </Modal>
       )}

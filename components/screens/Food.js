@@ -161,4 +161,3 @@ const mapDispatch = {
   removeNutrition }
 
 export default connect(mapState, mapDispatch)(MyFoodScreen)
-

@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, TextInput, KeyboardAvoidingView, ScrollView, Button } from 'react-native';
 import { Container, Header, Content, Form, Item, Input, Label } from 'native-base';
+import styles from '../../Styles'
 
 import { connect } from 'react-redux';
 
@@ -48,7 +49,7 @@ class Login extends React.Component {
         <Form>
         <Item stackedLabel>
               <Label>Email</Label>
-              <Input 
+              <Input
                 name="email"
                 autoCapitalize='none'
                 keyboardType="email-address"
@@ -59,7 +60,7 @@ class Login extends React.Component {
 
         <Item stackedLabel last>
               <Label>Password</Label>
-              <Input 
+              <Input
                 name="password"
                 autoCapitalize='none'
                 value={this.state.password}
@@ -69,12 +70,12 @@ class Login extends React.Component {
             </Item>
 
         <Button
-          buttonStyle={styles.button}
+          style={styles.button}
           title="Login"
           onPress={this.handleSubmit}
         />
         <Button
-          buttonStyle={styles.button}
+          style={styles.button}
           title="Sign Up"
           onPress={() => {
             this.props.navigation.navigate('Signup');
@@ -105,41 +106,3 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(null, mapDispatchToProps)(Login);
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    backgroundColor: 'white',
-    paddingHorizontal: 5,
-    flex: 1
-  },
-  textLabel: {
-    fontSize: 20,
-    marginTop: 10,
-    padding: 10
-  },
-  textInput: {
-    height: 40,
-    width: 300,
-    margin: 10,
-    color: 'tomato',
-    fontSize: 15,
-    borderWidth: 2,
-    borderRadius: 5
-  },
-  button: {
-    backgroundColor: 'gray',
-    width: 150,
-    height: 40,
-    borderRadius: 5,
-    alignSelf: 'center'
-  },
-  error: {
-    fontSize: 15,
-    color: 'blue',
-    marginVertical: 0,
-    paddingLeft: 10,
-    fontWeight: 'bold'
-  }
-});
