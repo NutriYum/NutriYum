@@ -23,15 +23,14 @@ import { RNS3 } from 'react-native-aws3'
 import {
   VENDOR_AK,
   VENDOR_SK,
-  VR_KEY, 
-  options
+  VR_KEY
 } from 'react-native-dotenv'
 import axios from 'axios'
 import styles from '../../Styles'
 
-vk = VENDOR_AK
-sk = VENDOR_SK
-watK = VR_KEY
+let vk = VENDOR_AK
+let sk = VENDOR_SK
+let watK = VR_KEY
 
 const options = {
   bucket: 'nutriyum2',
