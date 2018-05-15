@@ -40,7 +40,7 @@ class Main extends React.Component {
   }
 
   componentWillMount() {
-    this.props.day(this.props.user.id)
+    this.changeViewandFactorDay()
   }
 
   changeViewandFactorDay() {
@@ -109,6 +109,14 @@ class Main extends React.Component {
       },
       {
         reccoFat: reccoFat
+      }
+    ]
+    const defaultData = [
+      {
+        default: 100
+      },
+      {
+        default2: 200
       }
     ]
 
