@@ -91,7 +91,8 @@ class MyFoodScreen extends React.Component {
               <CardItem>
                 <Left>
                     <Thumbnail
-                    large
+                    square large
+                    style={{borderRadius: 10}}
                     source={{ uri: photo.uri }}
                   />
                 </Left>
