@@ -26,7 +26,7 @@ class ManualEntry extends Component {
       nutrition: [],
       proteinSum: 0,
       carbsSum: 0,
-      fatSum: 0, 
+      fatSum: 0,
       error: '',
       showToast: false
     }
@@ -75,7 +75,7 @@ class ManualEntry extends Component {
       }
       async addToFood() {
         await this.props.addToFoodLogThunker(this.state.nutrition)
-    
+
         Toast.show({
           text: `Added ${
             this.state.nutrition.length === 1
@@ -86,14 +86,14 @@ class ManualEntry extends Component {
           duration: 1500
         })
       }
-    
+
       getFoodLog() {
         const userId = this.props.user.id
         this.props.getFoodLogThunker(userId)
       }
 
     render () {
-        console.log(this.state.nutrition)
+        // console.log(this.state.nutrition)
         return (
             <Container>
             <Header style={styles.header}><Title style={styles.loginText}> NutriYum </Title></Header>
@@ -110,7 +110,6 @@ class ManualEntry extends Component {
             <View style={{display: 'flex', flexDirection: 'row'}}>
             <Button danger onPress={this.clearAll}><Text>Clear All</Text></Button>
             <Button primary onPress={this.addToFood}><Text>Add to Log</Text></Button>
-            <Button primary onPress={this.getFoodLog}><Text>Get Food Log</Text></Button>
             </View>
             <Content>
                 {this.state.nutrition === 'Item was not found! Try again' ? <Text>Item was not found! Please try again</Text> :
