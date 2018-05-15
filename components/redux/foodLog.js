@@ -63,3 +63,11 @@ export const addToFoodLogThunker = food => dispatch => {
     })
     .catch(err => console.log(err))
 }
+
+export const getFoodLogIntervalThunker = (foodLogsId, interval) => dispatch =>
+  axios
+    .get(`${IP}/api/foodlogs/${foodLogsId}/${interval}`)
+    .then(res => {
+      dispatch(getFoodLog(res.data || defaultFoodLog))
+    })
+    .catch(err => console.log(err))
