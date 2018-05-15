@@ -15,7 +15,7 @@ class Loader extends Component {
   }
   render()  {
     const { loading } = this.props;
-    console.log(loading)
+    // console.log(loading)
     return (
         <Modal
           visible={loading}
