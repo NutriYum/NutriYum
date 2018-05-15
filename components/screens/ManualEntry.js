@@ -122,7 +122,7 @@ class ManualEntry extends Component {
                         return (
                             <List key={food.name}>
                             <ListItem itemDivider>
-                                <Text>{food.quantity}  {food.name}       {food.calories > 4000 ? <Text>That's a lot of calories 😳 </Text> : ''}</Text>
+                                <Text>{food.quantity}  {food.name}       {food.calories > 400 ? <Text>That's a lot of calories 😳 </Text> : ''}</Text>
                             </ListItem>
                                 <ListItem><Text>calories:  {food.calories}kcal</Text></ListItem>
                                 <ListItem><Text>total fat:  {food.totalFat}g</Text></ListItem>
