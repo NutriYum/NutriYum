@@ -1,11 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, KeyboardAvoidingView, ScrollView, Button } from 'react-native';
+import { StyleSheet, Text, TextInput, KeyboardAvoidingView, ScrollView, Button, Image, TouchableHighlight } from 'react-native';
 import { Container, Header, Content, Form, Item, Input, Label } from 'native-base';
-import styles from '../../Styles'
-
 import { connect } from 'react-redux';
-
 import { login } from '../redux/auth';
+import styles from '../../Styles';
+
 
 class Login extends React.Component {
   constructor(props){
@@ -44,6 +43,7 @@ class Login extends React.Component {
 
   render() {
    return (
+  <Container>
     <KeyboardAvoidingView behavior="padding" enabled>
       <ScrollView>
         <Form>
@@ -69,14 +69,14 @@ class Login extends React.Component {
               />
             </Item>
 
-        <Button
-          style={styles.button}
-          title="Login"
+        <TouchableHighlight
+          style={styles.loginButton}
           onPress={this.handleSubmit}
-        />
-        <Button
-          style={styles.button}
-          title="Sign Up"
+          >
+          <Text style={styles.loginText}>Login</Text>
+        </TouchableHighlight>
+        <TouchableHighlight
+          style={styles.loginButton}
           onPress={() => {
             this.props.navigation.navigate('Signup');
             this.setState({
@@ -85,12 +85,16 @@ class Login extends React.Component {
               error: ''
             });
           }}
-        />
+          >
+          <Text style={styles.loginText}>Sign Up</Text>
+        </TouchableHighlight>
         <Text >{this.state.error}</Text>
         {/* {()=>{this.warning}} */}
         </Form>
       </ScrollView>
     </KeyboardAvoidingView>
+    <Image source={require('../../NYLogo.png')} style={styles.logo}/>
+  </Container>
   );
  }
 }
@@ -106,3 +110,5 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(null, mapDispatchToProps)(Login);
+
+
