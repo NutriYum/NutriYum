@@ -63,7 +63,8 @@ class MyFoodScreen extends React.Component {
               <CardItem>
                 <Left>
                     <Thumbnail
-                    large
+                    square large
+                    style={{borderRadius: 10}}
                     source={{ uri: photo.uri }}
                   />
                 </Left>
@@ -83,13 +84,13 @@ class MyFoodScreen extends React.Component {
             </Card>
           ) : (
             <View>
-              <Text style={{alignSelf: 'center', fontSize: 20, paddingTop: 50}}>Go to camera or manual entry to enter a food item</Text>
+              <Text style={{alignSelf: 'center'}}>Go to camera or manual entry to enter a food item</Text>
             </View>
           )}
 
           {foodMatch.length > 0 ? (
             <View>
-              <Text>Click the food that best matches your picture</Text>
+              <Text style={{alignSelf: 'center'}}>Click the food that best matches your picture</Text>
                   {foodMatch.map((item, index) => {
                     return (
                       <Card key={index}>

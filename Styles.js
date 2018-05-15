@@ -10,7 +10,7 @@ export default styles = StyleSheet.create({
   },
   snapIcon: {
     color: '#fff',
-    fontSize: 50, 
+    fontSize: 50,
     margin: -10
   },
   centerItems: {
@@ -34,7 +34,7 @@ export default styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 20,
     marginTop: 25,
-    opacity: .5,
+    opacity: .8,
     borderRadius: 3,
   },
   altTarget: {
@@ -82,7 +82,7 @@ export default styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   header: {
-    backgroundColor: '#0099FF', 
+    backgroundColor: '#0099FF',
     paddingTop: 25,
     borderBottomColor: '#ffdb4d',
     borderBottomWidth: 3
@@ -123,20 +123,20 @@ export default styles = StyleSheet.create({
     height: 50,
     borderRadius: 5,
     alignSelf: 'center',
-    alignItems: 'center', 
-    justifyContent: 'center', 
+    alignItems: 'center',
+    justifyContent: 'center',
     marginHorizontal: 15,
-    marginTop: 15, 
-    borderColor: '#ffdb4d', 
+    marginTop: 15,
+    borderColor: '#ffdb4d',
     borderBottomWidth: 3
   },
   logo: {
-    alignSelf: 'center', 
-    justifyContent: 'center', 
-  }, 
+    alignSelf: 'center',
+    justifyContent: 'center',
+  },
   loginText: {
     fontSize: 24,
-    color: 'white', 
+    color: 'white',
     fontWeight: 'bold'
   }
 })

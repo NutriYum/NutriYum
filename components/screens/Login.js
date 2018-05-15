@@ -37,7 +37,7 @@ class Login extends React.Component {
 
   warning(){
     if (this.props.error){
-      return <Text style={{fontWeight: 'bold',color: 'red', textShadowColor: 'black', fontSize: 16}}> {this.props.error.response.data} </Text>
+      return <Text style={{fontWeight: 'bold',color: 'red', textShadowColor: 'black', fontSize: 16, alignSelf: 'center'}}> {this.props.error.response.data} </Text>
   }
 }
 
@@ -110,5 +110,3 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(null, mapDispatchToProps)(Login);
-
-

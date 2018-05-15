@@ -130,6 +130,7 @@ class Main extends React.Component {
     const keysPro = ['protein', 'reccoPro']
     const keysCarb = ['carbs', 'reccoCarb']
 
+
     return (
       <Container>
         <Header />
@@ -138,12 +139,13 @@ class Main extends React.Component {
             <CardItem header>
               <Left>
                 <Thumbnail
-                  large
+                  square large
+                  style={{borderRadius: 10}}
                   source={{ uri: this.props.user.profileImgUri }}
                 />
               </Left>
               <Right>
-                <Text>{this.props.user.email}</Text>
+                <Text>{this.props.user.userName}</Text>
               </Right>
             </CardItem>
             <CardItem />
