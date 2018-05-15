@@ -22,6 +22,65 @@ export default styles = StyleSheet.create({
   pickerListText: {
     fontSize: 24
   },
+  targetContainer: {
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    alignSelf: 'center',
+    // zIndex: 1,
+  },
+  targetPrompt: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 20,
+    marginTop: 25,
+    opacity: .5,
+    borderRadius: 3,
+  },
+  altTarget: {
+    borderColor: '#fff',
+    marginTop: 72,
+    borderWidth: 5,
+    padding: 115,
+    borderRadius: 10,
+    borderStyle: 'dashed',
+    opacity: .5,
+  },
+  container: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    backgroundColor: 'white',
+    paddingHorizontal: 5,
+    flex: 1
+  },
+  textLabel: {
+    fontSize: 20,
+    marginTop: 10,
+    padding: 10
+  },
+  textInput: {
+    height: 40,
+    width: 300,
+    margin: 10,
+    color: 'tomato',
+    fontSize: 15,
+    borderWidth: 2,
+    borderRadius: 5
+  },
+  button: {
+    backgroundColor: 'gray',
+    width: 150,
+    height: 40,
+    borderRadius: 5,
+    alignSelf: 'center'
+  },
+  error: {
+    fontSize: 15,
+    color: 'blue',
+    marginVertical: 0,
+    paddingLeft: 10,
+    fontWeight: 'bold'
+  },
   header: {
     backgroundColor: '#0099FF', 
     paddingTop: 25,
@@ -47,6 +106,7 @@ export default styles = StyleSheet.create({
     justifyContent: 'space-around',
     backgroundColor: '#00000040',
     opacity: .5,
+    marginBottom: 60,
   },
   activityIndicatorWrapper: {
     backgroundColor: '#FFFFFF',

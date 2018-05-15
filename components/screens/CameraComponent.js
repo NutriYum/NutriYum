@@ -17,7 +17,7 @@ import { Camera, Permissions, ImageManipulator } from 'expo'
 import styles from '../../Styles'
 import CameraConfirm from './CameraConfirm'
 import { connect } from 'react-redux'
-import { setCurrentPhoto, removeCurrentPhoto } from '../redux/photo' 
+import { setCurrentPhoto, removeCurrentPhoto } from '../redux/photo'
 import Loader from './Loading'
 
 class CameraComponent extends Component {
@@ -55,7 +55,7 @@ class CameraComponent extends Component {
         tempPhoto,
         [
             { resize: { height: 1000 } },
-            { crop: { originX: 100, originY: 200, width: 500, height: 500 } }
+            { crop: { originX: 120, originY: 200, width: 500, height: 500 } }
         ],
         { format: 'png', compress: 1 }
         )
@@ -71,7 +71,7 @@ class CameraComponent extends Component {
     if (hasCameraPermission === null) {
       return <Container />
     } else if (hasCameraPermission === false) {
-      return <Container> No access to camera</Container>
+      return <Container><Text> No access to camera  </Text></Container>
     } else if (hasCameraPermission === true) {
       return (
         <Container>
@@ -85,8 +85,14 @@ class CameraComponent extends Component {
               this.camera = ref
             }}
           >
+          <Container style={styles.targetContainer}>
+            <Text style={styles.targetPrompt}> Make sure to center your chow! </Text>
+            <Container style={styles.altTarget}  />
+          </Container>
             <Container style={styles.snapIconContainer}>
               <Button
+
+                style={{ marginBottom: 40 }}
                 transparent
                 primary
                 onPress={this.snap.bind(this)}

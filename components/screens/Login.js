@@ -49,7 +49,7 @@ class Login extends React.Component {
         <Form>
         <Item stackedLabel>
               <Label>Email</Label>
-              <Input 
+              <Input
                 name="email"
                 autoCapitalize='none'
                 keyboardType="email-address"
@@ -60,7 +60,7 @@ class Login extends React.Component {
 
         <Item stackedLabel last>
               <Label>Password</Label>
-              <Input 
+              <Input
                 name="password"
                 autoCapitalize='none'
                 value={this.state.password}
