@@ -4,17 +4,12 @@ import {Thumbnail, Container, Header, Content, Card, CardItem, Body, Left, Right
 import { connect } from 'react-redux';
 import { getFoodLogIntervalThunker } from '../redux/foodLog'
 import { logout } from '../redux/auth';
-// import DailyFood from './DailyFood'
-// import WeeklyFood from './WeeklyFood'
-// import MonthlyFood from './MonthlyFood'
 
 class Main extends React.Component {
   componentWillMount(){
     this.props.day(this.props.user.id)
   }
   render() {
-    console.log(this.props)
-    // let { user } = this.props
     return (
       <Container>
         <Header />
@@ -43,21 +38,6 @@ class Main extends React.Component {
             </CardItem>
           </Card>
 
-          {/* <Card> */}
-
-            {/* <Tabs initialPage={0}>
-              <Tab heading ="Daily"
-                onPress={()=>{console.log('ello derr')}}>
-                <DailyFood />
-              </Tab>
-              <Tab heading="Weekly">
-                <WeeklyFood />
-              </Tab>
-              <Tab heading="Monthly">
-                <MonthlyFood />
-              </Tab>
-            </Tabs> */}
-
           <Card>
             <CardItem>
               <Button
@@ -84,32 +64,6 @@ class Main extends React.Component {
               </Card>
               )
           })}
-          {/* <CardItem
-            header
-            button
-            onPress= {()=> this.props.day(this.props.user.id)}
-            >
-            <Text> View Today's Food Log </Text>
-          </CardItem>
-          </Card>
-
-          <Card>
-          <CardItem
-            header
-            button
-            onPress= {()=> this.props.week(this.props.user.id)}>
-            <Text> View Week's Food Log </Text>
-          </CardItem>
-          </Card>
-
-          <Card>
-          <CardItem
-            header
-            button
-            onPress= {()=> this.props.month(this.props.user.id)} >
-            <Text> View Month's Food Log </Text>
-          </CardItem>
-          </Card> */}
 
         </Content>
       </Container>
