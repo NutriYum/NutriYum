@@ -3,8 +3,8 @@ import { TextInput, Image, View } from 'react-native'
 import axios from 'axios'
 import {
   Text,
+  Toast,
   Container,
-  Picker,
   List,
   ListItem,
   Content,
@@ -26,12 +26,13 @@ class ManualEntry extends Component {
       nutrition: [],
       proteinSum: 0,
       carbsSum: 0,
-      fatSum: 0 
+      fatSum: 0, 
+      error: '',
+      showToast: false
     }
     this.onSubmitFood = this.onSubmitFood.bind(this)
     this.clearAll = this.clearAll.bind(this)
     this.addToFood = this.addToFood.bind(this)
-    this.getFoodLog = this.getFoodLog.bind(this)
   }
 
   onSubmitFood() {
@@ -41,7 +42,11 @@ class ManualEntry extends Component {
           this.state.text
         )}`
       )
-      .then(result => {
+      .then( async result => {
+        if (result.data === 'Item was not found! Try again') {
+            this.setState({ error: result.data })
+          } else {
+              await
       this.setState({
         nutrition: result.data
       })
@@ -56,6 +61,7 @@ class ManualEntry extends Component {
           this.setState({ proteinSum: pro })
           this.setState({ carbsSum: car })
           this.setState({ fatSum: fat })
+    }
       })
       .catch(error => {
         console.error(error)
@@ -67,8 +73,18 @@ class ManualEntry extends Component {
       clearAll () {
           this.setState({nutrition: []})
       }
-      addToFood() {
-        this.props.addToFoodLogThunker(this.state.nutrition)
+      async addToFood() {
+        await this.props.addToFoodLogThunker(this.state.nutrition)
+    
+        Toast.show({
+          text: `Added ${
+            this.state.nutrition.length === 1
+              ? this.state.nutrition[0].name
+              : 'items'
+          } to Food Log`,
+          buttonText: 'Okay',
+          duration: 1500
+        })
       }
     
       getFoodLog() {
