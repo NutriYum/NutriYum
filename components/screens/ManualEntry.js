@@ -26,7 +26,8 @@ class ManualEntry extends Component {
       nutrition: [],
       proteinSum: 0,
       carbsSum: 0,
-      fatSum: 0, 
+      fatSum: 0,
+      calSum: 0, 
       error: '',
       showToast: false
     }
@@ -53,14 +54,17 @@ class ManualEntry extends Component {
         let pro = 0
         let car = 0
         let fat = 0
+        let cal = 0
         let totals = this.state.nutrition.map((food) => {
           pro += food.protein
           car += food.carbs
           fat += food.totalFat
+          cal += food.calories
       })
           this.setState({ proteinSum: pro })
           this.setState({ carbsSum: car })
           this.setState({ fatSum: fat })
+          this.setState({ calSum: cal })
     }
       })
       .catch(error => {
@@ -130,6 +134,7 @@ class ManualEntry extends Component {
                             )
                         })
              }
+             <Text>Total Calories:  {this.state.calSum.toFixed(2)}kcal</Text>
              <PieChart
                 style={{ height: 200 }}
                 outerRadius={'70%'}
