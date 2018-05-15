@@ -20,7 +20,7 @@ import {
 import { connect } from 'react-redux'
 import { getFoodLogIntervalThunker } from '../redux/foodLog'
 import { logout } from '../redux/auth'
-import { StackedBarChart } from 'react-native-svg-charts'
+import { BarChart } from 'react-native-svg-charts'
 
 let reccoCal = 0
 let reccoPro = 0
@@ -80,36 +80,16 @@ class Main extends React.Component {
       carbs += item.carbs
     })
     const dataCal = [
-      {
-        cals: calories
-      },
-      {
-        reccoCal: reccoCal
-      }
+      calories, reccoCal
     ]
     const dataPro = [
-      {
-        protein: protein
-      },
-      {
-        reccoPro: reccoPro
-      }
+      protein, reccoPro
     ]
     const dataCarb = [
-      {
-        carbs: carbs
-      },
-      {
-        reccoCarb: reccoCarb
-      }
+      carbs, reccoCarb
     ]
     const dataFat = [
-      {
-        fat: fat
-      },
-      {
-        reccoFat: reccoFat
-      }
+      fat, reccoFat
     ]
 
     const colorsCal = ['#ff6666', '#c61717']
@@ -164,46 +144,46 @@ class Main extends React.Component {
           </Card>
             <Content>
             <Text style={{marginLeft: 10}}>Calories: {calories} / {reccoCal} {Math.floor((calories/reccoCal) * 100)}%</Text>
-              <StackedBarChart
+              <BarChart
                 style={{ height: 100 }}
-                keys={keysCal}
-                colors={colorsCal}
+                // keys={keysCal}
+                // colors={colorsCal}
                 data={dataCal}
-                showGrid={false}
-               contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
+                // showGrid={false}
+                contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
                 horizontal={true}
                 animate={true}
               />
               <Text style={{marginLeft: 10}}>Fat: {fat} / {reccoFat} {Math.floor((fat/reccoFat * 100))}%</Text>
-              <StackedBarChart
+              <BarChart
                 style={{ height: 100 }}
-                keys={keysFat}
-                colors={colorsFat}
+                // keys={keysFat}
+                // colors={colorsFat}
                 data={dataFat}
-                showGrid={false}
-               contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
+                // showGrid={false}
+                contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
                 horizontal={true}
                 animate={true}
               />
               <Text style={{marginLeft: 10}}>Protein: {protein} / {reccoPro} {Math.floor((protein/reccoPro * 100))}%</Text>
-              <StackedBarChart
+              <BarChart
                 style={{ height: 100 }}
-                keys={keysPro}
-                colors={colorsPro}
+                // keys={keysPro}
+                // colors={colorsPro}
                 data={dataPro}
-                showGrid={false}
+                // showGrid={false}
                 contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
                 horizontal={true}
                 animate={true}
               />
               <Text style={{marginLeft: 10}}>Carbs: {carbs} / {reccoCarb} {Math.floor((carbs/reccoCarb * 100))}%</Text>
-              <StackedBarChart
+              <BarChart
                 style={{ height: 100 }}
-                keys={keysCarb}
-                colors={colorsCarb}
+                // keys={keysCarb}
+                // colors={colorsCarb}
                 data={dataCarb}
-                showGrid={false}
-               contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
+                // showGrid={false}
+                contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
                 horizontal={true}
                 animate={true}
               />
