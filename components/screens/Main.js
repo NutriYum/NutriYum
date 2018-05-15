@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, Platform } from 'react-native'
 import {
   Button,
   Thumbnail,
@@ -28,17 +28,18 @@ import { logout } from '../redux/auth'
 import { StackedBarChart } from 'react-native-svg-charts'
 import Axios from 'axios'
 import IP from '../../IP'
+import ProgressBarClassic from 'react-native-progress-bar-classic';
 
-let reccoCal = 0
-let reccoPro = 0
-let reccoFat = 0
-let reccoCarb = 0
+
+let reccoCal = 2200
+let reccoPro = 50
+let reccoFat = 70
+let reccoCarb = 250
 
 class Main extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      // factor: 1,
       dailyCal: 2200,
       dailyPro: 50,
       dailyFat: 70,
@@ -95,6 +96,7 @@ class Main extends React.Component {
       fat += item.totalFat
       carbs += item.carbs
     })
+
     const dataCal = [
       {
         cals: calories
@@ -144,6 +146,8 @@ class Main extends React.Component {
     const keysFat = ['fat', 'reccoFat']
     const keysPro = ['protein', 'reccoPro']
     const keysCarb = ['carbs', 'reccoCarb']
+
+
     return (
       <Container>
         <Header />
@@ -152,12 +156,13 @@ class Main extends React.Component {
             <CardItem header>
               <Left>
                 <Thumbnail
-                  large
+                  square large
+                  style={{borderRadius: 10}}
                   source={{ uri: this.props.user.profileImgUri }}
                 />
               </Left>
               <Right>
-                <Text>{this.props.user.email}</Text>
+                <Text>{this.props.user.userName}</Text>
               </Right>
             </CardItem>
             <CardItem />
@@ -184,6 +189,7 @@ class Main extends React.Component {
               </Button>
             </CardItem>
           </Card>
+          { Platform.OS === 'ios' ?
           <Content>
             <Text style={{ marginLeft: 10 }}>
               Calories: {calories} / {reccoCal}{' '}
@@ -240,7 +246,18 @@ class Main extends React.Component {
               animate={true}
             />
           </Content>
-
+          :
+            <Content>
+              <Text style={{marginLeft: 10}}>Calories: {calories} / {reccoCal} </Text>
+              <ProgressBarClassic progress={Math.floor((calories / reccoCal) * 100)} valueStyle={'balloon'} />
+              <Text style={{marginLeft: 10}}>Fat: {fat} / {reccoFat} {Math.floor((fat / reccoFat * 100))}%</Text>
+              <ProgressBarClassic progress={Math.floor((fat / reccoFat) * 100)} valueStyle={'balloon'} />
+              <Text style={{marginLeft: 10}}>Protein: {protein} / {reccoPro} </Text>
+              <ProgressBarClassic progress={Math.floor((protein / reccoPro) * 100)} valueStyle={'balloon'} />
+              <Text style={{marginLeft: 10}}>Carbs: {carbs} / {reccoCarb} {Math.floor((carbs / reccoCarb * 100))}%</Text>
+              <ProgressBarClassic progress={Math.floor((carbs / reccoCarb) * 100)} valueStyle={'balloon'} />
+            </Content>
+          }
           {this.props.food.map((item, index) => {
             return (
               <Card key={index}>
