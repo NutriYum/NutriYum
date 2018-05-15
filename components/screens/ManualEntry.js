@@ -26,7 +26,8 @@ class ManualEntry extends Component {
       nutrition: [],
       proteinSum: 0,
       carbsSum: 0,
-      fatSum: 0, 
+      fatSum: 0,
+      calSum: 0, 
       error: '',
       showToast: false
     }
@@ -53,14 +54,17 @@ class ManualEntry extends Component {
         let pro = 0
         let car = 0
         let fat = 0
+        let cal = 0
         let totals = this.state.nutrition.map((food) => {
           pro += food.protein
           car += food.carbs
           fat += food.totalFat
+          cal += food.calories
       })
           this.setState({ proteinSum: pro })
           this.setState({ carbsSum: car })
           this.setState({ fatSum: fat })
+          this.setState({ calSum: cal })
     }
       })
       .catch(error => {
@@ -75,7 +79,7 @@ class ManualEntry extends Component {
       }
       async addToFood() {
         await this.props.addToFoodLogThunker(this.state.nutrition)
-    
+
         Toast.show({
           text: `Added ${
             this.state.nutrition.length === 1
@@ -86,18 +90,17 @@ class ManualEntry extends Component {
           duration: 1500
         })
       }
-    
+
       getFoodLog() {
         const userId = this.props.user.id
         this.props.getFoodLogThunker(userId)
       }
 
     render () {
-        console.log(this.state.nutrition)
         return (
             <Container>
             <Header style={styles.header}><Title style={styles.loginText}> NutriYum </Title></Header>
-            <Container style={styles.container}>
+            <Container>
             <Text>What did you put in your face hole?</Text>
             <TextInput style={styles.manualTextInput}
             onChangeText={(text) => this.setState({text})}
@@ -110,7 +113,7 @@ class ManualEntry extends Component {
             <View style={{display: 'flex', flexDirection: 'row'}}>
             <Button danger onPress={this.clearAll}><Text>Clear All</Text></Button>
             <Button primary onPress={this.addToFood}><Text>Add to Log</Text></Button>
-            <Button primary onPress={this.getFoodLog}><Text>Get Food Log</Text></Button>
+            <Button success onPress={this.onSubmitFood}><Text>Search</Text></Button>
             </View>
             <Content>
                 {this.state.nutrition === 'Item was not found! Try again' ? <Text>Item was not found! Please try again</Text> :
@@ -130,6 +133,7 @@ class ManualEntry extends Component {
                             )
                         })
              }
+             <Text>Total Calories:  {this.state.calSum.toFixed(2)}kcal</Text>
              <PieChart
                 style={{ height: 200 }}
                 outerRadius={'70%'}
@@ -157,7 +161,6 @@ class ManualEntry extends Component {
              <Text style={{backgroundColor: '#ffdb4d'}}>Carbs {this.state.carbsSum.toFixed(2)}</Text>
              <Text style={{backgroundColor: '#808080'}}>Total Fat {this.state.fatSum.toFixed(2)}</Text>
             </Container>
-             <Image source={require('../../NYLogo.png')} style={styles.logo} />
              </Content>
              </Container>
              </Container>
