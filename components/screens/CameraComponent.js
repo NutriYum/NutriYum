@@ -75,7 +75,7 @@ class CameraComponent extends Component {
     } else if (hasCameraPermission === true) {
       return (
         <Container>
-          <Header style={styles.header}><Title> NutriYum </Title></Header>
+          <Header style={styles.header}><Title style={styles.loginText}> NutriYum </Title></Header>
           <Loader loading={this.state.loading} />
           <Camera
             ratio={'16:10'}
