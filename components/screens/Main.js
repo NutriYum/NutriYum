@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, Button } from 'react-native'
+import { StyleSheet, View, Button, Platform } from 'react-native'
 import {
   Thumbnail,
   Container,
@@ -20,7 +20,8 @@ import {
 import { connect } from 'react-redux'
 import { getFoodLogIntervalThunker } from '../redux/foodLog'
 import { logout } from '../redux/auth'
-import { BarChart } from 'react-native-svg-charts'
+import { StackedBarChart } from 'react-native-svg-charts'
+import ProgressBarClassic from 'react-native-progress-bar-classic';
 
 let reccoCal = 2200
 let reccoPro = 50
@@ -78,32 +79,57 @@ class Main extends React.Component {
       fat += item.totalFat
       carbs += item.carbs
     })
+
     const dataCal = [
-      calories, reccoCal
+      {
+        cals: calories
+      },
+      {
+        reccoCal: reccoCal
+      }
     ]
     const dataPro = [
-      protein, reccoPro
-    ]
-    const dataFat = [
-      fat, reccoFat
+      {
+        protein: protein
+      },
+      {
+        reccoPro: reccoPro
+      }
     ]
     const dataCarb = [
-      carbs
-      , reccoCarb
+      {
+        carbs: carbs
+      },
+      {
+        reccoCarb: reccoCarb
+      }
+    ]
+    const dataFat = [
+      {
+        fat: fat
+      },
+      {
+        reccoFat: reccoFat
+      }
+    ]
+    const defaultData = [
+      {
+        default: 100
+      },
+      {
+        default2: 200
+      }
     ]
 
-    let fill = 'rgb(220, 160, 255)'
-    let fill2 = 'rgb(127, 239, 119)'
-    let fill3 = 'rgb(144, 132, 255)'
-    let fill4 = 'rgb(255, 102, 102)'
-    // const colorsCal = ['#ff6666', '#c61717']
-    // const colorsCarb = ['#9084ff', '#1f1291']
-    // const colorsPro = ['#7fef77', '#44873f']
-    // const colorsFat = ['#dca0ff', '#581d7a']
-    // const keysCal = ['cals', 'reccoCal']
-    // const keysFat = ['fat', 'reccoFat']
-    // const keysPro = ['protein', 'reccoPro']
-    // const keysCarb = ['carbs', 'reccoCarb']
+    const colorsCal = ['#ff6666', '#c61717']
+    const colorsCarb = ['#9084ff', '#1f1291']
+    const colorsPro = ['#7fef77', '#44873f']
+    const colorsFat = ['#dca0ff', '#581d7a']
+    const keysCal = ['cals', 'reccoCal']
+    const keysFat = ['fat', 'reccoFat']
+    const keysPro = ['protein', 'reccoPro']
+    const keysCarb = ['carbs', 'reccoCarb']
+
     return (
       <Container>
         <Header />
@@ -146,51 +172,75 @@ class Main extends React.Component {
               />
             </CardItem>
           </Card>
-
-    {/* // const colorsCal = ['#ff6666', '#c61717']
-    // const colorsCarb = ['#9084ff', '#1f1291']
-    // const colorsPro = ['#7fef77', '#44873f']
-    // const colorsFat = ['#dca0ff', '#581d7a'] */}
-
+          { Platform.OS === 'ios' ?
+          <Content>
+            <Text style={{ marginLeft: 10 }}>
+              Calories: {calories} / {reccoCal}{' '}
+              {Math.floor(calories / reccoCal * 100)}%
+            </Text>
+            <StackedBarChart
+              style={{ height: 100 }}
+              keys={keysCal}
+              colors={colorsCal}
+              data={dataCal}
+              showGrid={false}
+              contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
+              horizontal={true}
+              animate={true}
+            />
+            <Text style={{ marginLeft: 10 }}>
+              Fat: {fat} / {reccoFat} {Math.floor(fat / reccoFat * 100)}%
+            </Text>
+            <StackedBarChart
+              style={{ height: 100 }}
+              keys={keysFat}
+              colors={colorsFat}
+              data={dataFat}
+              showGrid={false}
+              contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
+              horizontal={true}
+              animate={true}
+            />
+            <Text style={{ marginLeft: 10 }}>
+              Protein: {protein} / {reccoPro}{' '}
+              {Math.floor(protein / reccoPro * 100)}%
+            </Text>
+            <StackedBarChart
+              style={{ height: 100 }}
+              keys={keysPro}
+              colors={colorsPro}
+              data={dataPro}
+              showGrid={false}
+              contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
+              horizontal={true}
+              animate={true}
+            />
+            <Text style={{ marginLeft: 10 }}>
+              Carbs: {carbs} / {reccoCarb} {Math.floor(carbs / reccoCarb * 100)}%
+            </Text>
+            <StackedBarChart
+              style={{ height: 100 }}
+              keys={keysCarb}
+              colors={colorsCarb}
+              data={dataCarb}
+              showGrid={false}
+              contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
+              horizontal={true}
+              animate={true}
+            />
+          </Content>
+          :
             <Content>
-            <Text style={{marginLeft: 10}}>Calories: {calories} / {reccoCal} {Math.floor((calories / reccoCal) * 100)}%</Text>
-              <BarChart
-                style={{ height: 100 }}
-                data={dataCal}
-                contentInset={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                horizontal={true}
-                animate={true}
-                svg={{fill4}}
-              />
+              <Text style={{marginLeft: 10}}>Calories: {calories} / {reccoCal} </Text>
+              <ProgressBarClassic progress={Math.floor((calories / reccoCal) * 100)} valueStyle={'balloon'} />
               <Text style={{marginLeft: 10}}>Fat: {fat} / {reccoFat} {Math.floor((fat / reccoFat * 100))}%</Text>
-              <BarChart
-                style={{ height: 100 }}
-                data={dataFat}
-                contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
-                horizontal={true}
-                animate={true}
-                svg={{fill3}}
-              />
-              <Text style={{marginLeft: 10}}>Protein: {protein} / {reccoPro} {Math.floor((protein / reccoPro * 100))}%</Text>
-              <BarChart
-                style={{ height: 100 }}
-                data={dataPro}
-                contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
-                horizontal={true}
-                animate={true}
-                svg={{fill2}}
-              />
+              <ProgressBarClassic progress={Math.floor((fat / reccoFat) * 100)} valueStyle={'balloon'} />
+              <Text style={{marginLeft: 10}}>Protein: {protein} / {reccoPro} </Text>
+              <ProgressBarClassic progress={Math.floor((protein / reccoPro) * 100)} valueStyle={'balloon'} />
               <Text style={{marginLeft: 10}}>Carbs: {carbs} / {reccoCarb} {Math.floor((carbs / reccoCarb * 100))}%</Text>
-              <BarChart
-                style={{ height: 100 }}
-                data={dataCarb}
-                contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
-                horizontal={true}
-                animate={true}
-                svg={{fill}}
-              />
+              <ProgressBarClassic progress={Math.floor((carbs / reccoCarb) * 100)} valueStyle={'balloon'} />
             </Content>
-
+          }
           {this.props.food.map((item, index) => {
             return (
               <Card key={index}>
