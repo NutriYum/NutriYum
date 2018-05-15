@@ -97,11 +97,12 @@ class ManualEntry extends Component {
       }
 
     render () {
+        // console.log('NUTRITION>>>>',this.state.nutrition)
         return (
             <Container>
             <Header style={styles.header}><Title style={styles.loginText}> NutriYum </Title></Header>
             <Container>
-            <Text>What did you put in your face hole?</Text>
+            <Text style={{alignSelf: 'center', marginTop: 20, fontWeight: 'bold'}}>What did you put in your face hole?</Text>
             <TextInput style={styles.manualTextInput}
             onChangeText={(text) => this.setState({text})}
             value={this.state.text}
@@ -110,10 +111,10 @@ class ManualEntry extends Component {
             name='food'
             />
             <Container>
-            <View style={{display: 'flex', flexDirection: 'row'}}>
-            <Button danger onPress={this.clearAll}><Text>Clear All</Text></Button>
-            <Button primary onPress={this.addToFood}><Text>Add to Log</Text></Button>
-            <Button success onPress={this.onSubmitFood}><Text>Search</Text></Button>
+            <View style={{display: 'flex', flexDirection: 'row', alignSelf: 'center'}}>
+            <Button danger onPress={this.clearAll} style={{margin: 10}}><Text>Clear All</Text></Button>
+            <Button primary onPress={this.addToFood} style={{margin: 10}}><Text>Add to Log</Text></Button>
+            <Button success onPress={this.onSubmitFood} style={{margin: 10}}><Text>Search</Text></Button>
             </View>
             <Content>
                 {this.state.nutrition === 'Item was not found! Try again' ? <Text>Item was not found! Please try again</Text> :
@@ -121,7 +122,7 @@ class ManualEntry extends Component {
                         return (
                             <List key={food.name}>
                             <ListItem itemDivider>
-                                <Text>{food.quantity}  {food.name}       {food.calories > 150 ? <Text>That's a lot of calories 😳 </Text> : ''}</Text>
+                                <Text>{food.quantity}  {food.name}       {food.calories > 400 ? <Text>That's a lot of calories 😳 </Text> : ''}</Text>
                             </ListItem>
                                 <ListItem><Text>calories:  {food.calories}kcal</Text></ListItem>
                                 <ListItem><Text>total fat:  {food.totalFat}g</Text></ListItem>
@@ -133,7 +134,7 @@ class ManualEntry extends Component {
                             )
                         })
              }
-             <Text>Total Calories:  {this.state.calSum.toFixed(2)}kcal</Text>
+             {this.state.nutrition.length ? <Text>Total Calories:  {this.state.calSum.toFixed(2)}kcal</Text> : ''}
              <PieChart
                 style={{ height: 200 }}
                 outerRadius={'70%'}
@@ -155,12 +156,13 @@ class ManualEntry extends Component {
                         svg: { fill: '#808080' }
                     }
                 ]}
-            />
+            />{this.state.nutrition.length ? 
             <Container style={{alignItems: 'center'}}>
              <Text style={{backgroundColor: '#0099FF'}}>Protein {this.state.proteinSum.toFixed(2)}</Text>
              <Text style={{backgroundColor: '#ffdb4d'}}>Carbs {this.state.carbsSum.toFixed(2)}</Text>
              <Text style={{backgroundColor: '#808080'}}>Total Fat {this.state.fatSum.toFixed(2)}</Text>
-            </Container>
+            </Container>: ''
+        }
              </Content>
              </Container>
              </Container>

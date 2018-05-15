@@ -17,13 +17,17 @@ export const SignedOut = createStackNavigator({
   Login: {
     screen: Login,
     navigationOptions: {
-      title: 'Login'
+      title: 'Login',
+      headerStyle: styles.header,
+      headerTitleStyle: styles.loginText
     }
   },
   Signup: {
     screen: Signup,
     navigationOptions: {
-      title: 'Sign Up'
+      title: 'Sign Up',
+      headerStyle: styles.header,
+      headerTitleStyle: styles.loginText
     }
   }
 });
@@ -50,7 +54,7 @@ export const FoodStack = createStackNavigator({
   MyFoodScreen: {
     screen: MyFoodScreen,
     navigationOptions: {
-      title: 'Select your chow',
+      title: 'Select Your Chow',
       headerStyle: styles.header,
       headerTitleStyle: styles.loginText
     },
