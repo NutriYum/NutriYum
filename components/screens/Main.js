@@ -1,6 +1,7 @@
 import React from 'react'
-import { StyleSheet, View, Button } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import {
+  Button,
   Thumbnail,
   Container,
   Header,
@@ -15,12 +16,18 @@ import {
   Form,
   Text,
   Tabs,
-  Tab
+  Tab,
+  Icon
 } from 'native-base'
 import { connect } from 'react-redux'
-import { getFoodLogIntervalThunker } from '../redux/foodLog'
+import {
+  getFoodLogIntervalThunker,
+  deleteFromFoodLogThunker
+} from '../redux/foodLog'
 import { logout } from '../redux/auth'
 import { StackedBarChart } from 'react-native-svg-charts'
+import Axios from 'axios'
+import IP from '../../IP'
 
 let reccoCal = 0
 let reccoPro = 0
@@ -37,6 +44,7 @@ class Main extends React.Component {
       dailyFat: 70,
       dailyCarb: 250
     }
+    this.handleDeleteFoodItem = this.handleDeleteFoodItem.bind(this)
   }
 
   componentWillMount() {
@@ -67,12 +75,20 @@ class Main extends React.Component {
     reccoCarb = this.state.dailyCarb * 30
   }
 
+  async handleDeleteFoodItem(id) {
+    console.log(id)
+    await Axios.delete(`${IP}/api/foodLogs/${id}`)
+      .then(result => console.log(result))
+      .catch(error => console.log(error))
+
+    await this.changeViewandFactorDay()
+  }
+
   render() {
     let calories = 0
     let protein = 0
     let fat = 0
     let carbs = 0
-
     this.props.food.forEach(item => {
       calories += item.calories
       protein += item.protein
@@ -148,84 +164,104 @@ class Main extends React.Component {
             <CardItem footer>
               <Button
                 buttonStyle={styles.button}
-                title="Logout"
                 onPress={() => this.props.logout(this.props.navigation)}
-              />
+              >
+                <Text>Logout</Text>
+              </Button>
             </CardItem>
           </Card>
 
           <Card>
             <CardItem>
-              <Button
-                onPress={() => this.changeViewandFactorDay()}
-                title="Today"
-              />
-              <Button
-                onPress={() => this.changeViewandFactorWeek()}
-                title="Week"
-              />
-              <Button
-                onPress={() => this.changeViewandFactorMonth()}
-                title="Month"
-              />
+              <Button onPress={() => this.changeViewandFactorDay()}>
+                <Text>Today</Text>
+              </Button>
+              <Button onPress={() => this.changeViewandFactorWeek()}>
+                <Text>Week</Text>
+              </Button>
+              <Button onPress={() => this.changeViewandFactorMonth()}>
+                <Text>Month</Text>
+              </Button>
             </CardItem>
           </Card>
-            <Content>
-            <Text style={{marginLeft: 10}}>Calories: {calories} / {reccoCal} {Math.floor((calories/reccoCal) * 100)}%</Text>
-              <StackedBarChart
-                style={{ height: 100 }}
-                keys={keysCal}
-                colors={colorsCal}
-                data={dataCal}
-                showGrid={false}
-                contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
-                horizontal={true}
-                animate={true}
-              />
-              <Text style={{marginLeft: 10}}>Fat: {fat} / {reccoFat} {Math.floor((fat/reccoFat * 100))}%</Text>
-              <StackedBarChart
-                style={{ height: 100 }}
-                keys={keysFat}
-                colors={colorsFat}
-                data={dataFat}
-                showGrid={false}
-                contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
-                horizontal={true}
-                animate={true}
-              />
-              <Text style={{marginLeft: 10}}>Protein: {protein} / {reccoPro} {Math.floor((protein/reccoPro * 100))}%</Text>
-              <StackedBarChart
-                style={{ height: 100 }}
-                keys={keysPro}
-                colors={colorsPro}
-                data={dataPro}
-                showGrid={false}
-                contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
-                horizontal={true}
-                animate={true}
-              />
-              <Text style={{marginLeft: 10}}>Carbs: {carbs} / {reccoCarb} {Math.floor((carbs/reccoCarb * 100))}%</Text>
-              <StackedBarChart
-                style={{ height: 100 }}
-                keys={keysCarb}
-                colors={colorsCarb}
-                data={dataCarb}
-                showGrid={false}
-                contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
-                horizontal={true}
-                animate={true}
-              />
-            </Content>
+          <Content>
+            <Text style={{ marginLeft: 10 }}>
+              Calories: {calories} / {reccoCal}{' '}
+              {Math.floor(calories / reccoCal * 100)}%
+            </Text>
+            <StackedBarChart
+              style={{ height: 100 }}
+              keys={keysCal}
+              colors={colorsCal}
+              data={dataCal}
+              showGrid={false}
+              contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
+              horizontal={true}
+              animate={true}
+            />
+            <Text style={{ marginLeft: 10 }}>
+              Fat: {fat} / {reccoFat} {Math.floor(fat / reccoFat * 100)}%
+            </Text>
+            <StackedBarChart
+              style={{ height: 100 }}
+              keys={keysFat}
+              colors={colorsFat}
+              data={dataFat}
+              showGrid={false}
+              contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
+              horizontal={true}
+              animate={true}
+            />
+            <Text style={{ marginLeft: 10 }}>
+              Protein: {protein} / {reccoPro}{' '}
+              {Math.floor(protein / reccoPro * 100)}%
+            </Text>
+            <StackedBarChart
+              style={{ height: 100 }}
+              keys={keysPro}
+              colors={colorsPro}
+              data={dataPro}
+              showGrid={false}
+              contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
+              horizontal={true}
+              animate={true}
+            />
+            <Text style={{ marginLeft: 10 }}>
+              Carbs: {carbs} / {reccoCarb} {Math.floor(carbs / reccoCarb * 100)}%
+            </Text>
+            <StackedBarChart
+              style={{ height: 100 }}
+              keys={keysCarb}
+              colors={colorsCarb}
+              data={dataCarb}
+              showGrid={false}
+              contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
+              horizontal={true}
+              animate={true}
+            />
+          </Content>
 
           {this.props.food.map((item, index) => {
             return (
               <Card key={index}>
                 <CardItem header>
-                  <Text>{item.name}</Text>
+                  <Left>
+                    <Text>{item.name}</Text>
+                  </Left>
+                  <Right>
+                    <Button
+                      dark
+                      transparent
+                      onPress={() => this.handleDeleteFoodItem(item.id)}
+                    >
+                      <Icon name="trash" />
+                    </Button>
+                  </Right>
                 </CardItem>
                 <CardItem body>
                   <Text>
-                    Calories {item.calories} Protein {item.protein}
+                    Calories: {item.calories} Protein: {item.protein} Carbs:{' '}
+                    {item.carbs} Fat: {item.totalFat}
                   </Text>
                 </CardItem>
               </Card>
@@ -248,7 +284,8 @@ const mapDispatchToProps = dispatch => ({
   logout: navigation => dispatch(logout(navigation)),
   day: user => dispatch(getFoodLogIntervalThunker(user, 'day')),
   week: user => dispatch(getFoodLogIntervalThunker(user, 'week')),
-  month: user => dispatch(getFoodLogIntervalThunker(user, 'month'))
+  month: user => dispatch(getFoodLogIntervalThunker(user, 'month')),
+  deleteFromFoodLogThunker
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main)
