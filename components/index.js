@@ -1,41 +1,41 @@
-import React from 'react';
-import { Provider } from 'react-redux';
-import { createRootNavigator } from './router';
-import { isSignedIn } from './auth';
+import React from 'react'
+import { Provider } from 'react-redux'
+import { createRootNavigator } from './router'
+import { isSignedIn } from './auth'
 import { AppLoading, Font } from 'expo'
 import { Root } from 'native-base'
-import store from './store';
+import store from './store'
 
 export default class App extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       signedIn: false,
       checkedSignIn: false,
       loading: true
-    };
+    }
   }
 
   async componentWillMount() {
     isSignedIn()
       .then(res => this.setState({ signedIn: res, checkedSignIn: true }))
-      .catch(error => console.error(error));
+      .catch(error => console.error(error))
 
-      await Font.loadAsync({
-        Roboto: require('native-base/Fonts/Roboto.ttf'),
-        Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf')
-      })
-      this.setState({ loading: false })
+    await Font.loadAsync({
+      Roboto: require('native-base/Fonts/Roboto.ttf'),
+      Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf')
+    })
+    this.setState({ loading: false })
   }
 
   render() {
-    const { checkedSignIn, signedIn } = this.state;
+    const { checkedSignIn, signedIn } = this.state
 
     if (!checkedSignIn) {
-      return null;
+      return null
     }
 
-    const Layout = createRootNavigator(signedIn);
+    const Layout = createRootNavigator(signedIn)
 
     if (this.state.loading) {
       return (
@@ -45,9 +45,11 @@ export default class App extends React.Component {
       )
     }
     return (
-      <Provider store={store}>
-        <Layout />
-      </Provider>
-    );
+      <Root>
+        <Provider store={store}>
+          <Layout />
+        </Provider>
+      </Root>
+    )
   }
 }

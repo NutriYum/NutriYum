@@ -1,8 +1,14 @@
 {
+  "root": true,
+  "extends": "fullstack",
   "env": {
-      "node": true,
-      "browser": true,
-      "es6": true
+    "node": true,
+    "browser": true,
+    "es6": true
   },
-  "parser": "babel-eslint"
+  "parser": "babel-eslint",
+  "rules": {
+    "semi": 0,
+    "new-cap": [1, { "capIsNewExceptions": ["Router"] }]
+  }
 }

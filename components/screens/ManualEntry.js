@@ -3,8 +3,8 @@ import { TextInput } from 'react-native'
 import axios from 'axios'
 import {
   Text,
+  Toast,
   Container,
-  Picker,
   List,
   ListItem,
   Content,
@@ -23,17 +23,17 @@ class ManualEntry extends Component {
     this.state = {
       text: '',
       nutrition: [],
-      error: ''
+      error: '',
+      showToast: false
     }
     this.onSubmitFood = this.onSubmitFood.bind(this)
     this.clearAll = this.clearAll.bind(this)
     this.addToFood = this.addToFood.bind(this)
-    this.getFoodLog = this.getFoodLog.bind(this)
   }
 
   onSubmitFood() {
     this.setState({ error: '' })
-    let result = axios
+    axios
       .get(`${IP}/api/nutri/search/${encodeURI(this.state.text)}`)
       .then(async result => {
         if (result.data === 'Item was not found! Try again') {
@@ -56,15 +56,21 @@ class ManualEntry extends Component {
     this.setState({ nutrition: [] })
   }
 
-  addToFood() {
+  async addToFood() {
     // console.log(this.state.nutrition)
-    this.props.addToFoodLogThunker(this.state.nutrition)
+    await this.props.addToFoodLogThunker(this.state.nutrition)
+
+    Toast.show({
+      text: `Added ${
+        this.state.nutrition.length === 1
+          ? this.state.nutrition[0].name
+          : 'items'
+      } to Food Log`,
+      buttonText: 'Okay',
+      duration: 1500
+    })
   }
 
-  getFoodLog() {
-    const userId = this.props.user.id
-    this.props.getFoodLogThunker(userId)
-  }
   render() {
     return (
       <Container>
@@ -82,17 +88,16 @@ class ManualEntry extends Component {
             name="food"
           />
           <Container>
-            <Button danger onPress={this.clearAll}>
-              <Text> Clear All </Text>
-            </Button>
-            <Button primary onPress={this.addToFood}>
-              <Text> Add to Food Log </Text>
-            </Button>
-            <Button primary onPress={this.getFoodLog}>
-              <Text> Get Food Log </Text>
-            </Button>
             <Content>
-              {this.state.nutrition.map((food, index) => {
+              <Button danger onPress={this.clearAll}>
+                <Text> Clear All </Text>
+              </Button>
+              <Button primary onPress={this.addToFood}>
+                <Text> Add to Food Log </Text>
+              </Button>
+              {this.state.error ? <Text>{this.state.error}</Text> : null}
+
+              {this.state.nutrition.map(food => {
                 return (
                   <List key={food.name}>
                     <ListItem itemDivider>
