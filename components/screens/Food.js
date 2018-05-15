@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Image, Picker } from 'react-native'
-import {Thumbnail, Title, Button, Container, Icon, Header, Content, Text, Card, CardItem, Body, Left, Right, List, ListItem, Form, Separator, View} from 'native-base'
+import {Thumbnail, Button, Container, Icon, Header, Content, Text, Card, CardItem, Body, Left, Right, List, ListItem, Form, Separator, View, Title} from 'native-base'
 import axios from 'axios'
 import styles from '../../Styles'
 import FoodLog from './FoodLog'
