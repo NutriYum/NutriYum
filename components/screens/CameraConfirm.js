@@ -21,22 +21,23 @@ import { setNutrition, removeNutrition } from '../redux/nutrition'
 import { StackActions, NavigationActions } from 'react-navigation'
 import { RNS3 } from 'react-native-aws3'
 import {
-  AMAZON_ACCESSKEY,
-  AMAZON_SECRETKEY,
-  WATSON_KEY
+  VENDOR_AK,
+  VENDOR_SK,
+  VR_KEY, 
+  options
 } from 'react-native-dotenv'
 import axios from 'axios'
 import styles from '../../Styles'
 
-accesskey = AMAZON_ACCESSKEY
-secretkey = AMAZON_SECRETKEY
-watsonKey = WATSON_KEY
+vk = VENDOR_AK
+sk = VENDOR_SK
+watK = VR_KEY
 
 const options = {
   bucket: 'nutriyum2',
   region: 'us-east-1',
-  accessKey: accesskey,
-  secretKey: secretkey,
+  accessKey: vk,
+  secretKey: sk,
   successActionStatus: 201
 }
 
@@ -73,7 +74,7 @@ class CameraConfirm extends React.Component {
       })
       //call watson
       const response = await axios.get(
-        `https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key=${watsonKey}&url=${amaUri}&version=2018-03-19&classifier_ids=food`
+        `https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key=${watK}&url=${amaUri}&version=2018-03-19&classifier_ids=food`
       )
       let result = response.data.images[0].classifiers[0].classes
       // await this.setState({ watsonFood: result })
