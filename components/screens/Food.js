@@ -84,7 +84,7 @@ class MyFoodScreen extends React.Component {
 
     return (
       <Container>
-      <Header style={styles.header}><Title> NutriYum </Title></Header>
+      <Header style={styles.header}><Title style={styles.loginText}> NutriYum </Title></Header>
         <Content>
           {foodMatch && photo ? (
             <Card>
