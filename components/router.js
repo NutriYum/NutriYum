@@ -11,18 +11,23 @@ import ProfileScreen from './screens/Profile'
 import ManualEntry from './screens/ManualEntry'
 import CameraConfirm from './screens/CameraConfirm'
 import FoodNutrition from './screens/FoodNutrition'
+import styles from '../Styles'
 
 export const SignedOut = createStackNavigator({
   Login: {
     screen: Login,
     navigationOptions: {
-      title: 'Login'
+      title: 'Login',
+      headerStyle: styles.header,
+      headerTitleStyle: styles.loginText
     }
   },
   Signup: {
     screen: Signup,
     navigationOptions: {
-      title: 'Sign Up'
+      title: 'Sign Up',
+      headerStyle: styles.header,
+      headerTitleStyle: styles.loginText
     }
   }
 });
@@ -49,13 +54,17 @@ export const FoodStack = createStackNavigator({
   MyFoodScreen: {
     screen: MyFoodScreen,
     navigationOptions: {
-      title: 'MyFoodScreen'
-    }
+      title: 'NutriYum',
+      headerStyle: styles.header,
+      headerTitleStyle: styles.loginText
+    },
   },
   FoodNutrition: {
     screen: FoodNutrition,
     navigationOptions: {
-      title: 'FoodNutrition'
+      title: 'FoodNutrition',
+      headerStyle: styles.header,
+      headerTitleStyle: styles.loginText
     }
   }
 },

@@ -57,7 +57,6 @@ class MyFoodScreen extends React.Component {
 
     return (
       <Container>
-      <Header style={styles.header}><Title style={styles.loginText}> NutriYum </Title></Header>
         <Content>
           {foodMatch && photo ? (
             <Card>
@@ -84,7 +83,7 @@ class MyFoodScreen extends React.Component {
             </Card>
           ) : (
             <View>
-              <Text>Go to camera or manual entry to enter a food item</Text>
+              <Text style={{alignSelf: 'center', fontSize: 20, paddingTop: 50}}>Go to camera or manual entry to enter a food item</Text>
             </View>
           )}
 
