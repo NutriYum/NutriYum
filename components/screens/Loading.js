@@ -32,7 +32,7 @@ class Loader extends Component {
                 size="large"
                 color="#0000ff"
                 />
-              <Text>Watson's on it!</Text>
+              <Text style={{fontWeight: 'bold', color: "#0000ff"}}>Watson's on it!</Text>
             </View>
           </View>
         </Modal>

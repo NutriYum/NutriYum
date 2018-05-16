@@ -26,6 +26,7 @@ import { StackedBarChart } from 'react-native-svg-charts'
 import ProgressBarClassic from 'react-native-progress-bar-classic'
 import Axios from 'axios'
 import IP from '../../IP'
+import ProgressBarClassic from 'react-native-progress-bar-classic';
 
 let reccoCal = 2200
 let reccoPro = 50
@@ -152,12 +153,13 @@ class Main extends React.Component {
             <CardItem header>
               <Left>
                 <Thumbnail
-                  large
+                  square large
+                  style={{borderRadius: 10}}
                   source={{ uri: this.props.user.profileImgUri }}
                 />
               </Left>
               <Right>
-                <Text>{this.props.user.email}</Text>
+                <Text>{this.props.user.userName}</Text>
               </Right>
             </CardItem>
             <CardItem />
