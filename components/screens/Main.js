@@ -29,6 +29,8 @@ import style from '../../Styles'
 import ProgressBarClassic from 'react-native-progress-bar-classic'
 import Axios from 'axios'
 import IP from '../../IP'
+import Weekly from './Weekly'
+import Monthly from './Monthly'
 
 
 let reccoCal = 2200
@@ -43,7 +45,8 @@ class Main extends React.Component {
       dailyCal: 2200,
       dailyPro: 50,
       dailyFat: 70,
-      dailyCarb: 250
+      dailyCarb: 250,
+      timeFrame: ''
     }
   }
 
@@ -57,6 +60,7 @@ class Main extends React.Component {
     reccoPro = this.state.dailyPro
     reccoFat = this.state.dailyFat
     reccoCarb = this.state.dailyCarb
+    this.setState({ timeFrame: 'daily' })
   }
 
   changeViewandFactorWeek() {
@@ -65,6 +69,7 @@ class Main extends React.Component {
     reccoPro = this.state.dailyPro * 7
     reccoFat = this.state.dailyFat * 7
     reccoCarb = this.state.dailyCarb * 7
+    this.setState({ timeFrame: 'weekly' })
   }
 
   changeViewandFactorMonth() {
@@ -73,6 +78,7 @@ class Main extends React.Component {
     reccoPro = this.state.dailyPro * 30
     reccoFat = this.state.dailyFat * 30
     reccoCarb = this.state.dailyCarb * 30
+    this.setState({ timeFrame: 'monthly' })
   }
 
   async handleDeleteFoodItem(id, name) {
@@ -88,7 +94,6 @@ class Main extends React.Component {
       duration: 1500
     })
   }
-
 
   render() {
     let calories = 0
@@ -155,7 +160,7 @@ class Main extends React.Component {
 
     return (
       <Container>
-        <Content ref={c => (this.component = c)}>
+        <Content>
           <Card>
             <CardItem header>
               <Left>
@@ -194,10 +199,15 @@ class Main extends React.Component {
               </Button>
             </CardItem>
           </Card>
+          {this.state.timeFrame === 'weekly' ? <Weekly /> : null}
+          {this.state.timeFrame === 'monthly' ? <Monthly /> : null}
+
           {Platform.OS === 'ios' ? (
             <View>
               <Text style={{ marginLeft: 10 }}>
-                Calories: {calories} / {reccoCal}
+                Calories: {calories} / {reccoCal}{' '}
+              </Text>
+              <Text style={{ marginLeft: 10, marginTop: 5 }}>
                 {Math.floor(calories / reccoCal * 100)}%
               </Text>
               <StackedBarChart
@@ -211,7 +221,10 @@ class Main extends React.Component {
                 animate={true}
               />
               <Text style={{ marginLeft: 10 }}>
-                Fat: {fat} / {reccoFat} {Math.floor(fat / reccoFat * 100)}%
+                Fat: {fat} / {reccoFat}
+              </Text>
+              <Text style={{ marginLeft: 10, marginTop: 5 }}>
+                {Math.floor(fat / reccoFat * 100)}%
               </Text>
               <StackedBarChart
                 style={{ height: 100 }}
@@ -224,7 +237,9 @@ class Main extends React.Component {
                 animate={true}
               />
               <Text style={{ marginLeft: 10 }}>
-                Protein: {protein} / {reccoPro}
+                Protein: {protein} / {reccoPro}{' '}
+              </Text>
+              <Text style={{ marginLeft: 10, marginTop: 5 }}>
                 {Math.floor(protein / reccoPro * 100)}%
               </Text>
               <StackedBarChart
@@ -238,7 +253,9 @@ class Main extends React.Component {
                 animate={true}
               />
               <Text style={{ marginLeft: 10 }}>
-                Carbs: {carbs} / {reccoCarb}
+                Carbs: {carbs} / {reccoCarb}{' '}
+              </Text>
+              <Text style={{ marginLeft: 10, marginTop: 5 }}>
                 {Math.floor(carbs / reccoCarb * 100)}%
               </Text>
               <StackedBarChart
@@ -298,7 +315,6 @@ class Main extends React.Component {
                       transparent
                       onPress={() => {
                         this.handleDeleteFoodItem(item.id, item.name)
-                        this.component._root.scrollToPosition(0, 0)
                       }}
                     >
                       <Icon name="trash" />
@@ -331,7 +347,7 @@ const mapDispatchToProps = dispatch => ({
   logout: navigation => dispatch(logout(navigation)),
   day: user => dispatch(getFoodLogIntervalThunker(user, 'day')),
   week: user => dispatch(getFoodLogIntervalThunker(user, 'week')),
-  month: user => dispatch(getFoodLogIntervalThunker(user, 'month')),
+  month: user => dispatch(getFoodLogIntervalThunker(user, 'month'))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main)
