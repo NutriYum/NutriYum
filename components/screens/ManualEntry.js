@@ -91,9 +91,9 @@ class ManualEntry extends Component {
   render() {
     return (
       <Container>
-        <Header style={styles.header}>
+        {/* <Header style={styles.header}>
           <Title style={styles.loginText}> NutriYum </Title>
-        </Header>
+        </Header> */}
         <Container>
           <Content keyboardShouldPersistTaps="handled">
             <Text

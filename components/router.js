@@ -14,7 +14,7 @@ import Signup from './screens/Signup'
 import Main from './screens/Main'
 import MyCameraScreen from './screens/Camera'
 import MyFoodScreen from './screens/Food'
-import ProfileScreen from './screens/Profile'
+// import ProfileScreen from './screens/Profile'
 import ManualEntry from './screens/ManualEntry'
 import CameraConfirm from './screens/CameraConfirm'
 import FoodNutrition from './screens/FoodNutrition'
@@ -39,69 +39,89 @@ export const SignedOut = createStackNavigator({
   }
 })
 
-export const CameraStack = createStackNavigator(
-  {
-    MyCameraScreen: {
-      screen: MyCameraScreen,
-      navigationOptions: {
-        title: 'MyCameraScreen'
-      }
-    },
-    CameraConfirm: {
-      screen: CameraConfirm,
-      navigationOptions: {
-        title: 'CameraConfirm'
-      }
+export const CameraStack = createStackNavigator({
+  MyCameraScreen: {
+    screen: MyCameraScreen,
+    navigationOptions: {
+      title: 'Snap Your Chow',
+      headerStyle: styles.header,
+      headerTitleStyle: styles.loginText
     }
   },
-  {
-    headerMode: 'none',
-    initialRouteName: 'MyCameraScreen'
+  CameraConfirm: {
+    screen: CameraConfirm,
+    navigationOptions: {
+      title: 'Confirm Image',
+      headerStyle: styles.header,
+      headerTitleStyle: styles.loginText
+    }
+  },
+  MyFoodScreen: {
+    screen: MyFoodScreen,
+    navigationOptions: {
+      title: 'Select Your Chow',
+      headerStyle: styles.header,
+      headerTitleStyle: styles.loginText
+    },
+  },
+  FoodNutrition: {
+    screen: FoodNutrition,
+    navigationOptions: {
+      title: 'Food Facts',
+      headerStyle: styles.header,
+      headerTitleStyle: styles.loginText
+    }
   }
-)
+},
+  {
+  // {headerMode: 'none',
+    initialRouteName: 'MyCameraScreen'}
+);
 
-export const FoodStack = createStackNavigator(
-  {
-    MyFoodScreen: {
-      screen: MyFoodScreen,
-      navigationOptions: {
-        title: 'Select Your Chow',
-        headerStyle: styles.header,
-        headerTitleStyle: styles.loginText
-      }
-    },
-    FoodNutrition: {
-      screen: FoodNutrition,
-      navigationOptions: {
-        title: 'Food Nutrition',
-        headerStyle: styles.header,
-        headerTitleStyle: styles.loginText
-      }
+export const ProfileStack = createStackNavigator({
+  Profile: {
+    screen: Main,
+    path: 'Profile',
+    navigationOptions: {
+      title: 'My Profile',
+      headerStyle: styles.header,
+      headerTitleStyle: styles.loginText
     }
   },
+},
   {
-    initialRouteName: 'MyFoodScreen'
+    initialRouteName: 'Profile'}
+);
+
+export const ManualStack = createStackNavigator({
+  Manual: {
+    screen: ManualEntry,
+    path: 'Search',
+    navigationOptions: {
+      title: 'Manual Chow Search',
+      headerStyle: styles.header,
+      headerTitleStyle: styles.loginText
+    }
   }
-)
+},
+  {
+    initialRouteName: 'Manual'}
+);
 
 const SignedIn = createMaterialTopTabNavigator(
   {
     Profile: {
-      screen: Main,
+      screen: ProfileStack,
       path: 'Profile'
     },
     Camera: {
       screen: CameraStack,
       path: 'Camera'
     },
-    Food: {
-      screen: FoodStack,
-      path: 'Food'
-    },
     Search: {
-      screen: ManualEntry,
+      screen: ManualStack,
       path: 'Search'
-    }
+    },
   },
   {
     tabBarPosition: 'bottom',
