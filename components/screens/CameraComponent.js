@@ -31,8 +31,6 @@ class CameraComponent extends Component {
     whiteBalance: 'auto',
     autoFocus: 'off',
     loading: false,
-    // photo: null,
-    // photoName: ''
   }
   async componentWillMount() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA)
@@ -41,7 +39,6 @@ class CameraComponent extends Component {
 
   clearPhoto = async () => {
     await this.props.removeCurrentPhoto()
-    // this.setState({ photo: null, photoName: '' })
   }
 
   snap = async () => {

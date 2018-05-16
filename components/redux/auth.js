@@ -43,7 +43,6 @@ export const me = () => dispatch =>
     .catch(err => console.log(err))
 
 export const login = (credentials, navigation) => dispatch => {
-  // console.log(IP, credentials)
   axios.post(`${IP}/auth/login`, credentials)
     .then(res => setUserAndRedirect(res.data, navigation, dispatch))
     .catch(() => navigation.navigate('SignedOut', {error: 'Login failed.'}));

@@ -3,7 +3,7 @@ import { Image, Picker } from 'react-native'
 import {Thumbnail, Button, Container, Icon, Header, Content, Text, Card, CardItem, Body, Left, Right, List, ListItem, Form, Separator, View, Title} from 'native-base'
 import axios from 'axios'
 import styles from '../../Styles'
-import FoodLog from './FoodLog'
+// import FoodLog from './FoodLog'
 import { addToFoodLogThunker, getFoodLogThunker } from '../redux/foodLog';
 import { setCurrentPhoto, removeCurrentPhoto } from '../redux/photo'
 import { setCurrentMatch, removeCurrentMatch } from '../redux/foodmatch'
@@ -42,8 +42,7 @@ class MyFoodScreen extends React.Component {
       actions: [NavigationActions.navigate({ routeName: 'MyCameraScreen' })],
     });
     this.props.navigation.dispatch(resetAction);
-    // this.props.navigation.navigate('MyCameraScreen')
-    // this.props.removeCurrentPhoto();
+    this.props.navigation.navigate('MyCameraScreen')
     this.props.removeCurrentMatch();
     this.props.removeNutrition();
   }
@@ -54,14 +53,14 @@ class MyFoodScreen extends React.Component {
 
     return (
       <Container>
-      {/* <Header style={styles.header}><Title style={styles.loginText}> NutriYum </Title></Header> */}
         <Content>
           {foodMatch && photo ? (
             <Card>
               <CardItem>
                 <Left>
                     <Thumbnail
-                    large
+                    square large
+                    style={{borderRadius: 10}}
                     source={{ uri: photo.uri }}
                   />
                 </Left>
@@ -81,13 +80,13 @@ class MyFoodScreen extends React.Component {
             </Card>
           ) : (
             <View>
-              <Text>Go to camera or manual entry to enter a food item</Text>
+              <Text style={{alignSelf: 'center'}}>Go to camera or manual entry to enter a food item</Text>
             </View>
           )}
 
           {foodMatch.length > 0 ? (
             <View>
-              <Text>Click the food that best matches your picture</Text>
+              <Text style={{alignSelf: 'center'}}>Click the food that best matches your picture</Text>
                   {foodMatch.map((item, index) => {
                     return (
                       <Card key={index}>

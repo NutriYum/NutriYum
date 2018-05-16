@@ -15,14 +15,12 @@ class Loader extends Component {
   }
   render()  {
     const { loading } = this.props;
-    // console.log(loading)
     return (
         <Modal
           visible={loading}
           transparent={true}
           animationType='none'
           onRequestClose={()=>{
-            // return loading = false
           }}
           >
           <View style={styles.modalBackground}>
@@ -32,7 +30,7 @@ class Loader extends Component {
                 size="large"
                 color="#0000ff"
                 />
-              <Text>Watson's on it!</Text>
+              <Text style={{fontWeight: 'bold', color: "#0000ff"}}>Watson's on it!</Text>
             </View>
           </View>
         </Modal>

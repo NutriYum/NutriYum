@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, Button, Platform } from 'react-native'
+import { StyleSheet, Platform } from 'react-native'
 import {
   Thumbnail,
   Container,
@@ -15,14 +15,21 @@ import {
   Form,
   Text,
   Tabs,
-  Tab
+  Tab,
+  Icon,
+  Button,
+  Toast,
+  View
 } from 'native-base'
 import { connect } from 'react-redux'
 import { getFoodLogIntervalThunker } from '../redux/foodLog'
 import { logout } from '../redux/auth'
 import { StackedBarChart } from 'react-native-svg-charts'
-import ProgressBarClassic from 'react-native-progress-bar-classic';
 import style from '../../Styles'
+import ProgressBarClassic from 'react-native-progress-bar-classic'
+import Axios from 'axios'
+import IP from '../../IP'
+
 
 let reccoCal = 2200
 let reccoPro = 50
@@ -41,7 +48,7 @@ class Main extends React.Component {
   }
 
   componentWillMount() {
-    this.props.day(this.props.user.id)
+    this.changeViewandFactorDay()
   }
 
   changeViewandFactorDay() {
@@ -67,6 +74,21 @@ class Main extends React.Component {
     reccoFat = this.state.dailyFat * 30
     reccoCarb = this.state.dailyCarb * 30
   }
+
+  async handleDeleteFoodItem(id, name) {
+    console.log(id)
+    await Axios.delete(`${IP}/api/foodLogs/${id}`)
+      .then(result => console.log(result))
+      .catch(error => console.log(error))
+
+    await this.changeViewandFactorDay()
+    Toast.show({
+      text: `Removed ${name}`,
+      buttonText: 'Okay',
+      duration: 1500
+    })
+  }
+
 
   render() {
     let calories = 0
@@ -133,128 +155,160 @@ class Main extends React.Component {
 
     return (
       <Container>
-        <Header />
-        <Content>
+        <Content ref={c => (this.component = c)}>
           <Card>
             <CardItem header>
               <Left>
                 <Thumbnail
+                  square
                   large
+                  style={{ borderRadius: 10 }}
                   source={{ uri: this.props.user.profileImgUri }}
                 />
               </Left>
               <Right>
-                <Text>{this.props.user.email}</Text>
+                <Text>{this.props.user.userName}</Text>
               </Right>
             </CardItem>
             <CardItem />
             <CardItem footer>
               <Button
                 buttonStyle={styles.button}
-                title="Logout"
                 onPress={() => this.props.logout(this.props.navigation)}
-              />
+              >
+                <Text>Logout</Text>
+              </Button>
             </CardItem>
           </Card>
 
           <Card>
-            <CardItem
-              style={style.buttonContainer}>
-              <Button
-                onPress={() => this.changeViewandFactorDay()}
-                title="Today"
-                style={style.spacer}
-              />
-              <Button
-                onPress={() => this.changeViewandFactorWeek()}
-                title="Week"
-                style={style.spacer}
-              />
-              <Button
-                onPress={() => this.changeViewandFactorMonth()}
-                title="Month"
-                style={style.spacer}
-              />
+            <CardItem>
+              <Button onPress={() => this.changeViewandFactorDay()}>
+                <Text>Today</Text>
+              </Button>
+              <Button onPress={() => this.changeViewandFactorWeek()}>
+                <Text>Week</Text>
+              </Button>
+              <Button onPress={() => this.changeViewandFactorMonth()}>
+                <Text>Month</Text>
+              </Button>
             </CardItem>
           </Card>
-          { Platform.OS === 'ios' ?
-          <Content>
-            <Text style={{ marginLeft: 10 }}>
-              Calories: {calories} / {reccoCal}{' '}
-              {Math.floor(calories / reccoCal * 100)}%
-            </Text>
-            <StackedBarChart
-              style={{ height: 100 }}
-              keys={keysCal}
-              colors={colorsCal}
-              data={dataCal}
-              showGrid={false}
-              contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
-              horizontal={true}
-              animate={true}
-            />
-            <Text style={{ marginLeft: 10 }}>
-              Fat: {fat} / {reccoFat} {Math.floor(fat / reccoFat * 100)}%
-            </Text>
-            <StackedBarChart
-              style={{ height: 100 }}
-              keys={keysFat}
-              colors={colorsFat}
-              data={dataFat}
-              showGrid={false}
-              contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
-              horizontal={true}
-              animate={true}
-            />
-            <Text style={{ marginLeft: 10 }}>
-              Protein: {protein} / {reccoPro}{' '}
-              {Math.floor(protein / reccoPro * 100)}%
-            </Text>
-            <StackedBarChart
-              style={{ height: 100 }}
-              keys={keysPro}
-              colors={colorsPro}
-              data={dataPro}
-              showGrid={false}
-              contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
-              horizontal={true}
-              animate={true}
-            />
-            <Text style={{ marginLeft: 10 }}>
-              Carbs: {carbs} / {reccoCarb} {Math.floor(carbs / reccoCarb * 100)}%
-            </Text>
-            <StackedBarChart
-              style={{ height: 100 }}
-              keys={keysCarb}
-              colors={colorsCarb}
-              data={dataCarb}
-              showGrid={false}
-              contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
-              horizontal={true}
-              animate={true}
-            />
-          </Content>
-          :
+          {Platform.OS === 'ios' ? (
+            <View>
+              <Text style={{ marginLeft: 10 }}>
+                Calories: {calories} / {reccoCal}
+                {Math.floor(calories / reccoCal * 100)}%
+              </Text>
+              <StackedBarChart
+                style={{ height: 100 }}
+                keys={keysCal}
+                colors={colorsCal}
+                data={dataCal}
+                showGrid={false}
+                contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
+                horizontal={true}
+                animate={true}
+              />
+              <Text style={{ marginLeft: 10 }}>
+                Fat: {fat} / {reccoFat} {Math.floor(fat / reccoFat * 100)}%
+              </Text>
+              <StackedBarChart
+                style={{ height: 100 }}
+                keys={keysFat}
+                colors={colorsFat}
+                data={dataFat}
+                showGrid={false}
+                contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
+                horizontal={true}
+                animate={true}
+              />
+              <Text style={{ marginLeft: 10 }}>
+                Protein: {protein} / {reccoPro}
+                {Math.floor(protein / reccoPro * 100)}%
+              </Text>
+              <StackedBarChart
+                style={{ height: 100 }}
+                keys={keysPro}
+                colors={colorsPro}
+                data={dataPro}
+                showGrid={false}
+                contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
+                horizontal={true}
+                animate={true}
+              />
+              <Text style={{ marginLeft: 10 }}>
+                Carbs: {carbs} / {reccoCarb}
+                {Math.floor(carbs / reccoCarb * 100)}%
+              </Text>
+              <StackedBarChart
+                style={{ height: 100 }}
+                keys={keysCarb}
+                colors={colorsCarb}
+                data={dataCarb}
+                showGrid={false}
+                contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
+                horizontal={true}
+                animate={true}
+              />
+            </View>
+          ) : (
             <Content>
-              <Text style={{marginLeft: 10}}>Calories: {calories} / {reccoCal} </Text>
-              <ProgressBarClassic progress={Math.floor((calories / reccoCal) * 100)} valueStyle={'balloon'} />
-              <Text style={{marginLeft: 10}}>Fat: {fat} / {reccoFat} {Math.floor((fat / reccoFat * 100))}%</Text>
-              <ProgressBarClassic progress={Math.floor((fat / reccoFat) * 100)} valueStyle={'balloon'} />
-              <Text style={{marginLeft: 10}}>Protein: {protein} / {reccoPro} </Text>
-              <ProgressBarClassic progress={Math.floor((protein / reccoPro) * 100)} valueStyle={'balloon'} />
-              <Text style={{marginLeft: 10}}>Carbs: {carbs} / {reccoCarb} {Math.floor((carbs / reccoCarb * 100))}%</Text>
-              <ProgressBarClassic progress={Math.floor((carbs / reccoCarb) * 100)} valueStyle={'balloon'} />
+              <Text style={{ marginLeft: 10 }}>
+                Calories: {calories} / {reccoCal}
+              </Text>
+              <ProgressBarClassic
+                progress={Math.floor(calories / reccoCal * 100)}
+                valueStyle={'balloon'}
+              />
+              <Text style={{ marginLeft: 10 }}>
+                Fat: {fat} / {reccoFat} {Math.floor(fat / reccoFat * 100)}%
+              </Text>
+              <ProgressBarClassic
+                progress={Math.floor(fat / reccoFat * 100)}
+                valueStyle={'balloon'}
+              />
+              <Text style={{ marginLeft: 10 }}>
+                Protein: {protein} / {reccoPro}
+              </Text>
+              <ProgressBarClassic
+                progress={Math.floor(protein / reccoPro * 100)}
+                valueStyle={'balloon'}
+              />
+              <Text style={{ marginLeft: 10 }}>
+                Carbs: {carbs} / {reccoCarb}
+                {Math.floor(carbs / reccoCarb * 100)}%
+              </Text>
+              <ProgressBarClassic
+                progress={Math.floor(carbs / reccoCarb * 100)}
+                valueStyle={'balloon'}
+              />
             </Content>
-          }
+          )}
           {this.props.food.map((item, index) => {
             return (
               <Card key={index}>
                 <CardItem header>
-                  <Text>{item.name}</Text>
+                  <Left>
+                    <Text>{item.name}</Text>
+                  </Left>
+                  <Right>
+                    <Button
+                      dark
+                      transparent
+                      onPress={() => {
+                        this.handleDeleteFoodItem(item.id, item.name)
+                        this.component._root.scrollToPosition(0, 0)
+                      }}
+                    >
+                      <Icon name="trash" />
+                    </Button>
+                  </Right>
                 </CardItem>
                 <CardItem body>
                   <Text>
-                    Calories {item.calories} Protein {item.protein}
+                    Calories: {item.calories} Protein: {item.protein} Carbs:
+                    {item.carbs} Fat: {item.totalFat}
                   </Text>
                 </CardItem>
               </Card>
@@ -277,7 +331,7 @@ const mapDispatchToProps = dispatch => ({
   logout: navigation => dispatch(logout(navigation)),
   day: user => dispatch(getFoodLogIntervalThunker(user, 'day')),
   week: user => dispatch(getFoodLogIntervalThunker(user, 'week')),
-  month: user => dispatch(getFoodLogIntervalThunker(user, 'month'))
+  month: user => dispatch(getFoodLogIntervalThunker(user, 'month')),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main)

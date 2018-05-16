@@ -10,6 +10,7 @@ const frontEndAxios = axios.create
 
 const GET_FOODLOG = 'GET_FOODLOG'
 const ADD_TO_FOODLOG = 'ADD_TO_FOODLOG'
+const DELETE_FROM_FOODLOG = 'DELETE_FROM_FOODLOG'
 
 /**
  * INITIAL STATE
@@ -23,6 +24,7 @@ const defaultFoodLog = []
 
 const getFoodLog = foodLog => ({ type: GET_FOODLOG, foodLog })
 const addToFoodLog = foodLog => ({ type: ADD_TO_FOODLOG, foodLog })
+const eliminateFoodFromLog = food => ({ type: DELETE_FROM_FOODLOG, food })
 
 /**
  * REDUCER
@@ -34,8 +36,10 @@ export default function reducer(state = defaultFoodLog, action) {
       return action.foodLog
 
     case ADD_TO_FOODLOG:
-    return [...state, ...action.foodLog]
+      return [...state, ...action.foodLog]
 
+    case DELETE_FROM_FOODLOG:
+      return [...state]
 
     default:
       return defaultFoodLog
@@ -71,3 +75,12 @@ export const getFoodLogIntervalThunker = (foodLogsId, interval) => dispatch =>
       dispatch(getFoodLog(res.data || defaultFoodLog))
     })
     .catch(err => console.log(err))
+
+export const deleteFromFoodLogThunker = (food) => dispatch => {
+  axios
+    .delete(`${IP}/api/foodLogs/${food}`, food)
+    .then(res => {
+      return dispatch(eliminateFoodFromLog(res.data || defaultFoodLog))
+    })
+    .catch(err => console.log(err))
+}
