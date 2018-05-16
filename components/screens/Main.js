@@ -28,7 +28,7 @@ import { StackedBarChart } from 'react-native-svg-charts'
 import ProgressBarClassic from 'react-native-progress-bar-classic'
 import Axios from 'axios'
 import IP from '../../IP'
-import ProgressBarClassic from 'react-native-progress-bar-classic'
+// import ProgressBarClassic from 'react-native-progress-bar-classic'
 
 
 let reccoCal = 2200
