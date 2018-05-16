@@ -27,7 +27,6 @@ export default styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     alignSelf: 'center',
-    // zIndex: 1,
   },
   targetPrompt: {
     color: 'white',
@@ -51,7 +50,8 @@ export default styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'white',
     paddingHorizontal: 5,
-    flex: 1
+    flex: 1,
+    margin: 20
   },
   textLabel: {
     fontSize: 20,
@@ -96,9 +96,6 @@ export default styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20
   },
-  container: {
-    margin: 20
-},
   modalBackground: {
     flex: 1,
     alignItems: 'center',

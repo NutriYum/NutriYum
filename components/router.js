@@ -1,10 +1,17 @@
-import React from 'react';
-import { createStackNavigator, StackNavigator, TabNavigator, createTabNavigator, TabBarBottom, createMaterialTopTabNavigator } from 'react-navigation';
-import { FontAwesome } from 'react-native-vector-icons';
+import React from 'react'
+import {
+  createStackNavigator,
+  StackNavigator,
+  TabNavigator,
+  createTabNavigator,
+  TabBarBottom,
+  createMaterialTopTabNavigator
+} from 'react-navigation'
+import { FontAwesome } from 'react-native-vector-icons'
 
-import Login from './screens/Login';
-import Signup from './screens/Signup';
-import Main from './screens/Main';
+import Login from './screens/Login'
+import Signup from './screens/Signup'
+import Main from './screens/Main'
 import MyCameraScreen from './screens/Camera'
 import MyFoodScreen from './screens/Food'
 import ProfileScreen from './screens/Profile'
@@ -17,7 +24,7 @@ export const SignedOut = createStackNavigator({
   Login: {
     screen: Login,
     navigationOptions: {
-      title: 'Login',
+      title: 'NutriYum',
       headerStyle: styles.header,
       headerTitleStyle: styles.loginText
     }
@@ -30,54 +37,58 @@ export const SignedOut = createStackNavigator({
       headerTitleStyle: styles.loginText
     }
   }
-});
+})
 
-export const CameraStack = createStackNavigator({
-  MyCameraScreen: {
-    screen: MyCameraScreen,
-    navigationOptions: {
-      title: 'MyCameraScreen'
-    }
-  },
-  CameraConfirm: {
-    screen: CameraConfirm,
-    navigationOptions: {
-      title: 'CameraConfirm'
-    }
-  }
-},
-  {headerMode: 'none',
-    initialRouteName: 'MyCameraScreen'}
-);
-
-export const FoodStack = createStackNavigator({
-  MyFoodScreen: {
-    screen: MyFoodScreen,
-    navigationOptions: {
-      title: 'Select Your Chow',
-      headerStyle: styles.header,
-      headerTitleStyle: styles.loginText
-    },
-  },
-  FoodNutrition: {
-    screen: FoodNutrition,
-    navigationOptions: {
-      title: 'Food Nutrition',
-      headerStyle: styles.header,
-      headerTitleStyle: styles.loginText
-    }
-  }
-},
+export const CameraStack = createStackNavigator(
   {
-    // headerMode: 'none',
-    initialRouteName: 'MyFoodScreen'}
-);
+    MyCameraScreen: {
+      screen: MyCameraScreen,
+      navigationOptions: {
+        title: 'MyCameraScreen'
+      }
+    },
+    CameraConfirm: {
+      screen: CameraConfirm,
+      navigationOptions: {
+        title: 'CameraConfirm'
+      }
+    }
+  },
+  {
+    headerMode: 'none',
+    initialRouteName: 'MyCameraScreen'
+  }
+)
+
+export const FoodStack = createStackNavigator(
+  {
+    MyFoodScreen: {
+      screen: MyFoodScreen,
+      navigationOptions: {
+        title: 'Select Your Chow',
+        headerStyle: styles.header,
+        headerTitleStyle: styles.loginText
+      }
+    },
+    FoodNutrition: {
+      screen: FoodNutrition,
+      navigationOptions: {
+        title: 'Food Nutrition',
+        headerStyle: styles.header,
+        headerTitleStyle: styles.loginText
+      }
+    }
+  },
+  {
+    initialRouteName: 'MyFoodScreen'
+  }
+)
 
 const SignedIn = createMaterialTopTabNavigator(
   {
-    Main: {
+    Profile: {
       screen: Main,
-      path: 'Main'
+      path: 'Profile'
     },
     Camera: {
       screen: CameraStack,
@@ -87,14 +98,14 @@ const SignedIn = createMaterialTopTabNavigator(
       screen: FoodStack,
       path: 'Food'
     },
-    Manual: {
+    Search: {
       screen: ManualEntry,
-      path: 'Manual'
-    },
+      path: 'Search'
+    }
   },
   {
     tabBarPosition: 'bottom',
-    initialRouteName: 'Camera',
+    initialRouteName: 'Camera'
   },
   {
     tabBarOptions: {
@@ -122,12 +133,12 @@ export const createRootNavigator = (signedIn = false) => {
         navigationOptions: {
           gesturesEnabled: false
         }
-      },
+      }
     },
     {
       mode: 'modal',
       headerMode: 'none',
       initialRouteName: signedIn ? 'SignedIn' : 'SignedOut'
     }
-  );
-};
+  )
+}

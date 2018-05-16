@@ -80,7 +80,6 @@ export const deleteFromFoodLogThunker = (food) => dispatch => {
   axios
     .delete(`${IP}/api/foodLogs/${food}`, food)
     .then(res => {
-      // const dispatchData = Array.isArray(res.data) ? res.data : [res.data]
       return dispatch(eliminateFoodFromLog(res.data || defaultFoodLog))
     })
     .catch(err => console.log(err))

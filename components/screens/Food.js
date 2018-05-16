@@ -46,7 +46,6 @@ class MyFoodScreen extends React.Component {
     });
     this.props.navigation.dispatch(resetAction);
     this.props.navigation.navigate('MyCameraScreen')
-    // this.props.removeCurrentPhoto();
     this.props.removeCurrentMatch();
     this.props.removeNutrition();
   }
