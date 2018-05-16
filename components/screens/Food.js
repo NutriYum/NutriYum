@@ -10,6 +10,7 @@ import { setCurrentMatch, removeCurrentMatch } from '../redux/foodmatch'
 import { setNutrition, removeNutrition } from '../redux/nutrition'
 import { connect } from 'react-redux'
 import { StackActions, NavigationActions } from 'react-navigation';
+import ProgressCircle from 'react-native-progress-circle'
 
 class MyFoodScreen extends React.Component {
   constructor(props) {
@@ -68,7 +69,7 @@ class MyFoodScreen extends React.Component {
                   />
                 </Left>
                 <Body>
-                  <Text>  </Text>
+                  <Text />
                 </Body>
                 <Right>
                   <Button
@@ -96,12 +97,35 @@ class MyFoodScreen extends React.Component {
                       <CardItem
                         header
                         button
-                        onPress={()=> this.nutrionixCall(item.class)}>
-                        <Text> {item.class.toUpperCase()} </Text>
+                        onPress={() => this.nutrionixCall(item.class)}>
+                        <Left>
+                          <Text> {item.class.toUpperCase()} </Text>
+                        </Left>
+                        <Right>
+                          <ProgressCircle
+                            percent={Math.floor(item.score * 100)}
+                            radius={30}
+                            borderWidth={6}
+                            color="#4ed13a"
+                            shadowColor="#1e4718"
+                            bgColor="#fff"
+                          >
+                            <Text> {Math.floor(item.score * 100)}% </Text>
+                          </ProgressCircle>
+                        </Right>
                       </CardItem>
-                      <CardItem>
-                        <Body><Text>{item.score}% Match</Text></Body>
-                      </CardItem>
+                      {/* <CardItem>
+                        <ProgressCircle
+                          percent={Math.floor(item.score * 100)}
+                          radius={30}
+                          borderWidth={6}
+                          color="#4ed13a"
+                          shadowColor="#1e4718"
+                          bgColor="#fff"
+                        >
+                        <Text> {Math.floor(item.score * 100)}% </Text>
+                        </ProgressCircle>
+                      </CardItem> */}
                         </Card>
                     )})
                   }
