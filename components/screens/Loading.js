@@ -15,14 +15,12 @@ class Loader extends Component {
   }
   render()  {
     const { loading } = this.props;
-    // console.log(loading)
     return (
         <Modal
           visible={loading}
           transparent={true}
           animationType='none'
           onRequestClose={()=>{
-            // return loading = false
           }}
           >
           <View style={styles.modalBackground}>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, KeyboardAvoidingView, ScrollView, Button, Image, TouchableHighlight } from 'react-native';
+import { StyleSheet, TextInput, KeyboardAvoidingView, ScrollView, Button, Image, TouchableHighlight, Text, View } from 'react-native';
 import { Container, Header, Content, Form, Item, Input, Label } from 'native-base';
 import { connect } from 'react-redux';
 import { login } from '../redux/auth';
@@ -27,7 +27,6 @@ class Login extends React.Component {
       email,
       password
     }, this.props.navigation);
-    // clear the state after login for security
     this.setState({
       email: '',
       password: '',
@@ -37,7 +36,7 @@ class Login extends React.Component {
 
   warning(){
     if (this.props.error){
-      return <Text style={{fontWeight: 'bold',color: 'red', textShadowColor: 'black', fontSize: 16, alignSelf: 'center'}}> {this.props.error.response.data} </Text>
+      return <View><Text style={{fontWeight: 'bold',color: 'red', textShadowColor: 'black', fontSize: 16, alignSelf: 'center'}}> {this.props.error.response.data} </Text> </View>
   }
 }
 
@@ -45,7 +44,7 @@ class Login extends React.Component {
    return (
   <Container>
     <KeyboardAvoidingView behavior="padding" enabled>
-      <ScrollView>
+      <ScrollView  keyboardDismissMode="on-drag" keyboardShouldPersistTaps="handled">
         <Form>
         <Item stackedLabel>
               <Label>Email</Label>

@@ -15,7 +15,7 @@ class Signup extends React.Component {
       password2: '',
       error: ''
     };
-    // this.warning = this.warning.bind(this);
+
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -27,7 +27,6 @@ class Signup extends React.Component {
         email,
         password
       }, this.props.navigation);
-      // clear the state after signup for security
       this.setState({
         userName:'',
         email: '',
@@ -88,7 +87,6 @@ warning(){
 
 
         <Item stackedLabel last
-        // style={{marginBottom: 40}}
         >
           <Label>Confirm Password</Label>
             <Input

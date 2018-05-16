@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, Platform } from 'react-native'
+import { StyleSheet, Platform } from 'react-native'
 import {
   Thumbnail,
   Container,
@@ -17,7 +17,9 @@ import {
   Tabs,
   Tab,
   Icon,
-  Button
+  Button,
+  Toast,
+  View
 } from 'native-base'
 import { connect } from 'react-redux'
 import { getFoodLogIntervalThunker } from '../redux/foodLog'
@@ -26,7 +28,8 @@ import { StackedBarChart } from 'react-native-svg-charts'
 import ProgressBarClassic from 'react-native-progress-bar-classic'
 import Axios from 'axios'
 import IP from '../../IP'
-import ProgressBarClassic from 'react-native-progress-bar-classic';
+import ProgressBarClassic from 'react-native-progress-bar-classic'
+
 
 let reccoCal = 2200
 let reccoPro = 50
@@ -72,13 +75,18 @@ class Main extends React.Component {
     reccoCarb = this.state.dailyCarb * 30
   }
 
-  async handleDeleteFoodItem(id) {
+  async handleDeleteFoodItem(id, name) {
     console.log(id)
     await Axios.delete(`${IP}/api/foodLogs/${id}`)
       .then(result => console.log(result))
       .catch(error => console.log(error))
 
     await this.changeViewandFactorDay()
+    Toast.show({
+      text: `Removed ${name}`,
+      buttonText: 'Okay',
+      duration: 1500
+    })
   }
 
 
@@ -147,14 +155,14 @@ class Main extends React.Component {
 
     return (
       <Container>
-        <Header />
-        <Content>
+        <Content ref={c => (this.component = c)}>
           <Card>
             <CardItem header>
               <Left>
                 <Thumbnail
-                  square large
-                  style={{borderRadius: 10}}
+                  square
+                  large
+                  style={{ borderRadius: 10 }}
                   source={{ uri: this.props.user.profileImgUri }}
                 />
               </Left>
@@ -187,9 +195,9 @@ class Main extends React.Component {
             </CardItem>
           </Card>
           {Platform.OS === 'ios' ? (
-            <Content>
+            <View>
               <Text style={{ marginLeft: 10 }}>
-                Calories: {calories} / {reccoCal}{' '}
+                Calories: {calories} / {reccoCal}
                 {Math.floor(calories / reccoCal * 100)}%
               </Text>
               <StackedBarChart
@@ -216,7 +224,7 @@ class Main extends React.Component {
                 animate={true}
               />
               <Text style={{ marginLeft: 10 }}>
-                Protein: {protein} / {reccoPro}{' '}
+                Protein: {protein} / {reccoPro}
                 {Math.floor(protein / reccoPro * 100)}%
               </Text>
               <StackedBarChart
@@ -230,7 +238,7 @@ class Main extends React.Component {
                 animate={true}
               />
               <Text style={{ marginLeft: 10 }}>
-                Carbs: {carbs} / {reccoCarb}{' '}
+                Carbs: {carbs} / {reccoCarb}
                 {Math.floor(carbs / reccoCarb * 100)}%
               </Text>
               <StackedBarChart
@@ -243,11 +251,11 @@ class Main extends React.Component {
                 horizontal={true}
                 animate={true}
               />
-            </Content>
+            </View>
           ) : (
             <Content>
               <Text style={{ marginLeft: 10 }}>
-                Calories: {calories} / {reccoCal}{' '}
+                Calories: {calories} / {reccoCal}
               </Text>
               <ProgressBarClassic
                 progress={Math.floor(calories / reccoCal * 100)}
@@ -261,14 +269,14 @@ class Main extends React.Component {
                 valueStyle={'balloon'}
               />
               <Text style={{ marginLeft: 10 }}>
-                Protein: {protein} / {reccoPro}{' '}
+                Protein: {protein} / {reccoPro}
               </Text>
               <ProgressBarClassic
                 progress={Math.floor(protein / reccoPro * 100)}
                 valueStyle={'balloon'}
               />
               <Text style={{ marginLeft: 10 }}>
-                Carbs: {carbs} / {reccoCarb}{' '}
+                Carbs: {carbs} / {reccoCarb}
                 {Math.floor(carbs / reccoCarb * 100)}%
               </Text>
               <ProgressBarClassic
@@ -288,7 +296,10 @@ class Main extends React.Component {
                     <Button
                       dark
                       transparent
-                      onPress={() => this.handleDeleteFoodItem(item.id)}
+                      onPress={() => {
+                        this.handleDeleteFoodItem(item.id, item.name)
+                        this.component._root.scrollToPosition(0, 0)
+                      }}
                     >
                       <Icon name="trash" />
                     </Button>
@@ -296,7 +307,7 @@ class Main extends React.Component {
                 </CardItem>
                 <CardItem body>
                   <Text>
-                    Calories: {item.calories} Protein: {item.protein} Carbs:{' '}
+                    Calories: {item.calories} Protein: {item.protein} Carbs:
                     {item.carbs} Fat: {item.totalFat}
                   </Text>
                 </CardItem>
@@ -320,7 +331,7 @@ const mapDispatchToProps = dispatch => ({
   logout: navigation => dispatch(logout(navigation)),
   day: user => dispatch(getFoodLogIntervalThunker(user, 'day')),
   week: user => dispatch(getFoodLogIntervalThunker(user, 'week')),
-  month: user => dispatch(getFoodLogIntervalThunker(user, 'month'))
+  month: user => dispatch(getFoodLogIntervalThunker(user, 'month')),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main)
