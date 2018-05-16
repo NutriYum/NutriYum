@@ -96,9 +96,9 @@ class ManualEntry extends Component {
         <Container>
           <Content keyboardShouldPersistTaps="handled">
             <Text
-              style={{ alignSelf: 'center', marginTop: 20, fontWeight: 'bold' }}
+              style={{ alignSelf: 'center', marginTop: 20, fontWeight: 'bold', fontSize: 20 }}
             >
-              What did you put in your face hole?
+              WhatCha Eating?
             </Text>
             <TextInput
               style={styles.manualTextInput}
@@ -116,16 +116,16 @@ class ManualEntry extends Component {
                   alignSelf: 'center'
                 }}
               >
-                <Button danger onPress={this.clearAll} style={{ margin: 10 }}>
+                <Button danger onPress={this.clearAll} style={{ margin: 10, borderRadius: 10 }}>
                   <Text>Clear All</Text>
                 </Button>
-                <Button primary onPress={this.addToFood} style={{ margin: 10 }}>
+                <Button primary onPress={this.addToFood} style={{ margin: 10, borderRadius: 10 }}>
                   <Text>Add to Log</Text>
                 </Button>
                 <Button
                   success
                   onPress={this.onSubmitFood}
-                  style={{ margin: 10 }}
+                  style={{ margin: 10, borderRadius: 10 }}
                 >
                   <Text>Search</Text>
                 </Button>

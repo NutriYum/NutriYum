@@ -89,8 +89,9 @@ export default styles = StyleSheet.create({
   },
   manualTextInput: {
     height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
+    backgroundColor: '#0099FF',
+    borderColor: '#ffdb4d',
+    borderWidth: 2,
     borderRadius: 10,
     padding: 10,
     marginTop: 20,

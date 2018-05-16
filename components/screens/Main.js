@@ -28,6 +28,7 @@ import { StackedBarChart } from 'react-native-svg-charts'
 import ProgressBarClassic from 'react-native-progress-bar-classic'
 import Axios from 'axios'
 import IP from '../../IP'
+import { PieChart } from 'react-native-svg-charts'
 
 
 let reccoCal = 2200
@@ -39,11 +40,13 @@ class Main extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      dailyCal: 2200,
-      dailyPro: 50,
-      dailyFat: 70,
-      dailyCarb: 250
-    }
+        daily: {
+          dailyCal: 2200,
+          dailyPro: 50,
+          dailyFat: 70,
+          dailyCarb: 250
+        },
+      }
   }
 
   componentWillMount() {
@@ -52,26 +55,26 @@ class Main extends React.Component {
 
   changeViewandFactorDay() {
     this.props.day(this.props.user.id)
-    reccoCal = this.state.dailyCal
-    reccoPro = this.state.dailyPro
-    reccoFat = this.state.dailyFat
-    reccoCarb = this.state.dailyCarb
+    reccoCal = this.state.daily.dailyCal
+    reccoPro = this.state.daily.dailyPro
+    reccoFat = this.state.daily.dailyFat
+    reccoCarb = this.state.daily.dailyCarb
   }
 
   changeViewandFactorWeek() {
     this.props.week(this.props.user.id)
-    reccoCal = this.state.dailyCal * 7
-    reccoPro = this.state.dailyPro * 7
-    reccoFat = this.state.dailyFat * 7
-    reccoCarb = this.state.dailyCarb * 7
+    reccoCal = this.state.daily.dailyCal * 7
+    reccoPro = this.state.daily.dailyPro * 7
+    reccoFat = this.state.daily.dailyFat * 7
+    reccoCarb = this.state.daily.dailyCarb * 7
   }
 
   changeViewandFactorMonth() {
     this.props.month(this.props.user.id)
-    reccoCal = this.state.dailyCal * 30
-    reccoPro = this.state.dailyPro * 30
-    reccoFat = this.state.dailyFat * 30
-    reccoCarb = this.state.dailyCarb * 30
+    reccoCal = this.state.daily.dailyCal * 30
+    reccoPro = this.state.daily.dailyPro * 30
+    reccoFat = this.state.daily.dailyFat * 30
+    reccoCarb = this.state.daily.dailyCarb * 30
   }
 
   async handleDeleteFoodItem(id, name) {
@@ -156,7 +159,10 @@ class Main extends React.Component {
       <Container>
         <Content ref={c => (this.component = c)}>
           <Card>
-            <CardItem header>
+            <CardItem
+              header
+              style={{backgroundColor: '#0099FF', borderRadius: 10, marginBottom: -10}}
+              >
               <Left>
                 <Thumbnail
                   square
@@ -166,7 +172,7 @@ class Main extends React.Component {
                 />
               </Left>
               <Right>
-                <Text>{this.props.user.userName}</Text>
+                <Text style={{fontWeight: 'bold', fontSize: 25}}>{this.props.user.userName}</Text>
               </Right>
             </CardItem>
             <CardItem />
@@ -289,11 +295,13 @@ class Main extends React.Component {
               <Card key={index}>
                 <CardItem header>
                   <Left>
-                    <Text>{item.name}</Text>
+                    <Text style={{fontWeight: 'bold', fontSize: 25}}>{item.name}</Text>
                   </Left>
                   <Right>
                     <Button
                       dark
+                      large
+                      style={{FontAwesome: ''}}
                       transparent
                       onPress={() => {
                         this.handleDeleteFoodItem(item.id, item.name)
