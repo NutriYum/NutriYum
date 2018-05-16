@@ -83,6 +83,7 @@ componentDidMount(){
               </CardItem>
             )
           })}
+
           <View>
           <PieChart
           style={{ height: 200 }}
@@ -118,7 +119,11 @@ componentDidMount(){
         </TouchableHighlight>
       </View>
         </View>
-          <Button primary onPress={this.addToFood}>
+          <Button
+            style={{alignSelf: 'center', borderRadius: 10}}
+            primary
+            onPress={this.addToFood}>
+
             <Text> Add to Food Log </Text>
           </Button>
         </Card>

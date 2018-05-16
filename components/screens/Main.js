@@ -29,6 +29,7 @@ import style from '../../Styles'
 import ProgressBarClassic from 'react-native-progress-bar-classic'
 import Axios from 'axios'
 import IP from '../../IP'
+import { PieChart } from 'react-native-svg-charts'
 import Weekly from './Weekly'
 import Monthly from './Monthly'
 
@@ -157,27 +158,30 @@ class Main extends React.Component {
     const keysFat = ['fat', 'reccoFat']
     const keysPro = ['protein', 'reccoPro']
     const keysCarb = ['carbs', 'reccoCarb']
-
     return (
       <Container>
         <Content>
           <Card>
-            <CardItem header>
+            <CardItem
+              header
+              style={{backgroundColor: '#0099FF'}}
+              >
               <Left>
                 <Thumbnail
                   square
                   large
-                  style={{ borderRadius: 10 }}
+
                   source={{ uri: this.props.user.profileImgUri }}
                 />
               </Left>
               <Right>
-                <Text>{this.props.user.userName}</Text>
+                <Text style={{fontWeight: 'bold', fontSize: 30, color: 'white', marginRight: 15}}>{this.props.user.userName}</Text>
               </Right>
             </CardItem>
-            <CardItem />
-            <CardItem footer>
+            <CardItem footer style={{alignSelf: 'flex-end'}}>
               <Button
+                warning
+                style={{borderRadius: 10}}
                 buttonStyle={styles.button}
                 onPress={() => this.props.logout(this.props.navigation)}
               >
@@ -185,16 +189,21 @@ class Main extends React.Component {
               </Button>
             </CardItem>
           </Card>
-
           <Card>
-            <CardItem>
-              <Button onPress={() => this.changeViewandFactorDay()}>
+            <CardItem style={{justifyContent: 'space-around', marginLeft: -10}}>
+              <Button
+                style={{borderRadius: 10, margin: 2}}
+                onPress={() => this.changeViewandFactorDay()}>
                 <Text>Today</Text>
               </Button>
-              <Button onPress={() => this.changeViewandFactorWeek()}>
+              <Button
+                style={{borderRadius: 10, margin: 2}}
+                onPress={() => this.changeViewandFactorWeek()}>
                 <Text>Week</Text>
               </Button>
-              <Button onPress={() => this.changeViewandFactorMonth()}>
+              <Button
+                style={{borderRadius: 10, margin: 2}}
+                onPress={() => this.changeViewandFactorMonth()}>
                 <Text>Month</Text>
               </Button>
             </CardItem>
@@ -302,30 +311,74 @@ class Main extends React.Component {
               />
             </Content>
           )}
+          <Card sticky>
+            <CardItem style={{alignSelf: 'center'}}>
+              <CardItem header style={{alignSelf: 'center'}}>
+                <Text>PieChart Keys:</Text>
+              </CardItem>
+              <Button
+                style={{backgroundColor: '#ffdb4d'}}>
+                <Text style={{color: 'black', fontWeight: 'bold'}}>Sugar</Text>
+              </Button>
+              <Button
+                style={{backgroundColor: 'green'}}>
+                <Text style={{color: 'black', fontWeight: 'bold'}}>Carbs</Text>
+              </Button>
+              <Button
+                style={{backgroundColor: '#0099FF'}}>
+                <Text style={{color: 'black', fontWeight: 'bold'}}>Protein</Text>
+              </Button>
+            </CardItem>
+          </Card>
           {this.props.food.map((item, index) => {
             return (
               <Card key={index}>
                 <CardItem header>
                   <Left>
-                    <Text>{item.name}</Text>
-                  </Left>
+                    <Text style={{fontWeight: 'bold', fontSize: 25}}>{item.name.slice(0,1).toUpperCase() + item.name.slice(1)}</Text>
+                </Left>
+              </CardItem>
+              <CardItem>
+                  <PieChart
+                    style={{ height: 90, width: 90, marginBottom: -20 }}
+                    outerRadius={'70%'}
+                    innerRadius={10}
+                    data={[
+                      {
+                        key: 1,
+                        value: item.sugar,
+                        svg: { fill: '#ffdb4d' }
+
+                      },
+                      {
+                        key: 2,
+                        value: item.carbs,
+                        svg: { fill: 'green' }
+                      },
+                      {
+                        key: 3,
+                        value: item.protein,
+                        svg: { fill: '#0099FF' }
+                      }
+                    ]}
+                  />
                   <Right>
                     <Button
-                      dark
                       transparent
                       onPress={() => {
                         this.handleDeleteFoodItem(item.id, item.name)
                       }}
                     >
-                      <Icon name="trash" />
+                      <Icon
+                        style={{fontSize: 50, color: 'red'}}
+                        large
+                        name="trash" />
                     </Button>
                   </Right>
                 </CardItem>
-                <CardItem body>
-                  <Text>
-                    Calories: {item.calories} Protein: {item.protein} Carbs:
-                    {item.carbs} Fat: {item.totalFat}
-                  </Text>
+                <CardItem style={{alignSelf: 'center'}}>
+                    <Text style={{color: 'black', fontWeight: 'bold', marginTop: -17}}
+                      >Eaten on {item.date.slice(5,10) + '-' + item.date.slice(0,4)}</Text>
                 </CardItem>
               </Card>
             )
