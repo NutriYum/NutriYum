@@ -77,10 +77,10 @@ class CameraConfirm extends React.Component {
 
   async looksGood() {
     this.send()
-    await this.props.navigation.navigate('Food')
+    await this.props.navigation.navigate('MyFoodScreen')
   }
 
-  async looksBad() {
+  looksBad() {
     const resetAction = StackActions.reset({
       index: 0,
       actions: [NavigationActions.navigate({ routeName: 'MyCameraScreen' })]
@@ -92,7 +92,7 @@ class CameraConfirm extends React.Component {
   render() {
     return (
       <Container>
-<Header style={styles.header}><Title style={styles.loginText}> NutriYum </Title></Header>
+{/* <Header style={styles.header}><Title style={styles.loginText}> NutriYum </Title></Header> */}
         <Content>
           <Card>
             <CardItem>
@@ -102,7 +102,7 @@ class CameraConfirm extends React.Component {
             </CardItem>
             <CardItem cardBody>
               <Image
-                style={{ flex: 1, height: 400, width: null, borderRadius: 15 }}
+                style={{ flex: 1, height: 380, width: null, borderRadius: 15 }}
                 source={{ uri: this.props.photo.photo.uri }}
               />
             </CardItem>
