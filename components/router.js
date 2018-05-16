@@ -118,7 +118,7 @@ const SignedIn = createMaterialTopTabNavigator(
       screen: CameraStack,
       path: 'Camera'
     },
-    Manual: {
+    Search: {
       screen: ManualStack,
       path: 'Search'
     },
