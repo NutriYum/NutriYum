@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { TextInput, Image, View } from 'react-native'
+import { TextInput, Image, View, Keyboard } from 'react-native'
 import axios from 'axios'
 import {
   Text,
@@ -10,7 +10,9 @@ import {
   Content,
   Button,
   Title,
-  Header
+  Header,
+  Card,
+  CardItem,
 } from 'native-base'
 import IP from '../../IP'
 import { connect } from 'react-redux'
@@ -61,6 +63,7 @@ class ManualEntry extends Component {
           this.setState({ carbsSum: car })
           this.setState({ fatSum: fat })
           this.setState({ calSum: cal })
+          Keyboard.dismiss()
         }
       })
       .catch(error => {
@@ -93,7 +96,6 @@ class ManualEntry extends Component {
         {/* <Header style={styles.header}>
           <Title style={styles.loginText}> NutriYum </Title>
         </Header> */}
-        <Container>
           <Content keyboardShouldPersistTaps="handled">
             <Text
               style={{ alignSelf: 'center', marginTop: 20, fontWeight: 'bold' }}
@@ -108,7 +110,7 @@ class ManualEntry extends Component {
               onSubmitEditing={this.onSubmitFood}
               name="food"
             />
-            <Container>
+            <View>
               <View
                 style={{
                   display: 'flex',
@@ -130,7 +132,7 @@ class ManualEntry extends Component {
                   <Text>Search</Text>
                 </Button>
               </View>
-              <Content>
+                <Content>
                 {this.state.error === 'Item was not found! Try again' ? (
                   <Text style={{ marginLeft: 20 }}>
                     Item was not found! Please try again
@@ -138,7 +140,7 @@ class ManualEntry extends Component {
                 ) : (
                   this.state.nutrition.map((food, index) => {
                     return (
-                      <List key={food.name}>
+                        <List key={food.id}>
                         <ListItem itemDivider>
                           <Text>
                             {food.quantity} {food.name}
@@ -169,6 +171,8 @@ class ManualEntry extends Component {
                     )
                   })
                 )}
+                </Content>
+                <View>
                 {this.state.nutrition.length ? (
                   <Text>
                     Total Calories: {this.state.calSum.toFixed(2)}kcal
@@ -192,27 +196,31 @@ class ManualEntry extends Component {
                     {
                       key: 3,
                       value: this.state.fatSum,
-                      svg: { fill: '#808080' }
+                      svg: { fill: 'green' }
                     }
                   ]}
                 />
                 {this.state.nutrition.length ? (
-                  <Container style={{ alignItems: 'center' }}>
-                    <Text style={{ backgroundColor: '#0099FF' }}>
-                      Protein {this.state.proteinSum.toFixed(2)}
-                    </Text>
-                    <Text style={{ backgroundColor: '#ffdb4d' }}>
-                      Carbs {this.state.carbsSum.toFixed(2)}
-                    </Text>
-                    <Text style={{ backgroundColor: '#808080' }}>
-                      Total Fat {this.state.fatSum.toFixed(2)}
-                    </Text>
-                  </Container>
+          <Card sticky>
+            <CardItem>
+              <Button
+                style={{backgroundColor: '#0099FF'}}>
+                <Text style={{color: 'black', fontWeight: 'bold'}}>Protein {this.state.proteinSum.toFixed(2)}</Text>
+              </Button>
+              <Button
+                style={{backgroundColor: '#ffdb4d'}}>
+                <Text style={{color: 'black', fontWeight: 'bold'}}>Carbs {this.state.carbsSum.toFixed(2)}</Text>
+              </Button>
+              <Button
+                style={{backgroundColor: 'green'}}>
+                <Text style={{color: 'black', fontWeight: 'bold'}}>Fat {this.state.fatSum.toFixed(2)}</Text>
+              </Button>
+            </CardItem>
+          </Card>
                 ) : null}
-              </Content>
-            </Container>
+                </View>
+            </View>
           </Content>
-        </Container>
       </Container>
     )
   }

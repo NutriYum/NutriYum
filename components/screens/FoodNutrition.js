@@ -44,6 +44,7 @@ class FoodNutrition extends Component {
     let { nutrition } = this.props
     return (
       <Container>
+        <Content>
         <Card>
           {Object.keys(nutrition[0]).map((nutritionFact, index) => {
             let nutriValue =
@@ -62,6 +63,7 @@ class FoodNutrition extends Component {
             <Text> Add to Food Log </Text>
           </Button>
         </Card>
+        </Content>
       </Container>
     )
   }
