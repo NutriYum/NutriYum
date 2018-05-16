@@ -91,7 +91,7 @@ class MyFoodScreen extends React.Component {
           {foodMatch.length > 0 ? (
             <View>
               <Text style={{alignSelf: 'center'}}>Click the food that best matches your picture</Text>
-                  {foodMatch.map((item, index) => {
+                  {foodMatch.sort((a, b) => b.score - a.score).map((item, index) => {
                     return (
                       <Card key={index}>
                       <CardItem
@@ -102,7 +102,8 @@ class MyFoodScreen extends React.Component {
                           <Text> {item.class.toUpperCase()} </Text>
                         </Left>
                         <Right>
-                          <ProgressCircle
+                          {Math.floor(item.score * 100) > 70 ?
+                          (<ProgressCircle
                             percent={Math.floor(item.score * 100)}
                             radius={30}
                             borderWidth={6}
@@ -111,21 +112,20 @@ class MyFoodScreen extends React.Component {
                             bgColor="#fff"
                           >
                             <Text> {Math.floor(item.score * 100)}% </Text>
-                          </ProgressCircle>
+                          </ProgressCircle>) :
+
+                          (<ProgressCircle
+                            percent={Math.floor(item.score * 100)}
+                            radius={30}
+                            borderWidth={6}
+                            color="#f2e837"
+                            shadowColor="#474518"
+                            bgColor="#fff"
+                          >
+                            <Text> {Math.floor(item.score * 100)}% </Text>
+                          </ProgressCircle>)}
                         </Right>
                       </CardItem>
-                      {/* <CardItem>
-                        <ProgressCircle
-                          percent={Math.floor(item.score * 100)}
-                          radius={30}
-                          borderWidth={6}
-                          color="#4ed13a"
-                          shadowColor="#1e4718"
-                          bgColor="#fff"
-                        >
-                        <Text> {Math.floor(item.score * 100)}% </Text>
-                        </ProgressCircle>
-                      </CardItem> */}
                         </Card>
                     )})
                   }
