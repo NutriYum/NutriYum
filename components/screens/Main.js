@@ -303,15 +303,15 @@ class Main extends React.Component {
               </CardItem>
               <Button
                 style={{backgroundColor: '#ffdb4d'}}>
+                <Text style={{color: 'black', fontWeight: 'bold'}}>Sugar</Text>
+              </Button>
+              <Button
+                style={{backgroundColor: 'green'}}>
                 <Text style={{color: 'black', fontWeight: 'bold'}}>Carbs</Text>
               </Button>
               <Button
                 style={{backgroundColor: '#0099FF'}}>
                 <Text style={{color: 'black', fontWeight: 'bold'}}>Protein</Text>
-              </Button>
-              <Button
-                style={{backgroundColor: 'green'}}>
-                <Text style={{color: 'black', fontWeight: 'bold'}}>Fat</Text>
               </Button>
             </CardItem>
           </Card>
@@ -329,18 +329,19 @@ class Main extends React.Component {
                     data={[
                       {
                         key: 1,
-                        value: item.protein,
-                        svg: { fill: '#0099FF' }
+                        value: item.sugar,
+                        svg: { fill: '#ffdb4d' }
+
                       },
                       {
                         key: 2,
                         value: item.carbs,
-                        svg: { fill: '#ffdb4d' }
+                        svg: { fill: 'green' }
                       },
                       {
                         key: 3,
-                        value: item.totalFat,
-                        svg: { fill: 'green' }
+                        value: item.protein,
+                        svg: { fill: '#0099FF' }
                       }
                     ]}
                   />
