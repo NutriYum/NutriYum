@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { TextInput, Image, View, Keyboard, TouchableHighlight } from 'react-native'
+import { TextInput, Image, View, Keyboard } from 'react-native'
 import axios from 'axios'
 import {
   Text,
@@ -10,7 +10,9 @@ import {
   Content,
   Button,
   Title,
-  Header
+  Header,
+  Card,
+  CardItem,
 } from 'native-base'
 import IP from '../../IP'
 import { connect } from 'react-redux'
@@ -37,7 +39,6 @@ class ManualEntry extends Component {
   }
 
   onSubmitFood() {
-    this.setState({error: ''})
     this.setState({ nutrition: [] })
     axios
       .get(`${IP}/api/nutri/search/${encodeURI(this.state.text)}`)
@@ -74,7 +75,6 @@ class ManualEntry extends Component {
 
   clearAll() {
     this.setState({ nutrition: [] })
-    this.setState({error: ''})
   }
   async addToFood() {
     await this.props.addToFoodLogThunker(this.state.nutrition)
@@ -96,7 +96,6 @@ class ManualEntry extends Component {
         {/* <Header style={styles.header}>
           <Title style={styles.loginText}> NutriYum </Title>
         </Header> */}
-        <Container>
           <Content keyboardShouldPersistTaps="handled">
             <Text
               style={{ alignSelf: 'center', marginTop: 20, fontWeight: 'bold' }}
@@ -111,7 +110,7 @@ class ManualEntry extends Component {
               onSubmitEditing={this.onSubmitFood}
               name="food"
             />
-            <Container>
+            <View>
               <View
                 style={{
                   display: 'flex',
@@ -133,17 +132,15 @@ class ManualEntry extends Component {
                   <Text>Search</Text>
                 </Button>
               </View>
-              <Content>
+                <Content>
                 {this.state.error === 'Item was not found! Try again' ? (
-                  <Text style={{ marginLeft: 20, fontWeight: 'bold' }}>
+                  <Text style={{ marginLeft: 20 }}>
                     Item was not found! Please try again
                   </Text>
-                ) : null }
-                {this.state.nutrition.length ? (
-                <View>
-                  {this.state.nutrition.map((food, index) => {
+                ) : (
+                  this.state.nutrition.map((food, index) => {
                     return (
-                      <List key={food.name}>
+                        <List key={food.id}>
                         <ListItem itemDivider>
                           <Text>
                             {food.quantity} {food.name}
@@ -172,10 +169,15 @@ class ManualEntry extends Component {
                         </ListItem>
                       </List>
                     )
-                  })}
-                  <Text style={{fontWeight: 'bold'}}>
+                  })
+                )}
+                </Content>
+                <View>
+                {this.state.nutrition.length ? (
+                  <Text>
                     Total Calories: {this.state.calSum.toFixed(2)}kcal
                   </Text>
+                ) : null}
                 <PieChart
                   style={{ height: 200 }}
                   outerRadius={'70%'}
@@ -194,27 +196,31 @@ class ManualEntry extends Component {
                     {
                       key: 3,
                       value: this.state.fatSum,
-                      svg: { fill: '#808080' }
+                      svg: { fill: 'green' }
                     }
                   ]}
                 />
-                  <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-                    <TouchableHighlight style={{ backgroundColor: '#0099FF', padding: 3, borderRadius: 5, margin: 5, }}>
-                      <Text>Protein {this.state.proteinSum.toFixed(2)}</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight style={{ backgroundColor: '#ffdb4d', padding: 3, borderRadius: 5, margin: 5, }}>
-                      <Text>Carbs {this.state.carbsSum.toFixed(2)}</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight style={{ backgroundColor: '#808080', padding: 3, borderRadius: 5, margin: 5, }}>
-                      <Text>Total Fat {this.state.fatSum.toFixed(2)}</Text>
-                    </TouchableHighlight>
-                  </View>
-                  </View>
+                {this.state.nutrition.length ? (
+          <Card sticky>
+            <CardItem>
+              <Button
+                style={{backgroundColor: '#0099FF'}}>
+                <Text style={{color: 'black', fontWeight: 'bold'}}>Protein {this.state.proteinSum.toFixed(2)}</Text>
+              </Button>
+              <Button
+                style={{backgroundColor: '#ffdb4d'}}>
+                <Text style={{color: 'black', fontWeight: 'bold'}}>Carbs {this.state.carbsSum.toFixed(2)}</Text>
+              </Button>
+              <Button
+                style={{backgroundColor: 'green'}}>
+                <Text style={{color: 'black', fontWeight: 'bold'}}>Fat {this.state.fatSum.toFixed(2)}</Text>
+              </Button>
+            </CardItem>
+          </Card>
                 ) : null}
-              </Content>
-            </Container>
+                </View>
+            </View>
           </Content>
-        </Container>
       </Container>
     )
   }

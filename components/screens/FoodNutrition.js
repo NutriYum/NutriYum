@@ -68,7 +68,7 @@ componentDidMount(){
     let { nutrition } = this.props
     return (
       <Container>
-      <Content>
+        <Content>
         <Card>
           {Object.keys(nutrition[0]).map((nutritionFact, index) => {
             let nutriValue =
