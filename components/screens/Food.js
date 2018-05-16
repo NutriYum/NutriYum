@@ -3,7 +3,7 @@ import { Image, Picker } from 'react-native'
 import {Thumbnail, Button, Container, Icon, Header, Content, Text, Card, CardItem, Body, Left, Right, List, ListItem, Form, Separator, View, Title} from 'native-base'
 import axios from 'axios'
 import styles from '../../Styles'
-import FoodLog from './FoodLog'
+// import FoodLog from './FoodLog'
 import { addToFoodLogThunker, getFoodLogThunker } from '../redux/foodLog';
 import { setCurrentPhoto, removeCurrentPhoto } from '../redux/photo'
 import { setCurrentMatch, removeCurrentMatch } from '../redux/foodmatch'
@@ -15,9 +15,6 @@ class MyFoodScreen extends React.Component {
   constructor(props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-  static navigationOptions = {
-    tabBarLabel: 'Food'
   }
 
   handleSubmit(){
@@ -42,7 +39,7 @@ class MyFoodScreen extends React.Component {
   async clearFoodState() {
     const resetAction = StackActions.reset({
       index: 0,
-      actions: [NavigationActions.navigate({ routeName: 'MyFoodScreen' })],
+      actions: [NavigationActions.navigate({ routeName: 'MyCameraScreen' })],
     });
     this.props.navigation.dispatch(resetAction);
     this.props.navigation.navigate('MyCameraScreen')
@@ -68,7 +65,7 @@ class MyFoodScreen extends React.Component {
                   />
                 </Left>
                 <Body>
-                  <Text>  </Text>
+                  <Text />
                 </Body>
                 <Right>
                   <Button
@@ -96,7 +93,7 @@ class MyFoodScreen extends React.Component {
                       <CardItem
                         header
                         button
-                        onPress={()=> this.nutrionixCall(item.class)}>
+                        onPress={() => this.nutrionixCall(item.class)}>
                         <Text> {item.class.toUpperCase()} </Text>
                       </CardItem>
                       <CardItem>
