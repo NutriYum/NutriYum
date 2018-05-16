@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Image, Picker } from 'react-native'
+import { Image, Picker, View, TouchableHighlight } from 'react-native'
 import {
   Thumbnail,
   Toast,
@@ -22,10 +22,18 @@ import {
 import { connect } from 'react-redux'
 import styles from '../../Styles'
 import { addToFoodLogThunker } from '../redux/foodLog'
+import { PieChart } from 'react-native-svg-charts'
+
 
 class FoodNutrition extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      proteinSum: 0,
+      carbsSum: 0,
+      fatSum: 0,
+      calSum: 0,
+    }
     this.addToFood = this.addToFood.bind(this)
   }
 
@@ -39,6 +47,22 @@ class FoodNutrition extends Component {
       duration: 1500
     })
   }
+componentDidMount(){
+  let pro = 0
+  let car = 0
+  let fat = 0
+  let cal = 0
+  let totals = this.props.nutrition.map(food => {
+    pro += food.protein
+    car += food.carbs
+    fat += food.totalFat
+    cal += food.calories
+  })
+  this.setState({ proteinSum: pro })
+  this.setState({ carbsSum: car })
+  this.setState({ fatSum: fat })
+  this.setState({ calSum: cal })
+}
 
   render() {
     let { nutrition } = this.props
@@ -59,10 +83,47 @@ class FoodNutrition extends Component {
               </CardItem>
             )
           })}
+
+          <View>
+          <PieChart
+          style={{ height: 200 }}
+          outerRadius={'70%'}
+          innerRadius={10}
+          data={[
+            {
+              key: 1,
+              value: this.state.proteinSum,
+              svg: { fill: '#0099FF' }
+            },
+            {
+              key: 2,
+              value: this.state.carbsSum,
+              svg: { fill: '#ffdb4d' }
+            },
+            {
+              key: 3,
+              value: this.state.fatSum,
+              svg: { fill: '#808080' }
+            }
+          ]}
+        />
+        <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+        <TouchableHighlight style={{ backgroundColor: '#0099FF', padding: 3, borderRadius: 5, margin: 5, }}>
+          <Text>Protein {this.state.proteinSum.toFixed(2)}</Text>
+        </TouchableHighlight>
+        <TouchableHighlight style={{ backgroundColor: '#ffdb4d', padding: 3, borderRadius: 5, margin: 5, }}>
+          <Text>Carbs {this.state.carbsSum.toFixed(2)}</Text>
+        </TouchableHighlight>
+        <TouchableHighlight style={{ backgroundColor: '#808080', padding: 3, borderRadius: 5, margin: 5, }}>
+          <Text>Total Fat {this.state.fatSum.toFixed(2)}</Text>
+        </TouchableHighlight>
+      </View>
+        </View>
           <Button
             style={{alignSelf: 'center', borderRadius: 10}}
             primary
             onPress={this.addToFood}>
+
             <Text> Add to Food Log </Text>
           </Button>
         </Card>
