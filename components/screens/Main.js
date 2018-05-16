@@ -1,7 +1,6 @@
 import React from 'react'
 import { StyleSheet, View, Platform } from 'react-native'
 import {
-  Button,
   Thumbnail,
   Container,
   Header,
@@ -17,19 +16,17 @@ import {
   Text,
   Tabs,
   Tab,
-  Icon
+  Icon,
+  Button
 } from 'native-base'
 import { connect } from 'react-redux'
-import {
-  getFoodLogIntervalThunker,
-  deleteFromFoodLogThunker
-} from '../redux/foodLog'
+import { getFoodLogIntervalThunker } from '../redux/foodLog'
 import { logout } from '../redux/auth'
 import { StackedBarChart } from 'react-native-svg-charts'
+import ProgressBarClassic from 'react-native-progress-bar-classic'
 import Axios from 'axios'
 import IP from '../../IP'
 import ProgressBarClassic from 'react-native-progress-bar-classic';
-
 
 let reccoCal = 2200
 let reccoPro = 50
@@ -45,7 +42,6 @@ class Main extends React.Component {
       dailyFat: 70,
       dailyCarb: 250
     }
-    this.handleDeleteFoodItem = this.handleDeleteFoodItem.bind(this)
   }
 
   componentWillMount() {
@@ -85,11 +81,13 @@ class Main extends React.Component {
     await this.changeViewandFactorDay()
   }
 
+
   render() {
     let calories = 0
     let protein = 0
     let fat = 0
     let carbs = 0
+
     this.props.food.forEach(item => {
       calories += item.calories
       protein += item.protein
@@ -147,7 +145,6 @@ class Main extends React.Component {
     const keysPro = ['protein', 'reccoPro']
     const keysCarb = ['carbs', 'reccoCarb']
 
-
     return (
       <Container>
         <Header />
@@ -189,75 +186,97 @@ class Main extends React.Component {
               </Button>
             </CardItem>
           </Card>
-          { Platform.OS === 'ios' ?
-          <Content>
-            <Text style={{ marginLeft: 10 }}>
-              Calories: {calories} / {reccoCal}{' '}
-              {Math.floor(calories / reccoCal * 100)}%
-            </Text>
-            <StackedBarChart
-              style={{ height: 100 }}
-              keys={keysCal}
-              colors={colorsCal}
-              data={dataCal}
-              showGrid={false}
-              contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
-              horizontal={true}
-              animate={true}
-            />
-            <Text style={{ marginLeft: 10 }}>
-              Fat: {fat} / {reccoFat} {Math.floor(fat / reccoFat * 100)}%
-            </Text>
-            <StackedBarChart
-              style={{ height: 100 }}
-              keys={keysFat}
-              colors={colorsFat}
-              data={dataFat}
-              showGrid={false}
-              contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
-              horizontal={true}
-              animate={true}
-            />
-            <Text style={{ marginLeft: 10 }}>
-              Protein: {protein} / {reccoPro}{' '}
-              {Math.floor(protein / reccoPro * 100)}%
-            </Text>
-            <StackedBarChart
-              style={{ height: 100 }}
-              keys={keysPro}
-              colors={colorsPro}
-              data={dataPro}
-              showGrid={false}
-              contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
-              horizontal={true}
-              animate={true}
-            />
-            <Text style={{ marginLeft: 10 }}>
-              Carbs: {carbs} / {reccoCarb} {Math.floor(carbs / reccoCarb * 100)}%
-            </Text>
-            <StackedBarChart
-              style={{ height: 100 }}
-              keys={keysCarb}
-              colors={colorsCarb}
-              data={dataCarb}
-              showGrid={false}
-              contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
-              horizontal={true}
-              animate={true}
-            />
-          </Content>
-          :
+          {Platform.OS === 'ios' ? (
             <Content>
-              <Text style={{marginLeft: 10}}>Calories: {calories} / {reccoCal} </Text>
-              <ProgressBarClassic progress={Math.floor((calories / reccoCal) * 100)} valueStyle={'balloon'} />
-              <Text style={{marginLeft: 10}}>Fat: {fat} / {reccoFat} {Math.floor((fat / reccoFat * 100))}%</Text>
-              <ProgressBarClassic progress={Math.floor((fat / reccoFat) * 100)} valueStyle={'balloon'} />
-              <Text style={{marginLeft: 10}}>Protein: {protein} / {reccoPro} </Text>
-              <ProgressBarClassic progress={Math.floor((protein / reccoPro) * 100)} valueStyle={'balloon'} />
-              <Text style={{marginLeft: 10}}>Carbs: {carbs} / {reccoCarb} {Math.floor((carbs / reccoCarb * 100))}%</Text>
-              <ProgressBarClassic progress={Math.floor((carbs / reccoCarb) * 100)} valueStyle={'balloon'} />
+              <Text style={{ marginLeft: 10 }}>
+                Calories: {calories} / {reccoCal}{' '}
+                {Math.floor(calories / reccoCal * 100)}%
+              </Text>
+              <StackedBarChart
+                style={{ height: 100 }}
+                keys={keysCal}
+                colors={colorsCal}
+                data={dataCal}
+                showGrid={false}
+                contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
+                horizontal={true}
+                animate={true}
+              />
+              <Text style={{ marginLeft: 10 }}>
+                Fat: {fat} / {reccoFat} {Math.floor(fat / reccoFat * 100)}%
+              </Text>
+              <StackedBarChart
+                style={{ height: 100 }}
+                keys={keysFat}
+                colors={colorsFat}
+                data={dataFat}
+                showGrid={false}
+                contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
+                horizontal={true}
+                animate={true}
+              />
+              <Text style={{ marginLeft: 10 }}>
+                Protein: {protein} / {reccoPro}{' '}
+                {Math.floor(protein / reccoPro * 100)}%
+              </Text>
+              <StackedBarChart
+                style={{ height: 100 }}
+                keys={keysPro}
+                colors={colorsPro}
+                data={dataPro}
+                showGrid={false}
+                contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
+                horizontal={true}
+                animate={true}
+              />
+              <Text style={{ marginLeft: 10 }}>
+                Carbs: {carbs} / {reccoCarb}{' '}
+                {Math.floor(carbs / reccoCarb * 100)}%
+              </Text>
+              <StackedBarChart
+                style={{ height: 100 }}
+                keys={keysCarb}
+                colors={colorsCarb}
+                data={dataCarb}
+                showGrid={false}
+                contentInset={{ top: 20, bottom: 20, left: 10, right: 10 }}
+                horizontal={true}
+                animate={true}
+              />
             </Content>
-          }
+          ) : (
+            <Content>
+              <Text style={{ marginLeft: 10 }}>
+                Calories: {calories} / {reccoCal}{' '}
+              </Text>
+              <ProgressBarClassic
+                progress={Math.floor(calories / reccoCal * 100)}
+                valueStyle={'balloon'}
+              />
+              <Text style={{ marginLeft: 10 }}>
+                Fat: {fat} / {reccoFat} {Math.floor(fat / reccoFat * 100)}%
+              </Text>
+              <ProgressBarClassic
+                progress={Math.floor(fat / reccoFat * 100)}
+                valueStyle={'balloon'}
+              />
+              <Text style={{ marginLeft: 10 }}>
+                Protein: {protein} / {reccoPro}{' '}
+              </Text>
+              <ProgressBarClassic
+                progress={Math.floor(protein / reccoPro * 100)}
+                valueStyle={'balloon'}
+              />
+              <Text style={{ marginLeft: 10 }}>
+                Carbs: {carbs} / {reccoCarb}{' '}
+                {Math.floor(carbs / reccoCarb * 100)}%
+              </Text>
+              <ProgressBarClassic
+                progress={Math.floor(carbs / reccoCarb * 100)}
+                valueStyle={'balloon'}
+              />
+            </Content>
+          )}
           {this.props.food.map((item, index) => {
             return (
               <Card key={index}>
@@ -301,8 +320,7 @@ const mapDispatchToProps = dispatch => ({
   logout: navigation => dispatch(logout(navigation)),
   day: user => dispatch(getFoodLogIntervalThunker(user, 'day')),
   week: user => dispatch(getFoodLogIntervalThunker(user, 'week')),
-  month: user => dispatch(getFoodLogIntervalThunker(user, 'month')),
-  deleteFromFoodLogThunker
+  month: user => dispatch(getFoodLogIntervalThunker(user, 'month'))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main)
