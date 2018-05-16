@@ -1,7 +1,6 @@
 import React from 'react'
 import { StyleSheet, Platform } from 'react-native'
 import {
-  Button,
   Thumbnail,
   Container,
   Header,
@@ -18,18 +17,19 @@ import {
   Tabs,
   Tab,
   Icon,
+  Button,
   Toast,
   View
 } from 'native-base'
 import { connect } from 'react-redux'
-import {
-  getFoodLogIntervalThunker,
-} from '../redux/foodLog'
+import { getFoodLogIntervalThunker } from '../redux/foodLog'
 import { logout } from '../redux/auth'
 import { StackedBarChart } from 'react-native-svg-charts'
+import ProgressBarClassic from 'react-native-progress-bar-classic'
 import Axios from 'axios'
 import IP from '../../IP'
 import ProgressBarClassic from 'react-native-progress-bar-classic'
+
 
 let reccoCal = 2200
 let reccoPro = 50
@@ -45,7 +45,6 @@ class Main extends React.Component {
       dailyFat: 70,
       dailyCarb: 250
     }
-    this.handleDeleteFoodItem = this.handleDeleteFoodItem.bind(this)
   }
 
   componentWillMount() {
@@ -90,11 +89,13 @@ class Main extends React.Component {
     })
   }
 
+
   render() {
     let calories = 0
     let protein = 0
     let fat = 0
     let carbs = 0
+
     this.props.food.forEach(item => {
       calories += item.calories
       protein += item.protein
