@@ -312,7 +312,7 @@ class Main extends React.Component {
             </Content>
           )}
           <Card sticky>
-            <CardItem style={{alignSelf: 'center', marginLeft: -10}}>
+            <CardItem style={{alignSelf: 'center'}}>
               <CardItem header style={{alignSelf: 'center'}}>
                 <Text>PieChart Keys:</Text>
               </CardItem>
@@ -333,10 +333,12 @@ class Main extends React.Component {
           {this.props.food.map((item, index) => {
             return (
               <Card key={index}>
-                <CardItem>
+                <CardItem header>
                   <Left>
-                    <Text style={{fontWeight: 'bold', fontSize: 25}}>{item.name.slice(0,1).toUpperCase() + item.name.slice(1)}:</Text>
+                    <Text style={{fontWeight: 'bold', fontSize: 25}}>{item.name.slice(0,1).toUpperCase() + item.name.slice(1)}</Text>
                 </Left>
+              </CardItem>
+              <CardItem>
                   <PieChart
                     style={{ height: 90, width: 90, marginBottom: -20 }}
                     outerRadius={'70%'}
