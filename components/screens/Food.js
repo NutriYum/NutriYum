@@ -16,9 +16,6 @@ class MyFoodScreen extends React.Component {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  static navigationOptions = {
-    tabBarLabel: 'Food'
-  }
 
   handleSubmit(){
     this.props.addToFoodLogThunker(this.state.nutrition)
@@ -42,10 +39,10 @@ class MyFoodScreen extends React.Component {
   async clearFoodState() {
     const resetAction = StackActions.reset({
       index: 0,
-      actions: [NavigationActions.navigate({ routeName: 'MyFoodScreen' })],
+      actions: [NavigationActions.navigate({ routeName: 'MyCameraScreen' })],
     });
     this.props.navigation.dispatch(resetAction);
-    this.props.navigation.navigate('MyCameraScreen')
+    // this.props.navigation.navigate('MyCameraScreen')
     // this.props.removeCurrentPhoto();
     this.props.removeCurrentMatch();
     this.props.removeNutrition();
@@ -57,7 +54,7 @@ class MyFoodScreen extends React.Component {
 
     return (
       <Container>
-      <Header style={styles.header}><Title style={styles.loginText}> NutriYum </Title></Header>
+      {/* <Header style={styles.header}><Title style={styles.loginText}> NutriYum </Title></Header> */}
         <Content>
           {foodMatch && photo ? (
             <Card>
@@ -69,7 +66,7 @@ class MyFoodScreen extends React.Component {
                   />
                 </Left>
                 <Body>
-                  <Text>  </Text>
+                  <Text />
                 </Body>
                 <Right>
                   <Button
@@ -97,7 +94,7 @@ class MyFoodScreen extends React.Component {
                       <CardItem
                         header
                         button
-                        onPress={()=> this.nutrionixCall(item.class)}>
+                        onPress={() => this.nutrionixCall(item.class)}>
                         <Text> {item.class.toUpperCase()} </Text>
                       </CardItem>
                       <CardItem>
