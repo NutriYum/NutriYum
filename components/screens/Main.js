@@ -25,11 +25,13 @@ import { connect } from 'react-redux'
 import { getFoodLogIntervalThunker } from '../redux/foodLog'
 import { logout } from '../redux/auth'
 import { StackedBarChart } from 'react-native-svg-charts'
+import style from '../../Styles'
 import ProgressBarClassic from 'react-native-progress-bar-classic'
 import Axios from 'axios'
 import IP from '../../IP'
 import Weekly from './Weekly'
 import Monthly from './Monthly'
+
 
 let reccoCal = 2200
 let reccoPro = 50

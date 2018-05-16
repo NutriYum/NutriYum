@@ -33,7 +33,7 @@ export default styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 20,
     marginTop: 25,
-    opacity: .8,
+    opacity: 0.8,
     borderRadius: 3,
   },
   altTarget: {
@@ -43,7 +43,7 @@ export default styles = StyleSheet.create({
     padding: 115,
     borderRadius: 10,
     borderStyle: 'dashed',
-    opacity: .5,
+    opacity: 0.5,
   },
   container: {
     flexDirection: 'column',
@@ -102,7 +102,7 @@ export default styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-around',
     backgroundColor: '#00000040',
-    opacity: .5,
+    opacity: 0.5,
     marginBottom: 60,
   },
   activityIndicatorWrapper: {
@@ -135,5 +135,13 @@ export default styles = StyleSheet.create({
     fontSize: 24,
     color: 'white',
     fontWeight: 'bold'
+  },
+  buttonContainer: {
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  spacer: {
+    padding: 10
   }
 })

@@ -3,21 +3,19 @@ import { Image, Picker } from 'react-native'
 import {Thumbnail, Button, Container, Icon, Header, Content, Text, Card, CardItem, Body, Left, Right, List, ListItem, Form, Separator, View, Title} from 'native-base'
 import axios from 'axios'
 import styles from '../../Styles'
-import FoodLog from './FoodLog'
+// import FoodLog from './FoodLog'
 import { addToFoodLogThunker, getFoodLogThunker } from '../redux/foodLog';
 import { setCurrentPhoto, removeCurrentPhoto } from '../redux/photo'
 import { setCurrentMatch, removeCurrentMatch } from '../redux/foodmatch'
 import { setNutrition, removeNutrition } from '../redux/nutrition'
 import { connect } from 'react-redux'
 import { StackActions, NavigationActions } from 'react-navigation';
+import ProgressCircle from 'react-native-progress-circle'
 
 class MyFoodScreen extends React.Component {
   constructor(props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-  static navigationOptions = {
-    tabBarLabel: 'Food'
   }
 
   handleSubmit(){
@@ -42,7 +40,7 @@ class MyFoodScreen extends React.Component {
   async clearFoodState() {
     const resetAction = StackActions.reset({
       index: 0,
-      actions: [NavigationActions.navigate({ routeName: 'MyFoodScreen' })],
+      actions: [NavigationActions.navigate({ routeName: 'MyCameraScreen' })],
     });
     this.props.navigation.dispatch(resetAction);
     this.props.navigation.navigate('MyCameraScreen')
@@ -68,7 +66,7 @@ class MyFoodScreen extends React.Component {
                   />
                 </Left>
                 <Body>
-                  <Text>  </Text>
+                  <Text />
                 </Body>
                 <Right>
                   <Button
@@ -90,17 +88,40 @@ class MyFoodScreen extends React.Component {
           {foodMatch.length > 0 ? (
             <View>
               <Text style={{alignSelf: 'center'}}>Click the food that best matches your picture</Text>
-                  {foodMatch.map((item, index) => {
+                  {foodMatch.sort((a, b) => b.score - a.score).map((item, index) => {
                     return (
                       <Card key={index}>
                       <CardItem
                         header
                         button
-                        onPress={()=> this.nutrionixCall(item.class)}>
-                        <Text> {item.class.toUpperCase()} </Text>
-                      </CardItem>
-                      <CardItem>
-                        <Body><Text>{item.score}% Match</Text></Body>
+                        onPress={() => this.nutrionixCall(item.class)}>
+                        <Left>
+                          <Text> {item.class.toUpperCase()} </Text>
+                        </Left>
+                        <Right>
+                          {Math.floor(item.score * 100) > 70 ?
+                          (<ProgressCircle
+                            percent={Math.floor(item.score * 100)}
+                            radius={30}
+                            borderWidth={6}
+                            color="#4ed13a"
+                            shadowColor="#1e4718"
+                            bgColor="#fff"
+                          >
+                            <Text> {Math.floor(item.score * 100)}% </Text>
+                          </ProgressCircle>) :
+
+                          (<ProgressCircle
+                            percent={Math.floor(item.score * 100)}
+                            radius={30}
+                            borderWidth={6}
+                            color="#f2e837"
+                            shadowColor="#474518"
+                            bgColor="#fff"
+                          >
+                            <Text> {Math.floor(item.score * 100)}% </Text>
+                          </ProgressCircle>)}
+                        </Right>
                       </CardItem>
                         </Card>
                     )})
