@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { TextInput, Image, View } from 'react-native'
+import { TextInput, Image, View, Keyboard } from 'react-native'
 import axios from 'axios'
 import {
   Text,
@@ -61,6 +61,7 @@ class ManualEntry extends Component {
           this.setState({ carbsSum: car })
           this.setState({ fatSum: fat })
           this.setState({ calSum: cal })
+          Keyboard.dismiss()
         }
       })
       .catch(error => {
@@ -170,10 +171,10 @@ class ManualEntry extends Component {
                   })
                 )}
                 {this.state.nutrition.length ? (
+                    <View>
                   <Text>
                     Total Calories: {this.state.calSum.toFixed(2)}kcal
                   </Text>
-                ) : null}
                 <PieChart
                   style={{ height: 200 }}
                   outerRadius={'70%'}
@@ -196,7 +197,6 @@ class ManualEntry extends Component {
                     }
                   ]}
                 />
-                {this.state.nutrition.length ? (
                   <Container style={{ alignItems: 'center' }}>
                     <Text style={{ backgroundColor: '#0099FF' }}>
                       Protein {this.state.proteinSum.toFixed(2)}
@@ -208,6 +208,7 @@ class ManualEntry extends Component {
                       Total Fat {this.state.fatSum.toFixed(2)}
                     </Text>
                   </Container>
+                  </View>
                 ) : null}
               </Content>
             </Container>
