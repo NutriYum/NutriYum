@@ -22,6 +22,7 @@ import { getFoodLogIntervalThunker } from '../redux/foodLog'
 import { logout } from '../redux/auth'
 import { StackedBarChart } from 'react-native-svg-charts'
 import ProgressBarClassic from 'react-native-progress-bar-classic';
+import style from '../../Styles'
 
 let reccoCal = 2200
 let reccoPro = 50
@@ -157,18 +158,22 @@ class Main extends React.Component {
           </Card>
 
           <Card>
-            <CardItem>
+            <CardItem
+              style={style.buttonContainer}>
               <Button
                 onPress={() => this.changeViewandFactorDay()}
                 title="Today"
+                style={style.spacer}
               />
               <Button
                 onPress={() => this.changeViewandFactorWeek()}
                 title="Week"
+                style={style.spacer}
               />
               <Button
                 onPress={() => this.changeViewandFactorMonth()}
                 title="Month"
+                style={style.spacer}
               />
             </CardItem>
           </Card>
