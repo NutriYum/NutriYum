@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Image, Picker, View } from 'react-native'
+import { Image, Picker, View, TouchableHighlight } from 'react-native'
 import {
   Thumbnail,
   Toast,
@@ -47,23 +47,22 @@ class FoodNutrition extends Component {
       duration: 1500
     })
   }
-
-  pie() {
-    let pro = 0
-    let car = 0
-    let fat = 0
-    let cal = 0
-    let totals = this.props.nutrition.map(food => {
-      pro += food.protein
-      car += food.carbs
-      fat += food.totalFat
-      cal += food.calories
-    })
-    this.setState({ proteinSum: pro })
-    this.setState({ carbsSum: car })
-    this.setState({ fatSum: fat })
-    this.setState({ calSum: cal })
-  }
+componentDidMount(){
+  let pro = 0
+  let car = 0
+  let fat = 0
+  let cal = 0
+  let totals = this.props.nutrition.map(food => {
+    pro += food.protein
+    car += food.carbs
+    fat += food.totalFat
+    cal += food.calories
+  })
+  this.setState({ proteinSum: pro })
+  this.setState({ carbsSum: car })
+  this.setState({ fatSum: fat })
+  this.setState({ calSum: cal })
+}
 
   render() {
     let { nutrition } = this.props
@@ -107,6 +106,17 @@ class FoodNutrition extends Component {
             }
           ]}
         />
+        <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+        <TouchableHighlight style={{ backgroundColor: '#0099FF', padding: 3, borderRadius: 5, margin: 5, }}>
+          <Text>Protein {this.state.proteinSum.toFixed(2)}</Text>
+        </TouchableHighlight>
+        <TouchableHighlight style={{ backgroundColor: '#ffdb4d', padding: 3, borderRadius: 5, margin: 5, }}>
+          <Text>Carbs {this.state.carbsSum.toFixed(2)}</Text>
+        </TouchableHighlight>
+        <TouchableHighlight style={{ backgroundColor: '#808080', padding: 3, borderRadius: 5, margin: 5, }}>
+          <Text>Total Fat {this.state.fatSum.toFixed(2)}</Text>
+        </TouchableHighlight>
+      </View>
         </View>
           <Button primary onPress={this.addToFood}>
             <Text> Add to Food Log </Text>
