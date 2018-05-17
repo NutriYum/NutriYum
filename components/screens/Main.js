@@ -83,7 +83,6 @@ class Main extends React.Component {
   }
 
   async handleDeleteFoodItem(id, name) {
-    console.log(id)
     await Axios.delete(`${IP}/api/foodLogs/${id}`)
       .then(result => console.log(result))
       .catch(error => console.log(error))
@@ -312,21 +311,21 @@ class Main extends React.Component {
             </Content>
           )}
           <Card sticky>
-            <CardItem style={{alignSelf: 'center'}}>
+            <CardItem style={{alignSelf: 'center', marginLeft: -15}}>
               <CardItem header style={{alignSelf: 'center'}}>
                 <Text>PieChart Keys:</Text>
               </CardItem>
               <Button
-                style={{backgroundColor: '#ffdb4d'}}>
-                <Text style={{color: 'black', fontWeight: 'bold'}}>Sugar</Text>
+                style={{backgroundColor: '#0099FF'}}>
+                <Text style={{color: 'black', fontWeight: 'bold'}}>Protein</Text>
               </Button>
               <Button
-                style={{backgroundColor: 'green'}}>
+                style={{backgroundColor: '#ffdb4d'}}>
                 <Text style={{color: 'black', fontWeight: 'bold'}}>Carbs</Text>
               </Button>
               <Button
-                style={{backgroundColor: '#0099FF'}}>
-                <Text style={{color: 'black', fontWeight: 'bold'}}>Protein</Text>
+                style={{backgroundColor: 'green'}}>
+                <Text style={{color: 'black', fontWeight: 'bold'}}>Fat</Text>
               </Button>
             </CardItem>
           </Card>
@@ -335,42 +334,47 @@ class Main extends React.Component {
               <Card key={index}>
                 <CardItem header>
                   <Left>
-                    <Text style={{fontWeight: 'bold', fontSize: 25}}>{item.name.slice(0,1).toUpperCase() + item.name.slice(1)}</Text>
-                </Left>
+                    <Text style={{fontWeight: 'bold', fontSize: 25, marginBottom: -18}}>{item.name.slice(0,1).toUpperCase() + item.name.slice(1)}</Text>
+              </Left>
+              <Right>
+                <Text style={{fontWeight: 'bold', fontSize: 15, marginBottom: -20}}>{item.calories} : Calories</Text>
+              </Right>
               </CardItem>
               <CardItem>
                   <PieChart
-                    style={{ height: 90, width: 90, marginBottom: -20 }}
+                    style={{ height: 90, width: 90, marginBottom: -20, marginTop: -15 }}
                     outerRadius={'70%'}
                     innerRadius={10}
                     data={[
                       {
                         key: 1,
-                        value: item.sugar,
-                        svg: { fill: '#ffdb4d' }
+                        value: item.protein,
+                        svg: { fill: '#0099FF' }
+
 
                       },
                       {
                         key: 2,
                         value: item.carbs,
-                        svg: { fill: 'green' }
+                        svg: { fill: '#ffdb4d' }
                       },
                       {
                         key: 3,
-                        value: item.protein,
-                        svg: { fill: '#0099FF' }
+                        value: item.totalFat,
+                        svg: { fill: 'green' }
                       }
                     ]}
                   />
                   <Right>
                     <Button
+                      style={{marginRight: -15}}
                       transparent
                       onPress={() => {
                         this.handleDeleteFoodItem(item.id, item.name)
                       }}
                     >
                       <Icon
-                        style={{fontSize: 50, color: 'red'}}
+                        style={{fontSize: 50, color: 'red', marginTop: -10}}
                         large
                         name="trash" />
                     </Button>
@@ -378,7 +382,7 @@ class Main extends React.Component {
                 </CardItem>
                 <CardItem style={{alignSelf: 'center'}}>
                     <Text style={{color: 'black', fontWeight: 'bold', marginTop: -17}}
-                      >Eaten on {item.date.slice(5,10) + '-' + item.date.slice(0,4)}</Text>
+                      >{item.quantity} Eaten on {item.date.slice(5,10) + '-' + item.date.slice(0,4)}</Text>
                 </CardItem>
               </Card>
             )
