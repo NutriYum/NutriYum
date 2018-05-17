@@ -164,7 +164,7 @@ class ManualEntry extends Component {
                   ]}
                   />
                 </CardItem>
-            <CardItem>
+            <CardItem style={{flex: 1}}>
               <Button
                 style={{backgroundColor: '#0099FF'}}>
                 <Text style={{color: 'black', fontWeight: 'bold'}}>Protein {this.state.proteinSum.toFixed(2)}g</Text>

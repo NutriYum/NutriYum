@@ -70,21 +70,31 @@ componentDidMount(){
       <Container>
         <Content>
         <Card>
-          {Object.keys(nutrition[0]).map((nutritionFact, index) => {
-            let nutriValue =
-              nutrition[0][nutritionFact] === null
-                ? '0'
-                : nutrition[0][nutritionFact]
-            return (
-              <CardItem style={styles.centerItems} key={index}>
-                <Text style={styles.foodListText}>
-                  {nutritionFact} : {nutriValue}
-                </Text>
-              </CardItem>
-            )
-          })}
+        <CardItem
+        header
+        style={{alignSelf: 'center'}}>
+            <Text
+              style={{fontWeight: 'bold', fontSize: 20}}> {nutrition[0].name.toUpperCase()}</Text>
+            </CardItem>
+            <CardItem
+            style={{alignSelf: 'center'}}>
+              <Text
+                style={{fontWeight: 'bold', fontSize: 15}}>{nutrition[0].calories} calories </Text>
+            </CardItem>
+            <CardItem
+            style={{alignSelf: 'center'}}>
+            <Text style={{fontWeight: 'bold', fontSize: 15}}>  Serving: {nutrition[0].quantity} {nutrition[0].servingUnit} </Text>
+            </CardItem>
+            <CardItem
+              style={{alignSelf: 'center'}}>
+            <Button
+              style={{alignSelf: 'center', borderRadius: 10}}
+              primary
+              onPress={this.addToFood}>
 
-          <View>
+              <Text> Add to Food Log </Text>
+            </Button>
+            </CardItem>
           <PieChart
           style={{ height: 200 }}
           outerRadius={'70%'}
@@ -93,39 +103,72 @@ componentDidMount(){
             {
               key: 1,
               value: this.state.proteinSum,
-              svg: { fill: '#0099FF' }
+              svg: { fill: '#0099FF' },
+              arc: { cornerRadius: 5 }
             },
             {
               key: 2,
               value: this.state.carbsSum,
-              svg: { fill: '#ffdb4d' }
+              svg: { fill: '#ffdb4d' },
+              arc: { cornerRadius: 5 }
             },
             {
               key: 3,
               value: this.state.fatSum,
-              svg: { fill: '#808080' }
+              svg: { fill: '#808080' },
+              arc: { cornerRadius: 5 }
             }
           ]}
-        />
-        <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-        <TouchableHighlight style={{ backgroundColor: '#0099FF', padding: 3, borderRadius: 5, margin: 5, }}>
-          <Text>Protein {this.state.proteinSum.toFixed(2)}</Text>
-        </TouchableHighlight>
-        <TouchableHighlight style={{ backgroundColor: '#ffdb4d', padding: 3, borderRadius: 5, margin: 5, }}>
-          <Text>Carbs {this.state.carbsSum.toFixed(2)}</Text>
-        </TouchableHighlight>
-        <TouchableHighlight style={{ backgroundColor: '#808080', padding: 3, borderRadius: 5, margin: 5, }}>
-          <Text>Total Fat {this.state.fatSum.toFixed(2)}</Text>
-        </TouchableHighlight>
-      </View>
-        </View>
-          <Button
-            style={{alignSelf: 'center', borderRadius: 10}}
-            primary
-            onPress={this.addToFood}>
+          />
+            <CardItem>
+              <Button
+                style={{backgroundColor: '#0099FF'}}>
+                <Text style={{color: 'black', fontWeight: 'bold'}}>Protein {this.state.proteinSum.toFixed(2)}g</Text>
+              </Button>
+              <Button
+                style={{backgroundColor: '#ffdb4d'}}>
+                <Text style={{color: 'black', fontWeight: 'bold'}}>Carbs {this.state.carbsSum.toFixed(2)}g</Text>
+              </Button>
+              <Button
+                style={{backgroundColor: 'green'}}>
+                <Text style={{color: 'black', fontWeight: 'bold'}}>Fat {this.state.fatSum.toFixed(2)}g</Text>
+              </Button>
+            </CardItem>
+        </Card>
 
-            <Text> Add to Food Log </Text>
-          </Button>
+        <Card>
+          {nutrition.length ?
+          (
+            <List key={nutrition[0].id}>
+            <ListItem itemDivider>
+              <Text>
+                {nutrition[0].quantity} {nutrition[0].name.toUpperCase()}{nutrition[0].quantity > 0 ? ('S') : null}
+                {nutrition[0].calories > 500 ? (
+                  <Text>That's a lot of calories 😳 </Text>
+                ) : null}
+              </Text>
+            </ListItem>
+            <ListItem>
+              <Text>Calories: {nutrition[0].calories}kcal</Text>
+            </ListItem>
+            <ListItem>
+              <Text>Total Fat: {nutrition[0].totalFat}g</Text>
+            </ListItem>
+            <ListItem>
+              <Text>Carbs: {nutrition[0].carbs}g</Text>
+            </ListItem>
+            <ListItem>
+              <Text>Sugar: {nutrition[0].sugar}g</Text>
+            </ListItem>
+            <ListItem>
+              <Text>Sodium: {nutrition[0].sodium}g</Text>
+            </ListItem>
+            <ListItem>
+              <Text>Protein: {nutrition[0].protein}g</Text>
+            </ListItem>
+          </List>
+        )
+          : null}
         </Card>
         </Content>
       </Container>
