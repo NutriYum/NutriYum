@@ -12,7 +12,7 @@ import {
   Title,
   Header,
   Card,
-  CardItem,
+  CardItem
 } from 'native-base'
 import IP from '../../IP'
 import { connect } from 'react-redux'
@@ -49,6 +49,7 @@ class ManualEntry extends Component {
           await this.setState({
             nutrition: result.data
           })
+          this.setState({ error:'' })
           let pro = 0
           let car = 0
           let fat = 0
@@ -93,9 +94,6 @@ class ManualEntry extends Component {
   render() {
     return (
       <Container>
-        {/* <Header style={styles.header}>
-          <Title style={styles.loginText}> NutriYum </Title>
-        </Header> */}
           <Content keyboardShouldPersistTaps="handled">
             <Text
               style={{ alignSelf: 'center', marginTop: 20, fontWeight: 'bold', fontSize: 20 }}
@@ -133,6 +131,56 @@ class ManualEntry extends Component {
                 </Button>
               </View>
                 <Content>
+                {this.state.nutrition.length ? (
+                  <View>
+                  <Card style={{alignItems: 'center', padding: 10}}>
+                  <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
+                  Total Calories: {this.state.calSum.toFixed(2)} kcals
+                  </Text>
+                  <CardItem>
+                  <PieChart
+                  style={{ height: 200, width: 200}}
+                  outerRadius={'70%'}
+                  innerRadius={10}
+                  data={[
+                    {
+                      key: 1,
+                      value: this.state.proteinSum,
+                      svg: { fill: '#0099FF' }, 
+                      arc: { cornerRadius: 5, }
+                    },
+                    {
+                      key: 2,
+                      value: this.state.carbsSum,
+                      svg: { fill: '#ffdb4d' }, 
+                      arc: { cornerRadius: 5, }
+                    },
+                    {
+                      key: 3,
+                      value: this.state.fatSum,
+                      svg: { fill: 'green' }, 
+                      arc: { cornerRadius: 5, }
+                    }
+                  ]}
+                  />
+                </CardItem>
+            <CardItem style={{flex: 1}}>
+              <Button
+                style={{backgroundColor: '#0099FF'}}>
+                <Text style={{color: 'black', fontWeight: 'bold'}}>Protein {this.state.proteinSum.toFixed(2)}g</Text>
+              </Button>
+              <Button
+                style={{backgroundColor: '#ffdb4d'}}>
+                <Text style={{color: 'black', fontWeight: 'bold'}}>Carbs {this.state.carbsSum.toFixed(2)}g</Text>
+              </Button>
+              <Button
+                style={{backgroundColor: 'green'}}>
+                <Text style={{color: 'black', fontWeight: 'bold'}}>Fat {this.state.fatSum.toFixed(2)}g</Text>
+              </Button>
+            </CardItem>
+          </Card>
+          </View>
+                ) : null}
                 {this.state.error === 'Item was not found! Try again' ? (
                   <Text style={{ marginLeft: 20 }}>
                     Item was not found! Please try again
@@ -143,82 +191,38 @@ class ManualEntry extends Component {
                         <List key={food.id}>
                         <ListItem itemDivider>
                           <Text>
-                            {food.quantity} {food.name}
                             {food.calories > 500 ? (
-                              <Text>That's a lot of calories 😳 </Text>
+                              <Text>     That's a lot of calories 😳 </Text>
                             ) : null}
                           </Text>
                         </ListItem>
                         <ListItem>
-                          <Text>calories: {food.calories}kcal</Text>
+                          <Text>Calories: {food.calories}kcal</Text>
                         </ListItem>
                         <ListItem>
-                          <Text>total fat: {food.totalFat}g</Text>
+                            <Text>Serving: {food.quantity} {food.servingUnit}</Text>
                         </ListItem>
                         <ListItem>
-                          <Text>carbs: {food.carbs}g</Text>
+                          <Text>Total Fat: {food.totalFat}g</Text>
                         </ListItem>
                         <ListItem>
-                          <Text>sugar: {food.sugar}g</Text>
+                          <Text>Carbs: {food.carbs}g</Text>
                         </ListItem>
                         <ListItem>
-                          <Text>sodium: {food.sodium}g</Text>
+                          <Text>Sugar: {food.sugar}g</Text>
                         </ListItem>
                         <ListItem>
-                          <Text>protein: {food.protein}g</Text>
+                          <Text>Sodium: {food.sodium}g</Text>
+                        </ListItem>
+                        <ListItem>
+                          <Text>Protein: {food.protein}g</Text>
                         </ListItem>
                       </List>
                     )
                   })
                 )}
                 </Content>
-                <View>
-                {this.state.nutrition.length ? (
-                  <Text>
-                    Total Calories: {this.state.calSum.toFixed(2)}kcal
-                  </Text>
-                ) : null}
-                <PieChart
-                  style={{ height: 200 }}
-                  outerRadius={'70%'}
-                  innerRadius={10}
-                  data={[
-                    {
-                      key: 1,
-                      value: this.state.proteinSum,
-                      svg: { fill: '#0099FF' }
-                    },
-                    {
-                      key: 2,
-                      value: this.state.carbsSum,
-                      svg: { fill: '#ffdb4d' }
-                    },
-                    {
-                      key: 3,
-                      value: this.state.fatSum,
-                      svg: { fill: 'green' }
-                    }
-                  ]}
-                />
-                {this.state.nutrition.length ? (
-          <Card sticky>
-            <CardItem>
-              <Button
-                style={{backgroundColor: '#0099FF'}}>
-                <Text style={{color: 'black', fontWeight: 'bold'}}>Protein {this.state.proteinSum.toFixed(2)}</Text>
-              </Button>
-              <Button
-                style={{backgroundColor: '#ffdb4d'}}>
-                <Text style={{color: 'black', fontWeight: 'bold'}}>Carbs {this.state.carbsSum.toFixed(2)}</Text>
-              </Button>
-              <Button
-                style={{backgroundColor: 'green'}}>
-                <Text style={{color: 'black', fontWeight: 'bold'}}>Fat {this.state.fatSum.toFixed(2)}</Text>
-              </Button>
-            </CardItem>
-          </Card>
-                ) : null}
-                </View>
+
             </View>
           </Content>
       </Container>
