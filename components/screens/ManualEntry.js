@@ -190,7 +190,7 @@ class ManualEntry extends Component {
                     return (
                         <List key={food.id}>
                         <ListItem itemDivider>
-                          <Text>
+                          <Text style={{fontWeight: 'bold'}}>{food.name}
                             {food.calories > 500 ? (
                               <Text>     That's a lot of calories 😳 </Text>
                             ) : null}
