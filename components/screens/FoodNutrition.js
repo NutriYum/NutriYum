@@ -22,7 +22,10 @@ import {
 import { connect } from 'react-redux'
 import styles from '../../Styles'
 import { addToFoodLogThunker } from '../redux/foodLog'
+import { removeCurrentMatch } from '../redux/foodmatch'
+import { removeNutrition } from '../redux/nutrition'
 import { PieChart } from 'react-native-svg-charts'
+import { StackActions, NavigationActions } from 'react-navigation';
 
 
 class FoodNutrition extends Component {
@@ -47,6 +50,18 @@ class FoodNutrition extends Component {
       duration: 1500
     })
   }
+
+  async clearFoodState() {
+    const resetAction = StackActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({ routeName: 'MyCameraScreen' })],
+    });
+    this.props.navigation.dispatch(resetAction);
+    this.props.navigation.navigate('MyCameraScreen')
+    this.props.removeCurrentMatch();
+    this.props.removeNutrition();
+  }
+
 componentDidMount(){
   let pro = 0
   let car = 0
@@ -69,10 +84,14 @@ componentDidMount(){
     return (
       <Container>
         <Content>
-        <Card>
+          <View>
+        <Card
+          style={{alignItems: 'center', padding: 10}}
+        >
         <CardItem
         header
-        style={{alignSelf: 'center'}}>
+        style={{alignSelf: 'center'}}
+        >
             <Text
               style={{fontWeight: 'bold', fontSize: 20}}> {nutrition[0].name.toUpperCase()}</Text>
             </CardItem>
@@ -95,8 +114,9 @@ componentDidMount(){
               <Text> Add to Food Log </Text>
             </Button>
             </CardItem>
+            <CardItem>
           <PieChart
-          style={{ height: 200 }}
+          style={{ height: 200, width: 200 }}
           outerRadius={'70%'}
           innerRadius={10}
           data={[
@@ -115,12 +135,15 @@ componentDidMount(){
             {
               key: 3,
               value: this.state.fatSum,
-              svg: { fill: '#808080' },
+              svg: { fill: 'green' },
               arc: { cornerRadius: 5 }
             }
           ]}
           />
-            <CardItem>
+                      </CardItem>
+            <CardItem
+              // style={{alignItems: 'center', alignContent: 'center'}}>
+              style={{flex: 1}}>
               <Button
                 style={{backgroundColor: '#0099FF'}}>
                 <Text style={{color: 'black', fontWeight: 'bold'}}>Protein {this.state.proteinSum.toFixed(2)}g</Text>
@@ -135,14 +158,14 @@ componentDidMount(){
               </Button>
             </CardItem>
         </Card>
-
+          </View>
         <Card>
           {nutrition.length ?
           (
             <List key={nutrition[0].id}>
             <ListItem itemDivider>
               <Text>
-                {nutrition[0].quantity} {nutrition[0].name.toUpperCase()}{nutrition[0].quantity > 0 ? ('S') : null}
+                {nutrition[0].quantity} {nutrition[0].servingUnit} {nutrition[0].name.toUpperCase()}
                 {nutrition[0].calories > 500 ? (
                   <Text>That's a lot of calories 😳 </Text>
                 ) : null}
@@ -169,6 +192,15 @@ componentDidMount(){
           </List>
         )
           : null}
+          <CardItem footer>
+            <Button
+              transparent
+              onPress={() => this.clearFoodState()}
+              >
+              <Icon active name="thumbs-down" />
+              <Text>Return to Camera and Start Over</Text>
+            </Button>
+          </CardItem>
         </Card>
         </Content>
       </Container>
@@ -183,6 +215,6 @@ const mapState = state => {
   }
 }
 
-const mapDispatch = { addToFoodLogThunker }
+const mapDispatch = { addToFoodLogThunker, removeCurrentMatch, removeNutrition }
 
 export default connect(mapState, mapDispatch)(FoodNutrition)
