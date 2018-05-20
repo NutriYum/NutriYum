@@ -62,6 +62,11 @@ class Main extends React.Component {
     reccoFat = this.state.dailyFat
     reccoCarb = this.state.dailyCarb
     this.setState({ timeFrame: 'daily' })
+    time = StyleSheet.create({
+      daily: {borderBottomWidth: 6, borderBottomColor: '#ffdb4d'},
+      weekly: null,
+      monthly: null
+  })
   }
 
   changeViewandFactorWeek() {
@@ -71,6 +76,11 @@ class Main extends React.Component {
     reccoFat = this.state.dailyFat * 7
     reccoCarb = this.state.dailyCarb * 7
     this.setState({ timeFrame: 'weekly' })
+    time = StyleSheet.create({
+      daily: null,
+      weekly: {borderBottomWidth: 6, borderBottomColor: '#ffdb4d'},
+      monthly: null
+  })
   }
 
   changeViewandFactorMonth() {
@@ -80,6 +90,11 @@ class Main extends React.Component {
     reccoFat = this.state.dailyFat * 30
     reccoCarb = this.state.dailyCarb * 30
     this.setState({ timeFrame: 'monthly' })
+    time = StyleSheet.create({
+      daily: null,
+      weekly: null,
+      monthly: {borderBottomWidth: 6, borderBottomColor: '#ffdb4d'}
+  })
   }
 
   async handleDeleteFoodItem(id, name) {
@@ -192,16 +207,19 @@ class Main extends React.Component {
             <CardItem style={{justifyContent: 'space-around', marginLeft: -10}}>
               <Button
                 style={{borderRadius: 10, margin: 2}}
+                style={time.daily}
                 onPress={() => this.changeViewandFactorDay()}>
                 <Text>Today</Text>
               </Button>
               <Button
                 style={{borderRadius: 10, margin: 2}}
+                style={time.weekly}
                 onPress={() => this.changeViewandFactorWeek()}>
                 <Text>Week</Text>
               </Button>
               <Button
                 style={{borderRadius: 10, margin: 2}}
+                style={time.monthly}
                 onPress={() => this.changeViewandFactorMonth()}>
                 <Text>Month</Text>
               </Button>
