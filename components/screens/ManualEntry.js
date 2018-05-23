@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { TextInput, Image, View, Keyboard } from 'react-native'
+import { TextInput, Image, View, Keyboard, Slider } from 'react-native'
 import axios from 'axios'
 import {
   Text,
@@ -20,6 +20,10 @@ import { addToFoodLogThunker, getFoodLogThunker } from '../redux/foodLog'
 import styles from '../../Styles'
 import { PieChart } from 'react-native-svg-charts'
 
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1)
+}
+
 class ManualEntry extends Component {
   constructor(props) {
     super(props)
@@ -31,7 +35,8 @@ class ManualEntry extends Component {
       fatSum: 0,
       calSum: 0,
       error: '',
-      showToast: false
+      showToast: false,
+      value: 1
     }
     this.onSubmitFood = this.onSubmitFood.bind(this)
     this.clearAll = this.clearAll.bind(this)
@@ -39,7 +44,7 @@ class ManualEntry extends Component {
   }
 
   onSubmitFood() {
-    this.setState({ nutrition: [] })
+    this.setState({ nutrition: [], value: 1 })
     axios
       .get(`${IP}/api/nutri/search/${encodeURI(this.state.text)}`)
       .then(async result => {
@@ -49,7 +54,7 @@ class ManualEntry extends Component {
           await this.setState({
             nutrition: result.data
           })
-          this.setState({ error:'' })
+          this.setState({ error: '' })
           let pro = 0
           let car = 0
           let fat = 0
@@ -75,7 +80,7 @@ class ManualEntry extends Component {
   }
 
   clearAll() {
-    this.setState({ nutrition: [] })
+    this.setState({ nutrition: [], value: 1 })
   }
   async addToFood() {
     await this.props.addToFoodLogThunker(this.state.nutrition)
@@ -86,145 +91,190 @@ class ManualEntry extends Component {
           ? this.state.nutrition[0].name
           : 'items'
       } to Food Log`,
-      buttonText: 'Okay',
-      duration: 1500
+      duration: 2500
     })
+
   }
 
   render() {
     return (
       <Container>
-          <Content keyboardShouldPersistTaps="handled">
-            <Text
-              style={{ alignSelf: 'center', marginTop: 20, fontWeight: 'bold', fontSize: 20 }}
+        <Content keyboardShouldPersistTaps="handled">
+          <Text
+            style={{
+              alignSelf: 'center',
+              marginTop: 20,
+              fontWeight: 'bold',
+              fontSize: 20
+            }}
+          >
+            WhatCha Eating?
+          </Text>
+          <TextInput
+            style={styles.manualTextInput}
+            onChangeText={text => this.setState({ text })}
+            value={this.state.text}
+            placeholder={'ENTER FOOD HERE'}
+            onSubmitEditing={this.onSubmitFood}
+            name="food"
+          />
+          <View>
+            <View
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignSelf: 'center'
+              }}
             >
-              WhatCha Eating?
-            </Text>
-            <TextInput
-              style={styles.manualTextInput}
-              onChangeText={text => this.setState({ text })}
-              value={this.state.text}
-              placeholder={'ENTER FOOD HERE'}
-              onSubmitEditing={this.onSubmitFood}
-              name="food"
-            />
-            <View>
-              <View
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignSelf: 'center'
-                }}
+              <Button
+                danger
+                onPress={this.clearAll}
+                style={{ margin: 10, borderRadius: 10 }}
               >
-                <Button danger onPress={this.clearAll} style={{ margin: 10, borderRadius: 10 }}>
-                  <Text>Clear All</Text>
-                </Button>
-                <Button primary onPress={this.addToFood} style={{ margin: 10, borderRadius: 10 }}>
-                  <Text>Add to Log</Text>
-                </Button>
-                <Button
-                  success
-                  onPress={this.onSubmitFood}
-                  style={{ margin: 10, borderRadius: 10 }}
-                >
-                  <Text>Search</Text>
-                </Button>
-              </View>
-                <Content>
-                {this.state.nutrition.length ? (
-                  <View>
-                  <Card style={{alignItems: 'center', padding: 10}}>
-                  <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
-                  Total Calories: {this.state.calSum.toFixed(2)} kcals
-                  </Text>
-                  <CardItem>
-                  <PieChart
-                  style={{ height: 200, width: 200}}
-                  outerRadius={'70%'}
-                  innerRadius={10}
-                  data={[
-                    {
-                      key: 1,
-                      value: this.state.proteinSum,
-                      svg: { fill: '#0099FF' }, 
-                      arc: { cornerRadius: 5, }
-                    },
-                    {
-                      key: 2,
-                      value: this.state.carbsSum,
-                      svg: { fill: '#ffdb4d' }, 
-                      arc: { cornerRadius: 5, }
-                    },
-                    {
-                      key: 3,
-                      value: this.state.fatSum,
-                      svg: { fill: 'green' }, 
-                      arc: { cornerRadius: 5, }
-                    }
-                  ]}
-                  />
-                </CardItem>
-            <CardItem style={{flex: 1}}>
-              <Button
-                style={{backgroundColor: '#0099FF'}}>
-                <Text style={{color: 'black', fontWeight: 'bold'}}>Protein {this.state.proteinSum.toFixed(2)}g</Text>
+                <Text>Clear All</Text>
               </Button>
               <Button
-                style={{backgroundColor: '#ffdb4d'}}>
-                <Text style={{color: 'black', fontWeight: 'bold'}}>Carbs {this.state.carbsSum.toFixed(2)}g</Text>
+                primary
+                onPress={this.addToFood}
+                style={{ margin: 10, borderRadius: 10 }}
+              >
+                <Text>Add to Log</Text>
               </Button>
               <Button
-                style={{backgroundColor: 'green'}}>
-                <Text style={{color: 'black', fontWeight: 'bold'}}>Fat {this.state.fatSum.toFixed(2)}g</Text>
+                success
+                onPress={this.onSubmitFood}
+                style={{ margin: 10, borderRadius: 10 }}
+              >
+                <Text>Search</Text>
               </Button>
-            </CardItem>
-          </Card>
-          </View>
-                ) : null}
-                {this.state.error === 'Item was not found! Try again' ? (
-                  <Text style={{ marginLeft: 20 }}>
-                    Item was not found! Please try again
-                  </Text>
-                ) : (
-                  this.state.nutrition.map((food, index) => {
-                    return (
-                        <List key={food.id}>
-                        <ListItem itemDivider>
-                          <Text style={{fontWeight: 'bold'}}>{food.name}
-                            {food.calories > 500 ? (
-                              <Text>     That's a lot of calories 😳 </Text>
-                            ) : null}
-                          </Text>
-                        </ListItem>
-                        <ListItem>
-                          <Text>Calories: {food.calories}kcal</Text>
-                        </ListItem>
-                        <ListItem>
-                            <Text>Serving: {food.quantity} {food.servingUnit}</Text>
-                        </ListItem>
-                        <ListItem>
-                          <Text>Total Fat: {food.totalFat}g</Text>
-                        </ListItem>
-                        <ListItem>
-                          <Text>Carbs: {food.carbs}g</Text>
-                        </ListItem>
-                        <ListItem>
-                          <Text>Sugar: {food.sugar}g</Text>
-                        </ListItem>
-                        <ListItem>
-                          <Text>Sodium: {food.sodium}g</Text>
-                        </ListItem>
-                        <ListItem>
-                          <Text>Protein: {food.protein}g</Text>
-                        </ListItem>
-                      </List>
-                    )
-                  })
-                )}
-                </Content>
-
             </View>
-          </Content>
+            <Content>
+              {this.state.nutrition.length ? (
+                <View>
+                  <Card style={{ alignItems: 'center', padding: 10 }}>
+                    <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
+                      Total Calories:{' '}
+                      {(this.state.calSum * this.state.value).toFixed(2)} kcals
+                    </Text>
+                    <CardItem>
+                      <PieChart
+                        style={{ height: 200, width: 200 }}
+                        outerRadius={'70%'}
+                        innerRadius={10}
+                        data={[
+                          {
+                            key: 1,
+                            value: this.state.proteinSum,
+                            svg: { fill: '#0099FF' },
+                            arc: { cornerRadius: 5 }
+                          },
+                          {
+                            key: 2,
+                            value: this.state.carbsSum,
+                            svg: { fill: '#ffdb4d' },
+                            arc: { cornerRadius: 5 }
+                          },
+                          {
+                            key: 3,
+                            value: this.state.fatSum,
+                            svg: { fill: 'green' },
+                            arc: { cornerRadius: 5 }
+                          }
+                        ]}
+                      />
+                    </CardItem>
+                    <CardItem style={{ flex: 1 }}>
+                      <Button style={{ backgroundColor: '#0099FF' }}>
+                        <Text style={{ color: 'black', fontWeight: 'bold' }}>
+                          Protein {this.state.proteinSum.toFixed(2)}g
+                        </Text>
+                      </Button>
+                      <Button style={{ backgroundColor: '#ffdb4d' }}>
+                        <Text style={{ color: 'black', fontWeight: 'bold' }}>
+                          Carbs {this.state.carbsSum.toFixed(2)}g
+                        </Text>
+                      </Button>
+                      <Button style={{ backgroundColor: 'green' }}>
+                        <Text style={{ color: 'black', fontWeight: 'bold' }}>
+                          Fat {this.state.fatSum.toFixed(2)}g
+                        </Text>
+                      </Button>
+                    </CardItem>
+                  </Card>
+                </View>
+              ) : null}
+              {this.state.error === 'Item was not found! Try again' ? (
+                <Text style={{ marginLeft: 20 }}>
+                  Item was not found! Please try again
+                </Text>
+              ) : (
+                this.state.nutrition.map((food, index) => {
+                  return (
+                    <List key={index}>
+                      <ListItem itemDivider>
+                        <Text style={{ fontWeight: 'bold' }}>
+                          {capitalizeFirstLetter(food.name)}
+                          {food.calories > 500 ? (
+                            <Text> That's a lot of calories 😳 </Text>
+                          ) : null}
+                        </Text>
+                      </ListItem>
+                      <Slider
+                        value={this.state.value}
+                        onValueChange={val => this.setState({ value: val })}
+                        minimumValue={0.5}
+                        maximumValue={4}
+                        step={0.25}
+                      />
+                      <ListItem>
+                        <Text>Amount: {food.quantity * this.state.value}</Text>
+                      </ListItem>
+                      <ListItem>
+                        <Text>
+                          Serving: {food.quantity} {food.servingUnit}
+                        </Text>
+                      </ListItem>
+                      <ListItem>
+                        <Text>
+                          Calories:{' '}
+                          {(food.calories * this.state.value).toFixed(2)}kcal
+                        </Text>
+                      </ListItem>
+                      <ListItem>
+                        <Text>
+                          Total Fat:{' '}
+                          {(food.totalFat * this.state.value).toFixed(2)} g
+                        </Text>
+                      </ListItem>
+                      <ListItem>
+                        <Text>
+                          Carbs: {(food.carbs * this.state.value).toFixed(2)} g
+                        </Text>
+                      </ListItem>
+                      <ListItem>
+                        <Text>
+                          Sugar: {(food.sugar * this.state.value).toFixed(2)} g
+                        </Text>
+                      </ListItem>
+                      <ListItem>
+                        <Text>
+                          Sodium: {(food.sodium * this.state.value).toFixed(2)}{' '}
+                          g
+                        </Text>
+                      </ListItem>
+                      <ListItem>
+                        <Text>
+                          Protein:{' '}
+                          {(food.protein * this.state.value).toFixed(2)} g
+                        </Text>
+                      </ListItem>
+                    </List>
+                  )
+                })
+              )}
+            </Content>
+          </View>
+        </Content>
       </Container>
     )
   }

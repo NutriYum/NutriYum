@@ -12,7 +12,6 @@ beforeAll(()=> {
 
 test('renders without crashing', () => {
   const rendered = renderer.create(<Camera />).toJSON()
-//   console.log(Camera())
   expect(rendered).toBeTruthy()
 })
 

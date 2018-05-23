@@ -80,6 +80,8 @@ class Main extends React.Component {
     reccoFat = this.state.dailyFat * 30
     reccoCarb = this.state.dailyCarb * 30
     this.setState({ timeFrame: 'monthly' })
+    Axios.get(`${IP}/api/foodLogs/monthlysum`)
+    .then(result => console.log(result))
   }
 
   async handleDeleteFoodItem(id, name) {
@@ -90,8 +92,7 @@ class Main extends React.Component {
     await this.changeViewandFactorDay()
     Toast.show({
       text: `Removed ${name}`,
-      buttonText: 'Okay',
-      duration: 1500
+      duration: 2500
     })
   }
 

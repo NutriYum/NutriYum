@@ -43,8 +43,7 @@ class FoodNutrition extends Component {
 
     Toast.show({
       text: `Added ${nutrition[0].name} to Food Log`,
-      buttonText: 'Okay',
-      duration: 1500
+      duration: 2500
     })
   }
 componentDidMount(){

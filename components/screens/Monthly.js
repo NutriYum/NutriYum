@@ -24,19 +24,18 @@ class Monthly extends React.Component {
   }
 
   render() {
-    let dailyData = {}
-    let dataY = []
-    this.props.food.forEach((item, index) => {
-      let day = item.date.slice(8, 10)
-      console.log(day)
-      if (dailyData[day]){
-        let cals = dailyData[day]
-        dailyData[day] = (item.calories + cals)
-      } else {
-        dailyData[day] = item.calories
-      }
-    })
-    console.log(dailyData)
+    // let dailyData = {}
+    // let dataY = []
+    // this.props.food.forEach((item, index) => {
+    //   let day = item.date.slice(8, 10)
+    //   if (dailyData[day]){
+    //     let cals = dailyData[day]
+    //     dailyData[day] = (item.calories + cals)
+    //   } else {
+    //     dailyData[day] = item.calories
+    //   }
+    // })
+
     return (
       <ScrollView>
         <VictoryChart domain={{ y: [0, 3500] }}>

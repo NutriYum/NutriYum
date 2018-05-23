@@ -50,10 +50,6 @@ class CameraConfirm extends React.Component {
     this.send = this.send.bind(this)
   }
 
-  componentWillMount() {
-    console.log(this.props.photo.photo)
-  }
-
   async send() {
     const file = {
       uri: this.props.photo.photo.uri,
@@ -64,14 +60,12 @@ class CameraConfirm extends React.Component {
     await RNS3.put(file, options).then(response => {
       if (response.status !== 201) {throw new Error('Failed to upload image to S3')}
       amaUri = response.body.postResponse.location
-      console.log('from amazon', amaUri)
     })
     const response = await axios.get(
       `https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key=${watK}&url=${amaUri}&version=2018-03-19&classifier_ids=food`
     )
     let result = response.data.images[0].classifiers[0].classes
     await this.props.setCurrentMatch(result)
-    console.log('from watson', this.props)
     await this.props.setCurrentUrl({ amazonUrl: amaUri })
   }
 
